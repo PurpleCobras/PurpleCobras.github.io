@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
-    <title>Logic Gate Lesson</title>
+    <title>Gate Grabber</title>
 
         <!-- Bootstrap core CSS -->
     <link href="../bootstrap/bootstrap.min.css" rel="stylesheet">
@@ -86,7 +86,12 @@
 <button type="button" id="mainMenu_HowTo" class="ui howToPlay buttons" onclick ="loadMainMenu()">Main Menu</button>
 <button type="button" id="mainMenu_Controls" class="ui controls buttons" onclick ="loadMainMenu()">Main Menu</button>
 <button type="button" id="controls_MainMenu" class="ui mainMenu buttons" onclick ="loadControls()">Controls</button>
+<button type="button" id="highScores_MainMenu" class="ui mainMenu buttons" onclick ="loadHighScores()">High Scores</button>
+<button type="button" id="mainMenu_HighScores" class="ui highScores buttons" onclick ="loadMainMenu()">Main Menu</button>
+<button type="button" id="mainMenu_NewHighScoreScreen" class="ui newHighScoreScreen buttons" onclick ="loadMainMenu()">No Thanks</button>
+<button type="button" id="submitHighScore" class="ui newHighScoreScreen buttons" onclick ="addNewHighScore()">Submit!</button>
 <button type="button" id="config_Options" class="ui options buttons" onclick ="loadConfiguration()">Button Configuration</button>
+<input type="text" id="nameInput" class="ui newHighScoreScreen" maxlength="20" >
 <form id="opt" class ="ui options">
     Background Music
     <br>
@@ -106,12 +111,19 @@
 	Welcome to Gate Grabber!
 </form>
 
-<form id="gameOverText" class ="ui endGame">
+<form id="gameOverText" class ="ui endGame newHighScoreScreen">
 GAME OVER!
 </form>
 
-<form id="gameOverScore" class ="ui endGame">
+<form id="highScoreLabel" class ="ui endGame">
+High Scores
+</form>
+<form id="gameOverScore" class ="ui endGame newHighScoreScreen">
 
+</form>
+
+<form id="congratulations" class ="ui newHighScoreScreen">
+Congratulations! You've recorded a new high Score! Please enter your name below.
 </form>
 
 <form id="framesPerSecond" class ="ui inGame statuses">
@@ -126,6 +138,85 @@ GAME OVER!
 
 </form>
 
+<form id="highScore1" class ="ui highScores scoreList ">
+1.   nobody - 0pts
+</form>
+
+<form id="highScore2" class ="ui highScores scoreList">
+2.   nobody - 0pts
+</form>
+
+<form id="highScore3" class ="ui highScores scoreList">
+3.   nobody - 0pts
+</form>
+
+<form id="highScore4" class ="ui highScores scoreList">
+4.   nobody - 0pts
+</form>
+
+<form id="highScore5" class ="ui highScores scoreList">
+5.   nobody - 0pts
+</form>
+
+<form id="highScore6" class ="ui highScores scoreList">
+6.   nobody - 0pts
+</form>
+
+<form id="highScore7" class ="ui highScores scoreList">
+7.   nobody - 0pts
+</form>
+
+<form id="highScore8" class ="ui highScores scoreList">
+8.   nobody - 0pts
+</form>
+
+<form id="highScore9" class ="ui highScores scoreList">
+9.   nobody - 0pts
+</form>
+
+<form id="highScore10" class ="ui highScores scoreList">
+10. nobody - 0pts
+</form>
+
+<form id="highScoreEnd1" class ="ui endGame scoreList ">
+1.   nobody - 0pts
+</form>
+
+<form id="highScoreEnd2" class ="ui endGame scoreList">
+2.   nobody - 0pts
+</form>
+
+<form id="highScoreEnd3" class ="ui endGame scoreList">
+3.   nobody - 0pts
+</form>
+
+<form id="highScoreEnd4" class ="ui endGame scoreList">
+4.   nobody - 0pts
+</form>
+
+<form id="highScoreEnd5" class ="ui endGame scoreList">
+5.   nobody - 0pts
+</form>
+
+<form id="highScoreEnd6" class ="ui endGame scoreList">
+6.   nobody - 0pts
+</form>
+
+<form id="highScoreEnd7" class ="ui endGame scoreList">
+7.   nobody - 0pts
+</form>
+
+<form id="highScoreEnd8" class ="ui endGame scoreList">
+8.   nobody - 0pts
+</form>
+
+<form id="highScoreEnd9" class ="ui endGame scoreList">
+9.   nobody - 0pts
+</form>
+
+<form id="highScoreEnd10" class ="ui endGame scoreList">
+10. nobody - 0pts
+</form>
 <form id="gameDescription" class ="ui howToPlay">
 	Gate Grabber is a game that is based on the concepts of basic Boolean logic gates. The goal of the game is to collect as many of the gates as you can 
 	by inputting the value that causes them to evaluate to a logical 1, or "true". When a gate is collected and the input evaluates to a 1 you will recieve points.
@@ -150,6 +241,7 @@ Hint: Not all gates have a possible correct answer!
 </form>
 
 <img  id= "menuLogo" src = "../MainMenu/logo.png" class="ui mainMenu logos">
+<img  id= "highScoresLogo" src = "../MainMenu/highscores.png" class="ui highScores logos">
 <img  id= "optionsLogo" src = "../MainMenu/options.png" class="ui options logos">
 <img  id= "howToLogo" src = "../MainMenu/howto.png" class="ui howToPlay logos">
 <img  id= "controlsLogo" src = "../MainMenu/controls.png" class="ui controls logos">
@@ -159,8 +251,9 @@ Hint: Not all gates have a possible correct answer!
 <img  id= "textBackground" src = "../MainMenu/textbackground.png" class="ui howToPlay">
 <img  id= "textBackground2" src = "../MainMenu/textbackground.png" class="ui controls">
 <img  id= "textBackground3" src = "../MainMenu/textbackground.png" class="ui options">
-
-
+<img  id= "textBackground4" src = "../MainMenu/textbackground.png" class="ui highScores">
+<img  id= "textBackground5" src = "../MainMenu/textbackground.png" class="ui endGame">
+<img  id= "textBackground6" src = "../MainMenu/textbackground.png" class="ui newHighScoreScreen">
 </div>
 
 

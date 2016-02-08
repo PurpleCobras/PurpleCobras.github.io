@@ -46,6 +46,12 @@ body{
 	color: #ED1809;
 }
 
+.scoreList{
+	font-size: 190%;
+	color: #ED1809;
+	z-index: 1;
+	white-space: pre;
+}
 #framesPerSecond{
     position: absolute;
 	top: 2px;
@@ -154,10 +160,17 @@ body{
 
 .endGame {
 	position: absolute;
-	font-size: 24px;
 }
 
 .options{
+    position: absolute;
+}
+
+.highScores{
+    position: absolute;
+}
+
+.newHighScoreScreen{
     position: absolute;
 }
 
@@ -178,24 +191,33 @@ body{
 	visibility: visible;
 }
 
-
+#nameInput{
+	bottom: 340px;
+	left: 100px;
+	width: 300px;
+	height: 30px;
+	z-index: 1;
+	font-size:20px;
+}
 
 #endm{
-	bottom: 175px;
+	bottom: 75px;
 	left: 165px;
 	width: 180px;
 	height: 50px;
+	font-size: 24px;
 }
 
 #replay{
-	bottom: 235px;
+	bottom: 135px;
 	left: 165px;
 	width: 180px;
 	height: 50px;
+	font-size: 24px;
 }
 
 #gameOverText{
-	bottom: 435px;
+	bottom: 545px;
 	left: 0px;
 	width: 530px;
 	font-size: 55px;
@@ -203,11 +225,29 @@ body{
 	/*color: #FF0000;*/
 }
 
+#congratulations{
+	bottom: 375px;
+	left: 28px;
+	width: 450px;
+	font-size: 24px;
+	text-align: center;
+	color: #FF0000;
+	z-index:1;
+}
+
+#highScoreLabel{
+	bottom: 471px;
+	left: 0px;
+	width: 530px;
+	font-size: 40px;
+	text-align: center;
+}
 #gameOverScore{
-	bottom: 370px;
+	bottom: 528px;
 	left: 0px;
 	width: 530px;
 	text-align: center;
+	font-size: 24px;
 	/*color: #FF0000;*/
 }
 
@@ -246,6 +286,127 @@ body{
 		width: 124px;
 }
 
+#mainMenu_NewHighScoreScreen{
+     bottom: 218px;
+    left: 193px;
+    height: 40px;
+		width: 124px;
+}
+
+#submitHighScore{
+     bottom: 267px;
+    left: 193px;
+    height: 40px;
+		width: 124px;
+}
+
+#mainMenu_HighScores{
+     bottom: 73px;
+    left: 193px;
+    height: 40px;
+		width: 124px;
+}
+
+#highScore1{
+	bottom: 362px;
+	left: 35px;
+}
+
+#highScore2{
+	bottom: 336px;
+	left: 35px;
+}
+
+#highScore3{
+	bottom: 310px;
+	left: 35px;
+}
+
+#highScore4{
+	bottom: 284px;
+	left: 35px;
+}
+
+#highScore5{
+	bottom: 258px;
+	left: 35px;
+}
+
+#highScore6{
+	bottom: 232px;
+	left: 35px;
+}
+
+#highScore7{
+	bottom: 206px;
+	left: 35px;
+}
+
+#highScore8{
+	bottom: 180px;
+	left: 35px;
+}
+
+#highScore9{
+	bottom: 154px;
+	left: 35px;
+}
+
+#highScore10{
+	bottom: 128px;
+	left: 35px;
+}
+
+
+#highScoreEnd1{
+	bottom: 437px;
+	left: 35px;
+}
+
+#highScoreEnd2{
+	bottom: 411px;
+	left: 35px;
+}
+
+#highScoreEnd3{
+	bottom: 385px;
+	left: 35px;
+}
+
+#highScoreEnd4{
+	bottom: 359px;
+	left: 35px;
+}
+
+#highScoreEnd5{
+	bottom: 333px;
+	left: 35px;
+}
+
+#highScoreEnd6{
+	bottom: 307px;
+	left: 35px;
+}
+
+#highScoreEnd7{
+	bottom: 281px;
+	left: 35px;
+}
+
+#highScoreEnd8{
+	bottom: 255px;
+	left: 35px;
+}
+
+#highScoreEnd9{
+	bottom: 229px;
+	left: 35px;
+}
+
+#highScoreEnd10{
+	bottom: 203px;
+	left: 35px;
+}
 #textBackground{
 	visibility: visible;
 	position: absolute;
@@ -279,7 +440,38 @@ body{
 	
 }
 
+#textBackground4{
+	visibility: visible;
+	position: absolute;
+	height: 275px;
+	width: 450px;
+	bottom: 125px;
+	left: 30px;
+	z-index: 0;
+	
+}
 
+#textBackground5{
+	visibility: visible;
+	position: absolute;
+	height: 275px;
+	width: 450px;
+	bottom: 200px;
+	left: 30px;
+	z-index: 0;
+	
+}
+
+#textBackground6{
+	visibility: visible;
+	position: absolute;
+	height: 160px;
+	width: 450px;
+	bottom: 325px;
+	left: 28px;
+	z-index: 0;
+	
+}
 #gameWelcome{
 	text-align: center;
 	font-size: 165%;
@@ -372,6 +564,10 @@ body{
 	left: 165px;
 }
 
+#highScores_MainMenu{
+	bottom: 35px;
+    left: 165px;
+}
 #controls_MainMenu{
 	bottom: 185px;
     left: 165px;
