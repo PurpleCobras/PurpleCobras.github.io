@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
-    <title>Gate Grabber Information</title>
+    <title>Math Maze Information</title>
 
         <!-- Bootstrap core CSS -->
     <link href="../bootstrap/bootstrap.min.css" rel="stylesheet">
@@ -27,7 +27,6 @@
   </head>
 
   <body>
-
 
     <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -66,7 +65,7 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <!-- <li><a href="#">Optional</a></li> <!-->
+            <!-- <li><a href="#">Optional</a></li> -->
 
           </ul>
         </div>
@@ -75,26 +74,59 @@
 
     <div class="container">
 
-
-
 <br><br>
 <br>
-	<h5>Gate Grabber Information</h5>
+	<h5>Math Maze Information</h5>
 
-	<p>This puzzle game is based on logic gate functionality. In this game the player will choose an input (0 or 1) that will satisfy the
-				gate that is on the screen. Each gate will have 2 inputs and 1 output. One of the inputs is given and the other comes from the player.  There is the possibility for gates that do not have a correct answer. In that case, no input should be given to the gate. </p>
-	<p>When the game starts, there are 3 gates that fall at a chosen rate. Each gate will reset when the player provides an input or the gate
-				falls off the screen. At this time, a new gate and rate is randomly generated. </p>
-	<p>If the player provides the correct value to satisfy the gate, the player receives 100 points. If the player provides an incorrect value to
-				the gate, the player will lose a life. The player starts off with 10 lives and 0 points. The game ends when the player has 0 lives left. If the player gets a score in the top 10 they will be asked for their name for the highscore board.</p>
-  <p>There are powerups that the player can retrieve. There is a x2 multiplier and a 1up powerup right now. The x2 multiplier lasts for 15 seconds. The 1up gives the player 1 extra life.</p>
+	<p>This maze style game will help the player practice all kinds of mathematical functions in a fun and entertaining way. It is very easy to play and makes solving math problems more fun.</p>
+	<p>The first thing you do is choose the difficulty you want to play at. You then are able to choose the color of the player box in the game. When the maze loads, you are given a math problem to solve. The problems come in many forms based on the difficulty. There are some that ask for the greatest common factor, some that require a multistep solving process, and some that are just simple addition and subtraction.</p>
+
+	<p>First the player must solve the problem given. Then the player must find the correct answer in the maze. There are 4 answers placed on the for each problem. If the player retrieves the wrong answer they are penalized and the miss count increases. Once the player has retrieved the correct answer, they are rewarded and the hit count increases. There is a visualization for a correct and wrong answer. A different problem with a different maze is generated and loaded to the screen.</p>
+  <b>Difficulties:</b>
+  <ul>
+    <li><b>Easy</b></li>
+    <ul>
+      <li>Addition</li>
+      <li>Subtraction</li>
+      <li>Greatest Common Factor</li>
+    </ul>
+    <li><b>Moderate</b></li>
+    <ul>
+      <li>Multiplication</li>
+      <li>Division</li>
+      <li>Linear equations with one variable</li>
+    </ul>
+    <li><b>Hard</b></li>
+    <ul>
+      <li>Exponents</li>
+      <li>Least Common Multiple</li>
+      <li>Linear equations with variables on both sides</li>
+    </ul>
+    <li><b>All</b></li>
+    <ul>
+      <li>Mix of all Easy, Moderate, and Hard problems</li>
+    </ul>
+
+  </ul>
+  <p><b>Coming Soon:</b>
+      <ul>
+        <li>Game Ending</li>
+        <li>Scoring</li>
+        <li>Timer/time bonus</li>
+        <li>Updated visuals</li>
+        <li>More Mazes!</li>
+      </ul>
+    
+    </p>
+  <p>We are currently working on and improving this game. We will try to keep this information as up to date as possible. 
+  </p>
 				<br><br>
-				<p>For help on logic gates, visit our Logic Gate Lesson:</p>
-				<p>            <a href = "LogicGateLesson.html" class = "btn btn-default" role = "button"> 
-				Logic Gate Lesson </a> </p>
+				<!-- <p>            <a href = "LogicGateLesson.html" class = "btn btn-default" role = "button"> 
+				Logic Gate Lesson </a> </p> -->
 				
+	<!-- <p>For help on logic gates, click here!</p> -->
 
-<br>
+
 <div id="main">
 <p><b>We want to know what you think!</b> </p>
 
@@ -107,7 +139,6 @@
 
 </form>
 </div>
-
 
 <form id="form">
  <br><br>
@@ -129,8 +160,8 @@
 
    	var varComment = comment.value;
 
-	var GG_Comments = Parse.Object.extend("GG_Comments");
-	var comm = new GG_Comments();
+	var MM_Comments = Parse.Object.extend("MM_Comments");
+	var comm = new MM_Comments();
 
 comm.save({
   UserName: varName,
@@ -147,25 +178,21 @@ comm.save({
    	
 };
 
-var GG_Comments = Parse.Object.extend("GG_Comments");
-var query = new Parse.Query(GG_Comments);
+var MM_Comments = Parse.Object.extend("MM_Comments");
+var query = new Parse.Query(MM_Comments);
 query.exists("objectId");query.find({
   success: function(results) {
       for (var i = 0; i < results.length; i++) {
       	var object = results[i];
-		
-		document.getElementById("demo").innerHTML = document.getElementById("demo").innerHTML + "<b>" + object.get('UserName') + "</b>  -  <i>" + object.get('createdAt') + "</i><br>" + object.get('UserComment') + "<br>";  
-		 if(i != results.length - 1) {
-		 	document.getElementById("demo").innerHTML = document.getElementById("demo").innerHTML + "___________________________________________________________<br><br>";
-		 }
-		 }
-  },
+			document.getElementById("demo").innerHTML = document.getElementById("demo").innerHTML + "<b>" + object.get('UserName') + "</b> - <i>" + object.get('createdAt') + "</i><br>" + object.get('UserComment') + "<br>";  
+		 	if(i != results.length - 1) {
+		 		document.getElementById("demo").innerHTML = document.getElementById("demo").innerHTML + "___________________________________________________________<br><br>";
+		 	}
+		 }  },
   error: function(error) {
     // The request failed
   }
 });
-
-
 
 </script>
 <div id = "commentsDiv" >

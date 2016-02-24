@@ -48,6 +48,7 @@
         	<li><a href="AboutUs.html">About Purple Cobras</a></li>
             <li><a href="APIInfo.html">About API</a></li>
             <li><a href="GateGrabberInfo.html">About Gate Grabber</a></li>
+            <li><a href="MathMazeInfo.html">About Math Maze</a></li>
 
             </ul>
             </li>
@@ -73,29 +74,57 @@
 
 <br><br>
 
-<div id="textDiv", style="text-align: center"> 
-	<span class = "textTitle">Welcome to Math Maze!</span>
-	<span class = "textBody">Earn points by first solving the given 
-math question and then traversing the 
-maze until you reach the correct answer.</span> 
+<div id="textDiv", style=" display: none" > 
+    <img  id= "MathMazeLogo" src = "../images/MathMaze.png" ><br><br> 
+
+</div> 
+<div id = "menu">
+
+    <img  id= "MathMazeLogo" src = "../images/MathMaze.png" ><br><br><br>
+    <!-- <button class = "options" id = "options" onclick = "loadOptions()">Options</button><br> -->
+    Choose your difficulty:<br>
+    
+    <button class = "difficulty easy" id = "Easy" onclick ="colorChoice(1)"> Easy </button><br>
+    <button class = "difficulty moderate" id = "Moderate" onclick ="colorChoice(2)"> Moderate </button><br>
+    <button class = "difficulty hard" id = "Hard" onclick ="colorChoice(3)"> Hard</button><br>
+    <button class = "difficulty all" id = "All" onclick ="colorChoice(0)"> All </button><br>
+</div>
+<div id= "colorMenu" style = "display:none">
+    Choose a color:<br>
+    <button class = "colors" id = "red" onclick = "play(1)">RED</button>
+    <button class = "colors" id = "orange" onclick = "play(2)">ORANGE</button>
+    <button class = "colors" id = "yellow" onclick = "play(3)">YELLOW</button>
+    <button class = "colors" id = "green" onclick = "play(4)">GREEN</button><br><br>
+    <button class = "colors" id = "blue" onclick = "play(5)">BLUE</button>
+    <button class = "colors" id = "indigo" onclick = "play(6)">INDIGO</button>
+    <button class = "colors" id = "violet" onclick = "play(7)">VIOLET</button>
+    <button class = "colors" id = "cyan" onclick = "play(8)">CYAN</button><br><br>
+    <button class = "colors" id = "chartreuse" onclick = "play(9)">CHARTREUSE</button>
+    <button class = "colors" id = "magenta" onclick = "play(10)">MAGENTA</button>
+    <button class = "colors" id = "navy" onclick = "play(11)">NAVY</button>
+    <button class = "colors" id = "chocolate" onclick = "play(12)">CHOCOLATE</button>
+
 </div>
 
-<div id="hit_missDiv"> </div>
+<div id="hit_missDiv" style="display:none"> </div>
 
-<div id="mazeDiv">
+<div id="mazeDiv" style="display:none">
+
 	<canvas id="maze" width="600" height="600" ></canvas>
 </div>
 
-<div id="functionDiv"> 
+<div id="functionDiv" style="display:none"> 
 	<canvas id="function" width="505" height="45"></canvas>
 </div>
-
+<div id="scoreboardDiv">
+        <canvas id="scoreboard" width = "400" height="45"></canvas>
+</div>
 
 <script src="../js/Visualization API/Resources/d3.min.js"></script>
 <script src="../js/Visualization API/Resources/d3plus.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="../js/Visualization API/test.min.js"></script>
-<script src="../js/Math Maze/fraction.js"></script>
+<script src="../js/Math Maze/fraction.min.js"></script>
 <script src="../js/Math Maze/mathMaze.min.js"></script>
 
 

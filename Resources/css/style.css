@@ -23,6 +23,7 @@
 	height:62px;
 	line-height:100%;
 	text-shadow:-1px 1px 2px #3b0404;
+	font-family: "Retroville";
 }
 
 .buttons:hover {
@@ -35,10 +36,14 @@
 
 body{
 	/*padding-top: 100px;*/
-	font-family: arial;
+	font-family: "Arial";
 	background-color:white;
 	}
 
+@font-face{
+	font-family: "Retroville";
+    src: url(fonts/RetrovilleNC.ttf);
+}
 
  
 .statuses{
@@ -184,6 +189,25 @@ body{
 
 
 .logos{
+	bottom: 415px;
+	left: 105px;
+	width: 300px;
+	height: 150px;
+	visibility: visible;
+}
+
+#frame1{
+	bottom: 415px;
+	left: 105px;
+	width: 300px;
+	height: 150px;
+}
+
+.mainMenuAnimation{
+	position: absolute;
+}
+
+.animationLogos{
 	bottom: 415px;
 	left: 105px;
 	width: 300px;
@@ -595,7 +619,6 @@ body{
 }
 h1{
 	text-align:center;
-	/*color:#660066;*/
 	color:black;
 	text-shadow: 1px 1px 2px black, 0 0 25px white;
 }
@@ -797,57 +820,197 @@ img#table{
 		left: 50px;
 		top:  175px;
 }
+
+/*
+	Math Maze styling
+*/
+
+#menu{
+	height: screen.height;
+	width: screen.width;
+	margin-top: 35px;
+	margin-left: auto;
+	width: 80%;
+	position: absolute;
+
+	font-size: 18px;
+	font-family: arial;
+	text-align: center;
+}
+
+#MathMazeLogo{
+	visibility: visible;
+	height: 250px;
+	width: 375px;
+}
+#colorMenu{
+	height: screen.height;
+	width: screen.width;
+	margin-top: 100px;
+	margin-left: auto;
+	width: 80%;
+	position: absolute;
+
+	font-size: 18px;
+	font-family: arial;
+	text-align: center;
+}
+/*
+	styling for the buttons
+*/
+.colors{
+	border-radius: 20px;
+    border: none;
+	color:black;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 10px 5px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+
+}
+.colors:hover{
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+#red{
+	background-color: red;
+}
+#orange{
+	background-color: orange; 
+}
+#yellow{
+	background-color: yellow;
+}
+#green{
+	background-color: green;
+}
+
+#blue{
+	background-color: blue;
+}
+
+#indigo{
+	background-color: indigo;
+}
+
+#violet{
+	background-color: violet;
+}
+
+#cyan{
+	background-color: cyan;
+}
+
+#chartreuse{
+	background-color: chartreuse;
+}
+
+#magenta{
+	background-color: magenta;
+}
+
+#navy{
+	background-color: navy;
+}
+
+#chocolate{
+	background-color: chocolate;
+}
+
+.difficulty {
+	border-radius: 20px;
+    border: none;
+	color:black;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+.difficulty:hover{
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.all {
+	background-color: #0000e6;
+}
+
+.easy {
+    background-color: #006600;
+}
+
+.moderate {
+    background-color: #ffff00;
+}
+
+.hard {
+	background-color: #e60000;
+}
+
+#textDiv{
+	height:300px;
+	width: 200px;
+	position: absolute;
+	margin-top:45px;
+}
+#scoreboardDiv{
+	  width:350px;
+	  height: 45px;
+	  position: absolute;
+	  left: 150px;
+	  top: 502px;
+
+}
 #hit_missDiv{
-		height: 90px;
-		width: 180px;
-		position: absolute;
-		top: 280px;	/*originally 184 */
-		left: 150px;	/* originally 315 */
-		
-		/*
-		height: 90px;
-		width: 200px;
-		position: absolute;
-		top: 280px;	
-		right: 150px;
-		*/
+	height: 90px;
+	width: 180px;
+	position: absolute;
+	top: 400px;	/*originally 184 */
+	left: 215px;	/* originally 315 */
 }
 		
 #functionDiv{
-		width:505px;
-		height: 45px;
-		position: absolute;
-		right: 280px;
-		top: 50px;
-		
-		/*
-		width:505px;
-		height: 45px;
-		position: absolute;
-		left: 420px;
-		top: 50px;
-		*/
+	width:505px;
+	height: 45px;
+	position: absolute;
+	right: 280px;
+	top: 50px;
 }
 
 #mazeDiv{
-		position: absolute;
-		right: 230px;
-		top:  60px;
-		
-		/*
-		position: absolute;
-		left: 375px;
-		top:  60px;
-		*/
+	position: absolute;
+	right: 230px;
+	top:  60px;
 }
 
 /* CSS for comment section */
 
 #commentsDiv{
-	    background-color: lightgrey;
-    	width: 700px;
-   		padding: 20px;
-    	border: 3px solid black;
-    	margin: 20px;
+    background-color: white;
+	width: 505px;
+		padding: 20px;
+	border: 3px solid black;
+	margin: 0px;
+}
 
+commentHeader{
+	text-align:left;
+	font-size: 22px;
+}
+
+.commentContainer {
+        width: 505px;
+        clear: both;
+}
+.commentContainer input {
+        width: 100%;
+        clear: both;
 }
