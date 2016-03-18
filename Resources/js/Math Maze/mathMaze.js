@@ -1,5 +1,7 @@
 //Canvas variables
 var canvas = document.getElementById("function");
+var funWidth = canvas.width;
+var funHeight = canvas.height;
 var ctx = canvas.getContext("2d");
 
 var maze = document.getElementById("maze");
@@ -61,6 +63,9 @@ var algebraQuestion = [0, '', '', 0, '=', 0]; //Array that stores the equation. 
 var wrongAnswer = false;
 var rightAnswer = false;
 var wrongCount = 0; //Used for penalty when obtaining the wrong answer
+var questionCounter = 0; //Used to count how many questions have been answered
+var paused = false; //Variable to determine whether the game is paused or not
+
 //Timer variables
 var start_time;
 var start_time_ms;
@@ -69,6 +74,7 @@ var current_time_ms;
 var seconds = 0;
 var minutes = 0;
 var hours = 0;
+var previousTimer = 0; //Variable to store the previous value passed to the function scoreboarddisplay
 
 //Variables to maintain fps when using requestAnimationFrame
 var fps = 70;
@@ -76,6 +82,10 @@ var now;
 var then = Date.now();
 var interval = 1000/fps;
 var delta;
+
+//Sound variables
+var wrongAnswer_Sound = new Audio("../Sounds/WrongAnswer.mp3");
+var rightAnswer_Sound = new Audio("../Sounds/RightAnswer.mp3");
 
 //Visualization API declaration
 var visHitMiss = new test();
@@ -129,9 +139,11 @@ function play(color){
 	}
 	var temp = document.getElementById("menuLogo");
 	document.getElementById("colorMenu").style.display = "none";
+	document.getElementById("MathMazeDiv").style.display = "inline";
 	document.getElementById("mazeDiv").style.display = "inline";
 	document.getElementById("functionDiv").style.display = "inline";
 	document.getElementById("hit_missDiv").style.display = "inline";
+	document.getElementById("scoreboardDiv").style.display = "inline";
 	document.getElementById("textDiv").style.display = "inline";
 	// difficulty = diff;
 
@@ -142,6 +154,8 @@ function play(color){
 		.visualize();
 	init();
 }
+//bookmark
+
 /*
 colorChoice(diff)
 	-Difficulty is set based on the player's choice (diff).
@@ -169,14 +183,13 @@ function init(){
 	YanswerCoords = [];
 	
 	window.addEventListener('keydown',doKeyDown,true);		//Event listener for key press.
-
-	generateQuestion();				//Function to generate the algebraic question/find the solution using the library algebra.js
 	
 	chooseMaze();					//Function to pick a maze
 	
 	last_src = src;					//Store the last maze (used in chooseMaze)
 	img.src = src;
-	
+	visHitMiss.attr("index-color", "#484848");
+	visHitMiss.attr("text-color", "white");
 	visHitMiss.update(hit_Miss);	
 		
 	draw();
@@ -220,22 +233,23 @@ chooseMaze()
 */
 function chooseMaze(){
 	var temp = Math.floor(Math.random() * 20) + 1;
-	player_x = 255;
-	player_y = 255;
+	player_x = 260;
+	player_y = 210;
 	src = possibleMazes[temp];
 	maze_type = temp;
 
-	while(true){
+	src = "http://i.imgur.com/iNDtyRa.png"
+// 	while(true){
 
-		src = possibleMazes[temp-1];
-		maze_type = temp;
+// 		src = possibleMazes[temp-1];
+// 		maze_type = temp;
 		
-		if(src == last_src){		//The new maze is the same as the old maze
-			temp = Math.floor(Math.random() * 20) + 1;
-		}
+// 		if(src == last_src){		//The new maze is the same as the old maze
+// 			temp = Math.floor(Math.random() * 20) + 1;
+// 		}
 		
-		else{ break;}				//The same maze wasn't used two times in a row
-	}	
+// 		else{ break;}				//The same maze wasn't used two times in a row
+// 	}	
 }
 
 /*
@@ -249,138 +263,96 @@ drawEasyEquation()
 function drawEasyEquation(t, t2, questionNum, extraInput1, t3, extraInput2, extraInput3, extraInput4){
 	//Clear previous question
 	ctx.clearRect(0, 0, WIDTH, HEIGHT);
+	
+	//Variables used in switch statements below
+	var op, op2;
+	var start = 0;
+	var questNum = questionCounter + 1; //add one to the question counter index which starts at 0.
+									
+	
+	ctx.fillStyle = "white";
 	switch(questionNum){
 		//Addition, subtraction, multiplication, division
 		case 1:
 		case 2:
 		case 3:
 		case 5:
-				var op;
-				if(questionNum == 1){op = '+';}
-				else if(questionNum == 2){op = '-';}
-				else if(questionNum == 3){op = '*';}
-				else if(questionNum == 5){op = '/';}
-				var t_ = t.toString();	//Cast as string
-				var t2_ = t2.toString(); //Cast as string
-				t_ = t_.length;			//Find how many characters
-				t2_ = t2_.length;		//Find how many characters
-				var opSpace = 14 * t_;	//Each character is roughly 12 pixels
-										//Found using ctx.measureText(t)
-				var equalSpace = 14 * t2_; //Find the coordinate for the equal sign
-				var startSpace = (505/2) - (opSpace + equalSpace); //Find the x coordinate where the question starts at
-																   //Note: 505 is the size of the div this text is displayed
-				ctx.font = "20px Lucida Console";
-				ctx.fillText(t, startSpace, 30);
-				ctx.fillText(op, startSpace + opSpace, 30);
-				ctx.fillText(t2, startSpace + opSpace + 15, 30);
-				ctx.fillText('=', (startSpace + opSpace + 15 + equalSpace), 30);
-				ctx.fillText(random_character(), (startSpace + opSpace + 15 + equalSpace + 15), 30);
+				start = funWidth * 0.25;
+				ctx.font = "28px CabinBold";
+				op;
+				if(questionNum == 1){op = " + " ;}
+				else if(questionNum == 2){op = " - " ;}
+				else if(questionNum == 3){op = " * " ;}
+				else if(questionNum == 5){op = " / ";}
+																   
+				ctx.fillText(questNum + ".)   " + t + op + t2 + " = " + random_character(), start, 30);
 				break;
 		//Exponents		
 		case 4:	
+				//tem = ctx.measureText(questNum.toString()+". "+t.toString());
+
+				start = funWidth * 0.30;
 				//First type of exponent question
 				if(extraInput1){
-					var startSpace = (505 / 2) - (15 + 14 + 16);
-					ctx.font = "20px Lucida Console";
-					ctx.fillText(t, startSpace, 30);
-					ctx.font = "14px Lucida Console";
-					ctx.fillText(t2, startSpace + 15, 20);
-					ctx.font = "20px Lucida Console";
-					ctx.fillText('=', startSpace + 29, 30);
-					ctx.fillText(random_character(), startSpace + 45, 30);
-					
+					ctx.font = "28px CabinBold";
+					ctx.fillText(questNum + ".)   "  + t, start, 30);
+					var temp = ctx.measureText(questNum + ".)   "  + t);
+					ctx.font = "22px CabinBold";
+					ctx.fillText(t2, start + temp.width, 20);
+					var temp2 = ctx.measureText(t2);
+					ctx.font = "28px CabinBold";
+					ctx.fillText(" = " + random_character(), start + temp2.width + temp.width, 30);
 				}
 				
 				else{
-					var startSpace = (505/2) - (15 + 14 + 15);
-					ctx.font = "20px Lucida Console";
-					ctx.fillText(t, startSpace, 30);
-					ctx.font = "14px Lucida Console";
-					ctx.fillText(random_character(), startSpace + 15, 20);
-					ctx.font = "20px Lucida Console";
-					ctx.fillText('=', startSpace + 29, 30);
-					ctx.fillText(t2, startSpace + 44, 30);
+					ctx.font = "28px CabinBold";
+					ctx.fillText(questNum + ".)   " + t, start, 30);
+					var temp = ctx.measureText(questNum + ".)   "  + t);
+					ctx.font = "22px CabinBold";
+					var temp2 = random_character();
+					ctx.fillText(temp2, start + temp.width, 20);
+					temp2 = ctx.measureText(temp2);
+					ctx.font = "28px CabinBold";
+					ctx.fillText(" = " + t2, start + temp2.width+temp.width, 30);
 				}
 		
 				break;
 		//Least common multiple		
-		case 6: ctx.font = "19px Lucida Console";
-				var t_ = t.toString();
-				t_ = t_.length;
-				var andSpace = 87 + (t_ * 14);
-				var startSpace = (505/2) - (andSpace);				
-				ctx.fillText("Find the Least Common Multiple of ", 0, 30);
-				ctx.fillText(t, 390, 30);
-				ctx.fillText("and", 390 + (t_*14), 30);
-				ctx.fillText(t2, 430 + (t_*14), 30);
+		case 6: 
+				start = funWidth * 0.025;
+				ctx.font = "24px CabinBold";				
+				ctx.fillText(questNum + ".) " + "Find the least common multiple of " + t + " and " + t2, start, 30);
 				break;
 		//Simple two step equation
-		case 7: ctx.font = "20px Lucida Console";
-				var t_ = t.toString();
-				var t2_ = t2.toString();
-				var t3_ = t3.toString();
-				t_ = t_.length;
-				t2_ = t2_.length;
-				t3_ = t3_.length;
-				var varSpace = t_ * 13;
-				var startSpace = (505/2) - ((varSpace + 40 +(t2_*13))/2);
-				ctx.fillText(t, startSpace, 30);
-				ctx.fillText(random_character(), startSpace + varSpace, 30);
+		case 7: 
+				start = funWidth * 0.30;
+				ctx.font = "28px CabinBold";
+				
 				
 				if(extraInput2 == 1){
-					ctx.fillText('+', startSpace + varSpace + 13, 30);
+					ctx.fillText(questNum + ".)   " + t + random_character() + " + " + t2 + " = " + t3, start, 30);
 				}
 				else{
-					ctx.fillText('-', startSpace + varSpace + 13, 30);
+					ctx.fillText(questNum + ".)   " + t + random_character() + " - " + t2 + " = " + t3, start, 30);
 				}
-				ctx.fillText(t2, startSpace + varSpace + 27, 30);
-				ctx.fillText('=', startSpace + varSpace + 27 + (t2_*13), 30);
-				ctx.fillText(t3, startSpace + varSpace + 40 + (t2_*13), 30);
 				break;		
 		//Greatest common divisor/factor
-		case 8:	ctx.font = "18px Lucida Console";
-				var t_ = t.toString();
-				t_ = t_.length;
-				var t2_ = t2.toString();
-				t2_ = t2_.length;
-				ctx.fillText("Find the greatest common factor of ", 0, 30);
-				ctx.fillText(t, 382, 30);
-				ctx.fillText("and", 382+(14*t_), 30);
-				ctx.fillText(t2, 382+(14*t_)+ 40, 30);			
+		case 8:	
+				start = funWidth * 0.015;
+				ctx.font = "22px CabinBold";
+				ctx.fillText(questNum + ".) " + "Find the greatest common factor of " + t + " and " + t2, start, 30);
 				break;
 		//Variables on both sides of equation
-		case 9:	ctx.font = "20px Lucida Console";
-		
-				var op, op2;
-				if(extraInput1 == 1) op = '+'; 
-				else op = '-';
-				if(extraInput3 == 1) op2 = '+';
-				else op2 = '-';
+		case 9:	
+				start = funWidth * 0.25;
+				ctx.font = "28px CabinBold";
+
+				if(extraInput1 == 1) op = " + "; 
+				else op = " - ";
+				if(extraInput3 == 1) op2 = " + ";
+				else op2 = " - ";
 				
-				var t_ = t.toString();
-				t_ = t_.length;
-				var t3_ = t3.toString();
-				t3_ = t3_.length;
-				var t4 = extraInput2.toString();
-				t4 = t4.length;
-				var t5 = extraInput4.toString();
-				t5 = t5.length;
-				
-				var center = (505/2) - (((t_*13)+57+(t3_*14)+(t4*13)+(t5*13))/2);
-										
-				ctx.fillText(t, center, 30);	//Draw left hand coefficient
-				ctx.fillText(t2, (t_ * 13)+center, 30); //Draw the variable
-				ctx.fillText(op, (t_*13)+14+center, 30); //Draw left side operator
-				ctx.fillText(t3, (t_*13)+29+center, 30); //Draw the constant
-				ctx.fillText('=', (t_*13)+29+(t3_*14)+center, 30);	//Draw equal sign
-				ctx.fillText(extraInput2, (t_*13)+43+(t3_*14)+center, 30); //Draw right hand constant
-				ctx.fillText(op2, (t_*13)+43+(t3_*14)+(t4*13)+center, 30); //Draw right hand operator
-				ctx.fillText(extraInput4, (t_*13)+57+(t3_*14)+(t4*13)+center, 30); //Draw right hand coefficient
-				ctx.fillText(t2, (t_*13)+57+(t3_*14)+(t4*13)+(t5*13)+center, 30);	//Draw variable on right side				
-			/*
-				(coeff, variable, questionNum, operator, const2, rightHandSide, operator2, rightHandCoeff)
-				(t, t2, questionNum, extraInput1, t3, extraInput2, extraInput3, extraInput4)
-			*/	
+				ctx.fillText(questNum + ".)   " + t + t2 + op + t3 + " = " + extraInput2 + op2 + extraInput4 + t2, start, 30);
 				break;
 	}	
 }
@@ -393,6 +365,7 @@ drawAnswers()
 function drawAnswers(){		
 	//Set the font/size
 	ctx2.font = "bold 12px Lucida Console";
+	ctx2.fillStyle = "white";
 	var temp1 = possibleAnswers[0].toString(),
 		temp2 = possibleAnswers[1].toString(),
 		temp3 = possibleAnswers[2].toString(),
@@ -503,7 +476,7 @@ function draw(){
     delta = now - then;
      
     if (delta > interval) {
-            
+				
         then = now - (delta % interval);
          
         ctx3.clearRect(0,0,scoreboard.width, scoreboard.height);
@@ -521,13 +494,15 @@ function draw(){
 			minutes = 0;
 			hours = 0;
 			ctx2.drawImage(img, 0 , 0);
-			for(y = 45; y <= 495; y += 50){
-				for(x = 45; x <= 495; x += 50){
-					if(x !== 245 && y !== 245){
+			for(y =0; y <= 504; y += 50){
+				for(x = 0; x <= 504; x += 50){
+					if(x !== 250 && y !== 200){
 						var imgData = ctx2.getImageData(x, y, 55, 55);
 						
 						for (var i = 0; n = imgData.data.length, i < n; i += 4) {
-							if (imgData.data[i] == 0) {
+							if (imgData.data[i] == 255) {
+								// console.log(i, imgData.data[i]);
+								// console.log(count);
 								count++;
 							}	
 					    }
@@ -540,12 +515,19 @@ function draw(){
 					}
 				}
 			}
-
+			generateQuestion();				//Function to generate the algebraic question/find the solution using the library algebra.js
 			find_Possible_Answers_Coordinates();
 		};
 
-		scoreboarddisplay(current_time - start_time);
-
+		//Makes sure the clock/score aren't updated when the game is "paused"
+		if(!paused){
+			scoreboarddisplay(current_time - start_time);
+		}
+		
+		else{
+			//previousTimer holds the value of the parameter from the last time scoreboarddisplay was called
+			scoreboarddisplay(previousTimer);
+		}
 
 		clear();
 		ctx2.fillStyle = playerColor;
@@ -557,7 +539,6 @@ function draw(){
 		
 		//Wrong answer was picked -> run animation
 		if(wrongAnswer){
-			console.log(animationYCoord);
 			drawCheckOrX(xImg, animationXCoord, animationYCoord);
 			animationYCoord -= 1;
 		}
@@ -668,7 +649,7 @@ function checkcollision(direction) {
 		imgData = ctx2.getImageData(tempX, tempY, 1, 1);
 	}
 
-	if(imgData.data[0] == 0){
+	if(imgData.data[0] == 255){
 		collision = 1;
 	}
 }
@@ -697,6 +678,7 @@ function checkForAnswer(){
 	if(answer1status == 0){
 		if(player_x == (XanswerCoords[possAnswer1-1] + 10) && player_y == (YanswerCoords[possAnswer1-1] + 10)){
 			if(answer == temp1){
+				questionCounter++;
 				correctAns(1);
 			}
 			else{
@@ -708,6 +690,7 @@ function checkForAnswer(){
 	if(answer2status == 0){
 		if(player_x == (XanswerCoords[possAnswer2-1] + 10) && player_y == (YanswerCoords[possAnswer2-1] + 10 )){
 			if(answer == temp2){
+				questionCounter++;
 				correctAns(2);
 			}
 			else{
@@ -719,6 +702,7 @@ function checkForAnswer(){
 	if(answer3status == 0){
 		if(player_x == (XanswerCoords[possAnswer3-1] +10) && player_y == (YanswerCoords[possAnswer3-1] + 10)){
 			if(answer == temp3){
+				questionCounter++;
 				correctAns(3);
 			}
 			else{
@@ -730,6 +714,7 @@ function checkForAnswer(){
 	if(answer4status == 0){
 		if(player_x == (XanswerCoords[possAnswer4-1] + 10) && player_y == (YanswerCoords[possAnswer4-1] + 10)){
 			if(answer == temp4){
+				questionCounter++;
 				correctAns(4);
 			}
 			else{
@@ -765,6 +750,9 @@ function correctAns(ans){
 
 	//Setting this starts the animation (done in draw())
 	rightAnswer = true;
+	rightAnswer_Sound.pause();
+	rightAnswer_Sound.currentTime = 0;
+	rightAnswer_Sound.play();
 	wrongAnswer = false; //to stop the wrong answer animation if it is still in progress
 
 	//Update Score and hit_Miss
@@ -779,9 +767,21 @@ function correctAns(ans){
 	//Stops visualization
 	setTimeout(function() {
 		rightAnswer = false;
-		visHitMiss.attr("index-color", "white", 0);
+		visHitMiss.attr("index-color", "#484848", 0);
 		visHitMiss.update(hit_Miss);
-		init();
+		//Player has reached the end of the game
+		if(questionCounter == 15){
+			paused = true;
+			loadEndMenu();
+		}
+		
+		if(!paused){ 
+			init();
+		}
+		/*
+		else
+			clearScreen();
+		*/
 	}, 1000);
 }
 /*
@@ -812,10 +812,13 @@ function wrongAns(ans){
 
 	//Setting this starts the animation (done in draw())
 	wrongAnswer = true;
+	wrongAnswer_Sound.pause();
+	wrongAnswer_Sound.currentTime = 0;
+	wrongAnswer_Sound.play();
 	wrongCount += 1;
 	//Ends visualization
 	setTimeout(function(){
-		visHitMiss.attr("index-color", "white", 1);
+		visHitMiss.attr("index-color", "#484848", 1);
 		visHitMiss.update(hit_Miss);
 		wrongAnswer = false;		//"end" the animation
 	}, 1500);
@@ -901,20 +904,22 @@ function generateQuestion(){
 		}
 		
 		lastQuestionType = questionNum;
-			
+		
+		//Variables used below in switch statements
+		var t, t2, t3, expoType, easyQuestionAns, coeff, const2, variable, operator, operator2, rightHandCoeff, rightHandSide;
 		switch(questionNum){			
 			//Addition
 			case 1:	
-					var t = Math.floor(Math.random() * 500) + 1;
-					var t2 = Math.floor(Math.random() * 500) + 1;
+					t = Math.floor(Math.random() * 500) + 1;
+					t2 = Math.floor(Math.random() * 500) + 1;
 					answer = t + t2;
 					//Draw the question
 					drawEasyEquation(t, t2, questionNum);
 					break;
 			//Subtraction
 			case 2:	
-					var t = Math.floor(Math.random() * 500) + 1;
-					var t2 = Math.floor(Math.random() * 500) + 1;			
+					t = Math.floor(Math.random() * 500) + 1;
+					t2 = Math.floor(Math.random() * 500) + 1;			
 					if(t >= t2){ answer = t - t2; 
 						drawEasyEquation(t, t2, questionNum);
 					}
@@ -924,20 +929,19 @@ function generateQuestion(){
 					break;
 			//Multiplication
 			case 3: 
-					var t = Math.floor(Math.random() * 19) + 1;
-					var t2 = Math.floor(Math.random() * 52) + 1;
+					t = Math.floor(Math.random() * 19) + 1;
+					t2 = Math.floor(Math.random() * 52) + 1;
 					answer = t * t2; 
 					//Draw the question
 					drawEasyEquation(t, t2, questionNum);
 					break;
 			//Exponents
 			case 4: 
-					var expoType = getRandomInt(0,1);
-					expoType = 0;
+					expoType = getRandomInt(0,1);
 					//Find the answer
 					if(expoType == 1){
-						var t = getRandomInt(2, 9);	//Base number
-						var t2 = Math.floor(Math.random() * 3) + 1; //Exponent
+						t = getRandomInt(2, 9);	//Base number
+						t2 = Math.floor(Math.random() * 4) + 1; //Exponent
 						answer = 1;
 						for(var i = 0; i < t2; ++i){
 							answer = answer * t;
@@ -947,10 +951,10 @@ function generateQuestion(){
 					}
 					//Find the exponent variable that solves the problem
 					else{
-						var t = getRandomInt(2,9);	//Base number
-						var t2 = Math.floor(Math.random() * 4) + 1; //Exponent
+						t = getRandomInt(2,9);	//Base number
+						t2 = Math.floor(Math.random() * 4) + 1; //Exponent
 						answer = t2;
-						var easyQuestionAns = 1;
+						easyQuestionAns = 1;
 						for(var i = 0; i < t2; ++i){
 							easyQuestionAns = easyQuestionAns * t;
 						}
@@ -959,8 +963,8 @@ function generateQuestion(){
 					break;
 			//Division
 			case 5: 
-					var t = Math.floor(Math.random() * 500) + 1;
-					var t2 = Math.floor(Math.random() * 500) + 1;
+					t = Math.floor(Math.random() * 500) + 1;
+					t2 = Math.floor(Math.random() * 500) + 1;
 					while(t%t2 != 0 || t==t2 || t2 == 1){
 						t = Math.floor(Math.random() * 500) + 1;
 						t2 = Math.floor(Math.random() * 500) + 1;
@@ -970,19 +974,19 @@ function generateQuestion(){
 					break;
 			//Find the least common multiple
 			case 6: 
-					var t = getRandomInt(1,25);
-					var t2 = getRandomInt(1,25);
+					t = getRandomInt(1,25);
+					t2 = getRandomInt(1,25);
 					//Find the LCM
 					answer = lcm(t, t2);
 					drawEasyEquation(t, t2, questionNum);
 					break;
 			//Simple two step equation
 			case 7: 
-					var coeff = Math.floor(Math.random() * 9) + 1;
-					var variable = random_character();
-					var const2 = getRandomInt(1,20);
-					var operator = getRandomInt(0,1);
-				    var rightHandSide = getRandomInt(1,25);
+					coeff = Math.floor(Math.random() * 9) + 1;
+					variable = random_character();
+					const2 = getRandomInt(1,20);
+					operator = getRandomInt(0,1);
+				    rightHandSide = getRandomInt(1,25);
 					//If operator == 1 => addition
 					if(operator == 1){
 						while((rightHandSide - const2) % coeff != 0){
@@ -1006,21 +1010,21 @@ function generateQuestion(){
 			case 8: 
 					answer=1;
 					while(answer == 1){
-						var t = getRandomInt(1,250);
-						var t2 = getRandomInt(1,250);
+						t = getRandomInt(1,250);
+						t2 = getRandomInt(1,250);
 						answer = gcd(t,t2);
 					}
 					drawEasyEquation(t, t2, questionNum);
 					break;
 			//Algebraic question with variables on both sides
 			case 9: 
-					var coeff = getRandomInt(2,15);
-					var variable = random_character();
-					var const2 = getRandomInt(1,50);
-					var operator = getRandomInt(0,1); //Operator on left hand side
-					var operator2 = getRandomInt(0,1); //Operator on right hand side
-				    var rightHandSide = getRandomInt(1,50);
-					var rightHandCoeff = getRandomInt(1,15);
+					coeff = getRandomInt(2,15);
+					variable = random_character();
+					const2 = getRandomInt(1,50);
+					operator = getRandomInt(0,1); //Operator on left hand side
+					operator2 = getRandomInt(0,1); //Operator on right hand side
+				    rightHandSide = getRandomInt(1,50);
+					rightHandCoeff = getRandomInt(1,15);
 					//operator2 = operator = 1;
 					//Right hand side has '+' operator
 					if(operator2 == 1){
@@ -1072,8 +1076,7 @@ function generateQuestion(){
 					}
 					
 	drawEasyEquation(coeff, variable, questionNum, operator, const2, rightHandSide, operator2, rightHandCoeff);
-			
-    }
+	}
 	possibleAnswers[0] = answer;
 	fillWrongAnswers();								//This function will fill the possibleAnswers array with random numbers
 }
@@ -1100,66 +1103,77 @@ fillWrongAnswers()
 function fillWrongAnswers(){
 	//Local variable to contain the incorrect answers generated in this function
 	var ans;
-	
-	//Case where the answer is negative
-	if(possibleAnswers[0] < 0){
-		
-		//Generate the first wrong answer
-		ans = getRandomInt(1, 20);
-		possibleAnswers[1] = (ans + answer)*-1;
-		
-		//Generate second wrong answer
-		var temp = possibleAnswers[0].toString();
-		temp = temp.length;
-				
-		if(temp == 2){
-			ans = getRandomInt(1, 10);
-		}
-	
-		else if(temp == 3){
-			ans = getRandomInt(10, 50);
-		}
-		
-		ans *= -1;
+	do{
+		//Case where the answer is negative
+		if(possibleAnswers[0] < 0){
 			
-		possibleAnswers[2] = ans;
+			//Generate the first wrong answer
+			ans = getRandomInt(1, 20);
+			possibleAnswers[1] = (ans + answer)*-1;
+			
+			//Generate second wrong answer
+			var temp = possibleAnswers[0].toString();
+			temp = temp.length;
+					
+			if(temp == 2){
+				ans = getRandomInt(1, 10);
+			}
 		
-		//Get third wrong answer
-		ans = getRandomInt(1, 10);
-		possibleAnswers[3] = (ans + answer) * -1;
-		
-	}
-	
-	//Answer is positive
-	else{
-		//Generate the first wrong answer
-		ans = getRandomInt(1, 20);
-		possibleAnswers[1] = ans + answer;
-		
-	
-		//Generate a second incorrect answer
-		//This one is based on how many digits the real answer has
-		var temp = possibleAnswers[0].toString();
-		temp = temp.length;
-	
-		if(temp == 1){
-			ans = getRandomInt(1,9);
-		}
-	
-		else if(temp == 2){
-			ans = getRandomInt(10, 99);
-		}
-	
-		else if(temp == 3){
-			ans = getRandomInt(100, 500);
+			else if(temp == 3){
+				ans = getRandomInt(10, 50);
+			}
+			
+			ans *= -1;
+				
+			possibleAnswers[2] = ans;
+			
+			//Get third wrong answer
+			ans = getRandomInt(1, 10);
+			possibleAnswers[3] = (ans + answer) * -1;
+			
 		}
 		
-		possibleAnswers[2] = ans;
-	
-		//Get third wrong answer
-		ans = getRandomInt(1, 10);
-		possibleAnswers[3] = ans + answer;
-	}	
+		//Answer is positive
+		else{
+			//This one is based on how many digits the real answer has
+			var temp = possibleAnswers[0].toString();
+			temp = temp.length;
+		
+			if(temp == 1){
+				ans = getRandomInt(1,9);
+				possibleAnswers[1] = ans;
+
+				ans = getRandomInt(1,9);
+				possibleAnswers[2] = ans;
+
+				ans = getRandomInt(1, 9);
+				possibleAnswers[3] = ans;
+			}
+		
+			else if(temp == 2){
+				ans = getRandomInt(1, 5);
+				possibleAnswers[1] = (ans*10) + answer;
+
+				ans = getRandomInt(10, 99);
+				possibleAnswers[2] = ans;
+
+				ans = getRandomInt(1, 25);
+				possibleAnswers[3] = ans + answer;
+			}
+		
+			else if(temp == 3){
+				ans = getRandomInt(1, 5);
+				possibleAnswers[1] = (ans*10) + answer;
+
+				ans = getRandomInt(100, 500);
+				possibleAnswers[2] = ans;
+
+				ans = getRandomInt(1, 5);
+				possibleAnswers[3] = (ans*10) + answer;
+			}
+		}
+	}while(possibleAnswers[1] == possibleAnswers[0] || possibleAnswers[2] == possibleAnswers[0] || possibleAnswers[3] == possibleAnswers[0]
+		 || possibleAnswers[1] == possibleAnswers[2] || possibleAnswers[1] == possibleAnswers[3] || possibleAnswers[2] == possibleAnswers[3]);
 }
 
 function getRandomInt(min, max){
@@ -1171,6 +1185,7 @@ scoreboarddisplay(timer)
 
  */
 function scoreboarddisplay(timer){
+	previousTimer = timer;
 
 	var sec = Math.floor(timer /1000);
 	seconds = sec%60;
@@ -1187,10 +1202,13 @@ function scoreboarddisplay(timer){
 	else if(lastQuestionType == 4 || lastQuestionType == 6 || lastQuestionType == 9){
 		level = "Hard";
 	}
-	ctx3.font="20px Time New Roman";
-	ctx3.fillStyle = "blue";
-	ctx3.fillText("Score: " + player_score + "	Timer: " + minutes + " mins " + seconds +" secs	",0, 20);
-	ctx3.fillText("Difficulty: "+ level + "	Possible Points: " + points(start_time_ms, current_time_ms), 0, 40);
+	ctx3.font="40px CabinBold";
+	ctx3.fillStyle = "white";
+	ctx3.fillText("Score: " + player_score ,0, 30);
+	ctx3.fillText("Timer: " + minutes + " mins " + seconds +" secs	",0, 65);
+	ctx3.fillText("Level: "+ level, 0, 100);
+	ctx3.fillText("Max points: " + points(start_time_ms, current_time_ms), 0, 135);
+
 }
 
 /*
@@ -1238,8 +1256,68 @@ random_character()
 	-Function that will generate a random variable from the alphabet for the equation
 */
 function random_character() {
-    var chars = "abcdefghijkmnpqurstuvwxyzABCDEFGHJKLMNPQURSTUVWXYZ";
-    return chars.substr( Math.floor(Math.random() * 48), 1);
+    var chars = "abcdefghijkmnpqurstuvwxyzABCDEFGHJKLMNPURSTUVWXYZ";
+    return chars.substr( Math.floor(Math.random() * 47), 1);
+}
+
+/*
+ newGame()
+	-Function to reset variables and restart the game
+*/
+function newGame(){
+	//clear all user interface elements
+	$(".mm").fadeOut(600);
+    var temp = document.getElementsByClassName("mm");
+    for(i=0; i<temp.length; ++i){
+        temp[i].style.display = "none";
+    }
+	
+	//Reset the hit/miss array
+    hit_Miss[0] = hit_Miss[1] = 0;
+	
+	//Reset the players score
+	player_score = 0;
+	
+	//Reset question counter
+	questionCounter = 0;
+	
+	//Unpause the game
+	paused = false;
+	
+    //Start the game
+    init();
+}
+
+
+/*
+ loadEndMenu()
+	-Function that will load the end of game menu to the screen
+*/
+function loadEndMenu(){
+    //load all relevant user interface elements
+    temp = document.getElementsByClassName("endGame");
+    for(i=0; i<temp.length; ++i){
+        temp[i].style.display = "inline";
+    }
+	//setTimeout(refreshHighScores, 2500);
+}
+
+/*
+refresh()
+	-Function to reload the math maze HTML file
+*/
+function refresh(){
+	window.location.href = "mathMaze.html";
+}
+
+/*
+clearScreen()
+	-Function to remove math question/maze when game has "ended"
+	-Note: Maze is not removed as of now because draw continues to be called => maze keeps being redrawn
+*/
+function clearScreen(){
+	ctx2.clearRect(0, 0, WIDTH, HEIGHT);
+	ctx.clearRect(0, 0, WIDTH, HEIGHT);
 }
 
 window.alert("WARNING!!! This game may experience issues in browsers other than Google Chrome.");

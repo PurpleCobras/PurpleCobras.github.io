@@ -39,12 +39,51 @@ body{
 	font-family: "Arial";
 	background-color:white;
 	}
-
+/*Fonts being used in the website*/
 @font-face{
 	font-family: "Retroville";
     src: url(fonts/RetrovilleNC.ttf);
 }
-
+@font-face{
+	font-family: "Kinescope";
+	src: url(fonts/Kinescope.otf);
+}
+@font-face{
+	font-family: "VintageOne";
+	src: url(fonts/VintageOne.ttf);
+}
+@font-face{
+	font-family: "CabinBold";
+	src: url(fonts/CabinSketch-Bold.otf);
+}
+@font-face{
+	font-family: "CabinReg";
+	src: url(fonts/CabinSketch-Regular.otf);
+}
+@font-face{
+	font-family: "Writing";
+	src: url(fonts/PrestonsWriting.ttf);
+}
+@font-face{
+	font-family: "Sketch Nothing";
+	src: url(fonts/Sketch-Nothing.ttf);
+}
+@font-face{
+	font-family: "Sketchy";
+	src: url(fonts/Sketchy.ttf);
+}
+@font-face{
+	font-family: "SquareChalk";
+	src: url(fonts/SquareChalk.ttf);
+}
+@font-face{
+	font-family: "Writing Stuff";
+	src: url(fonts/Writing_Stuff.ttf);
+}
+@font-face{
+	font-family: "MyWriting";
+	src: url(fonts/MyWriting.ttf);
+}
  
 .statuses{
 	position: absolute;
@@ -57,6 +96,12 @@ body{
 	z-index: 1;
 	white-space: pre;
 }
+
+#playerIcon{
+	width: 71px;
+	height: 91px;
+}
+
 #framesPerSecond{
     position: absolute;
 	top: 2px;
@@ -86,10 +131,11 @@ body{
 #gameDiv{
 	position: absolute;
 	width:530px;
-	height: 625px;
-	top: 95px;
+	height: 600px;
+	top: 60px;
 	left: 200px;
-	padding-right: 25px;	
+	padding-right: 25px;
+	margin-bottom: 0px;
 }
 
 
@@ -108,10 +154,9 @@ body{
 #speedDivTop{
 	float: left;
 	/*float: left;*/
-	width: 90%;
+	width: 80%;
 	/*width: 400px;*/
 	height: 20%;
-	padding-top: 35px;
 	/*border-style: solid;*/
 }
 
@@ -121,25 +166,32 @@ body{
 	width: 80%;
 	/*width: 400px;*/
 	height: 60%;
-	padding-top: 35px;
+	padding-top: 5px;
 	/*border-style: solid;*/
 }
 
 .diceView{
 	float: left;
-	width:  50px; /*20%;*/
-	height: 50px; /*70%;*/
-	margin: 3.5px;
-	border-style: solid;
+	width:  40px; /*20%;*/
+	height: 40px; /*70%;*/
+	margin: 16px;
+	border-style: outset;
 }
+.gateViz{
+	float:left;
+	width:56px;
+	height:119px;
+	margin:8px;
+	visibility: visible;
 
+}
 .speedView{
 	float: left;
 	width: 50px; /*20%;*/
-	height: 20%;
-	margin: 3.5px;
-	background-color : #6495ed;
-	border-style: solid;
+	height: 10px;
+	margin: 11px;
+	background-color : #e60000;
+	border-style: outset;
 }
 
 
@@ -843,6 +895,12 @@ img#table{
 	height: 250px;
 	width: 375px;
 }
+/*this is for the logo on the math maze game screen*/
+/*#MathMazeLogoMini{
+	visibility: visible;
+	height: 90px;
+	width: 135px;
+}*/
 #colorMenu{
 	height: screen.height;
 	width: screen.width;
@@ -954,41 +1012,120 @@ img#table{
 .hard {
 	background-color: #e60000;
 }
+#MathMazeDiv{
+	position: absolute;
+	height:100%-40px;
+	width: 100%;
+	top: 40px;
+	left:0px;
+	bottom: 0px;
+	/*background: url(../Background/chalkboard.jpg);*/
+}
+
+#MathMazeBackground{
+	height:100%;
+	width: 100%;
+	visibility: visible;
+}
 
 #textDiv{
-	height:300px;
-	width: 200px;
+	height:100%;
+	width: 47%;
+	top:0px;
+	left:0px;
 	position: absolute;
-	margin-top:45px;
 }
 #scoreboardDiv{
-	  width:350px;
-	  height: 45px;
-	  position: absolute;
-	  left: 150px;
-	  top: 502px;
-
+	width: 100%;
+	height: 150px;
+	position: absolute;
+	left: 20%;
+	top: 55%;
+	text-align: center;
+	/*font-family: "VintageOne";*/
+	/*background: url(../Background/paperpng.png);*/
 }
 #hit_missDiv{
 	height: 90px;
 	width: 180px;
 	position: absolute;
-	top: 400px;	/*originally 184 */
-	left: 215px;	/* originally 315 */
+	top: 30%;
+	left: 35%;
+	font-family: "CabinBold";
+	color: white;
 }
 		
 #functionDiv{
-	width:505px;
-	height: 45px;
+	width:100%;
+	height: 100px;
 	position: absolute;
-	right: 280px;
-	top: 50px;
+	text-align: center;
+	top: 15%;
+	left: 5%;
+	font-family: "CabinBold";
+}
+#function{
+	width:100%;
+	font-family: "CabinBold";
 }
 
 #mazeDiv{
 	position: absolute;
-	right: 230px;
-	top:  60px;
+	left: 50%;
+	top:  50px;
+}
+
+.mmReplayButton {
+	border-radius: 12px;
+	background-color: green;
+	background-color: #66ff66;
+	border:1px solid #1f1f1f;
+	color: white;
+	text-shadow:-1px 1px 2px #3b0404;
+	font-family: "CabinBold";
+}
+
+.mmReplayButton:hover {
+	background-color:#363535;
+}
+
+.mmEndButton {
+	border-radius: 12px;
+	background-color: red;
+	background-color: #ff4d4d;
+	border:1px solid #1f1f1f;
+	color: white;
+	line-height:100%;
+	text-shadow:-1px 1px 2px #3b0404;
+	font-family: "CabinBold";
+}
+
+.mmEndButton:hover {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #363535), color-stop(1, #1f1f1f) );
+	background:-moz-linear-gradient( center top, #363535 5%, #1f1f1f 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#363535', endColorstr='#1f1f1f');
+	background-color:#363535;
+}
+
+#mathMazeEndm{
+	width: 180px;
+	height: 50px;
+	font-size: 28px;
+	top: 45%;
+	left: 33%;
+}
+
+#mathMazeReplay{
+	width: 180px;
+	height: 50px;
+	font-size: 28px;
+	top: 35%;
+	left: 33%;
+}
+
+.mm{
+	display: none;
+	font-weight: bold;
 }
 
 /* CSS for comment section */

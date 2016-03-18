@@ -87,8 +87,12 @@ function test(){
             	this.visualize();							//visualizes the updated structure
             }
         } else if (this.dataStructureName == "speed") {
-			d3.select("#canvasSpeed").remove();
-
+			
+			//d3.select("#canvasSpeed").remove();
+            this.dataStructure.gate1.src = _data.gate1;
+            this.dataStructure.gate2.src = _data.gate2;
+            this.dataStructure.gate3.src = _data.gate3;
+			
             if (_data.rate1 != this.dataStructure.speed1)
                 this.dataStructure.change1 = true;
             if (_data.rate2 != this.dataStructure.speed2)
@@ -120,11 +124,13 @@ function test(){
 
         } //End of  if dataStructure == array
         else if (this.dataStructureName == "speed") {
+			/*
 			this.canvas = d3.select(this.canvasLocation)		//Finds the specified location of the HTML file and appends a "canvas" to it
             .append("svg")
             .attr("id", "canvasSpeed")
             .attr("width", this.locationWidth)
             .attr("height", this.locationHeight);
+			*/
 			
             var div1 = this.dataStructure.div1;
             var div2 = this.dataStructure.div2;
@@ -213,6 +219,10 @@ function test(){
 
 //********************************* SPEED "OBJECT" *********************************
 function speed(){
+        this.gate1 = document.getElementById('gate1');
+        this.gate2 = document.getElementById('gate2');
+        this.gate3 = document.getElementById('gate3');
+
         this.speed1 = 0;
         this.speed2 = 0;
         this.speed3 = 0;
@@ -234,6 +244,9 @@ function speed(){
         this.die2.style.backgroundSize = '100% 100%';
         this.die3.style.backgroundSize = '100% 100%';
 
+        this.gate1.src = "../Gates/or00x.png"
+        this.gate2.src = "../Gates/and01x.png"
+        this.gate3.src = "../Gates/or1x0.png"
 
         this.data = function(rate) {
             if (rate.rate1 != this.speed1)
@@ -293,7 +306,7 @@ function randomVis(die, div, vel, imgIndex) {
         die.style.backgroundSize = '100% 100%';
         setBarLength(div, vel);
 
-    }, 1000);
+    }, 500);
 
 } // End of Speed object
 

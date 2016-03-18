@@ -1,75 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
     <title>Math Maze Information</title>
-
-        <!-- Bootstrap core CSS -->
-    <link href="../bootstrap/bootstrap.min.css" rel="stylesheet">
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="navbar-fixed-top.css" rel="stylesheet">
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
-
-	<link rel="stylesheet" href="../css/style.css" type="text/css" />
-
 <!-- For Parse -->
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
+      ga('create', 'UA-75296801-1', 'auto');
+      ga('send', 'pageview');
+    </script>
   </head>
 
   <body>
 
-    <!-- Fixed navbar -->
+       <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="../../index.html">Purple Cobras</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="../../index.html">Home</a></li>
-            
-            <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About<span class="caret"></span></a>
-            <ul class="dropdown-menu">
-        	<li><a href="AboutUs.html">About Purple Cobras</a></li>
-            <li><a href="APIInfo.html">About API</a></li>
-            <li><a href="GateGrabberInfo.html">About Gate Grabber</a></li>
-            <li><a href="MathMazeInfo.html">About Math Maze</a></li>
-
-            </ul>
-            </li>
-            
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Games<span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="version 1.0.html">Gate Grabber</a></li>
-                <li><a href="mathMaze.html">Math Maze</a></li>
-
-              </ul>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <!-- <li><a href="#">Optional</a></li> -->
-
-          </ul>
-        </div>
-      </div>
+      <script type="text/javascript" src="../js/Navigation Menu/navbar.js"></script>
     </nav>
 
     <div class="container">
@@ -81,7 +32,7 @@
 	<p>This maze style game will help the player practice all kinds of mathematical functions in a fun and entertaining way. It is very easy to play and makes solving math problems more fun.</p>
 	<p>The first thing you do is choose the difficulty you want to play at. You then are able to choose the color of the player box in the game. When the maze loads, you are given a math problem to solve. The problems come in many forms based on the difficulty. There are some that ask for the greatest common factor, some that require a multistep solving process, and some that are just simple addition and subtraction.</p>
 
-	<p>First the player must solve the problem given. Then the player must find the correct answer in the maze. There are 4 answers placed on the for each problem. If the player retrieves the wrong answer they are penalized and the miss count increases. Once the player has retrieved the correct answer, they are rewarded and the hit count increases. There is a visualization for a correct and wrong answer. A different problem with a different maze is generated and loaded to the screen.</p>
+	<p>First the player must solve the problem given. Then the player must find the correct answer in the maze. There are 4 answers placed on the for each problem. If the player retrieves a wrong answer the max possible score decreases and the miss count increases. The amount of possible points depends on the difficulty as well as the time that has elapsed. Once the player has retrieved the correct answer, points are awarded depending on difficulty and time and the hit count increases. There is a visualization for a correct and wrong answer. If the answer chosen is wrong a red 'x' floats up and the miss box in the visualization is made red for a few seconds. If the answer chosen is correct a green 'check' floats up and the hit box in the visualization is made green for a few seconds.  A different problem with a different maze is generated and loaded to the screen.</p>
   <b>Difficulties:</b>
   <ul>
     <li><b>Easy</b></li>
@@ -111,9 +62,9 @@
   <p><b>Coming Soon:</b>
       <ul>
         <li>Game Ending</li>
-        <li>Scoring</li>
-        <li>Timer/time bonus</li>
+        <li>Highscore board</li>
         <li>Updated visuals</li>
+        <li>Sound Effects</li>
         <li>More Mazes!</li>
       </ul>
     
@@ -200,6 +151,38 @@ query.exists("objectId");query.find({
 <br>
 
     </div> <!-- /container -->
+
+<script>
+  window.fbAsyncInit = function() {
+
+    Parse.FacebookUtils.init({
+      appId      : '794487414028233',
+	  status     : true,  // check Facebook Login status
+      cookie     : true,  // enable cookies to allow Parse to access the session
+      xfbml      : true,  // initialize Facebook social plugins on the page
+      version    : 'v2.3' // point to the latest Facebook Graph API version
+    });
+
+        // Run code after the Facebook SDK is loaded.
+  };
+
+      (function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+<div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="false"></div>
+<br>
+<div
+  class="fb-like"
+  data-href="https://www.facebook.com/PurpleCobrasGames" 
+  data-share="true"
+  data-width="450"
+  data-show-faces="true">
+</div>
 
 
     <!-- Bootstrap core JavaScript
