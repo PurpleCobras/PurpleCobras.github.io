@@ -16,7 +16,8 @@ var player_Name;
 //
 var match = false;
 var paused = false; //denotes whether the game is currently running
-
+var animationx = 0; //Animation coordinates for scoring animation
+var animationy = 0;
 //
 //Button Variables
 //
@@ -315,6 +316,9 @@ function changeGate(gate){
 function checkMatch(gate){
     if(gate == "gate1"){
         if(gate1.need == player.value || gate1.need == 2){
+            scored = true;
+            animationx = ball.x;
+            animationy = ball.y;
             if(collected2x == true) player.score+= 200;
             else
             player.score += 100;
@@ -333,6 +337,9 @@ function checkMatch(gate){
     }
     else if(gate == "gate2"){
         if(gate2.need == player.value || gate2.need == 2){
+            scored = true;
+            animationx = ball.x;
+            animationy = ball.y;
             if(collected2x == true) player.score+= 200;
             else
             player.score+= 100;
@@ -350,6 +357,9 @@ function checkMatch(gate){
     }
     else if(gate =="gate3"){
         if(gate3.need == player.value || gate3.need == 2){
+            scored = true;
+            animationx = ball.x;
+            animationy = ball.y;
             if(collected2x == true) player.score+= 200;
             else
             player.score+= 100;
@@ -553,7 +563,7 @@ function pause(){
  If the space bar is pressed the player's value  will change from 0 to 1 or vice versa. (kinda glitchy)
 
  */
-
+var scored = false;
 
 function draw(time) {
 
@@ -589,10 +599,10 @@ function draw(time) {
         doublepts.y = doublepts.y + 2;
 
         ctx.fillStyle ="#FFFF00";
-        ctx.font = "20px Verdana";
-        ctx.fillText("2x", doublepts.x - 8, doublepts.y + 6);
+        ctx.font = "20px Retroville";
+        ctx.fillText("2x", doublepts.x - 16, doublepts.y + 6);
         ctx.fillStyle ="#FF0000";
-        ctx.font = "12px Verdana"
+        ctx.font = "12px Retroville"
     }
 
 
@@ -605,14 +615,15 @@ function draw(time) {
         extralife.y = extralife.y + 2;
 
         ctx.fillStyle ="#1D7CF2";
-        ctx.font = "16px Verdana";
-        ctx.fillText("1UP", extralife.x - 12, extralife.y + 6);
+        ctx.font = "16px Retroville";
+        ctx.fillText("1UP", extralife.x - 18, extralife.y + 6);
         ctx.fillStyle ="#FF0000";
-        ctx.font = "12px Verdana"
+        ctx.font = "12px Retroville";
     }
 
 
     if(collected2x == true) {
+        ctx.font = "16px Retroville";
         ctx.fillText("2x: " + Math.floor((collected2x_limit - current_time_ms) / 1000) +" Sec", 0, canvas.height / 2);
 
         if(current_time_ms  >= collected2x_limit){
@@ -645,6 +656,7 @@ function draw(time) {
 
 
     if (player.lives == 0) {
+        scored = false;
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		document.getElementById("gameOverScore").innerHTML = "You scored " + player.score + " points!";
 		checkHighScore();
@@ -657,6 +669,14 @@ function draw(time) {
 
     if (!paused){
         requestAnimationFrame(draw);
+    }
+//Animation runs when a player scores. Working on improving this animation later on
+    if(scored == true){
+        ctx.font = "14px Retroville";
+        if(collected2x == true) ctx.fillText("+200",animationx - 25, animationy);
+        else ctx.fillText("+100",animationx - 25, animationy);
+        animationy -= 3;
+        if(animationy <= ball.y - 300) scored = false;
     }
 }
 /*
@@ -786,7 +806,8 @@ function loadConfiguration() {
         temp[i].style.display = "none";
     }
     //receive new keystrokes
-    ctx.font = "20px Verdana";
+    ctx.font = "20px Retroville";
+    ctx.fillStyle ="#FF0000";
     ctx.textAlign="center";
     ctx.fillText("Input left movement key", canvas.width / 2, canvas.height / 2);
     document.addEventListener("keydown", assignleft, false);
@@ -1459,6 +1480,7 @@ function newGame(){
     ref_time2x_ms = ref_time2x.getTime();
     spawn2x = false;
     collected2x = false;
+    scored = false; //tells if player scores
     //start the game
     		paused = false;
     requestAnimationFrame(draw);

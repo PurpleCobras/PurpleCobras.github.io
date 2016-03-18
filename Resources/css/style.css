@@ -36,6 +36,8 @@
 
 body{
 	/*padding-top: 100px;*/
+	height: 100%;
+	width: 100%;
 	font-family: "Arial";
 	background-color:white;
 	}
@@ -82,10 +84,11 @@ body{
 }
 @font-face{
 	font-family: "MyWriting";
-	src: url(fonts/MyWriting.ttf);
+	src: url(fonts/Mywriting.ttf);
 }
  
 .statuses{
+	font-family: "Retroville";
 	position: absolute;
 	color: #ED1809;
 }
@@ -199,7 +202,7 @@ body{
 #quitButton{
 	height: 25px;
 	position: absolute;
-	left: 447px;
+	left: 425px;
 	top: 2px;
 }
 
@@ -216,6 +219,7 @@ body{
 }
 
 .endGame {
+	font-family: "Retroville";
 	position: absolute;
 }
 
@@ -224,10 +228,16 @@ body{
 }
 
 .highScores{
+	font-size: 20px;
+	font-family: "Retroville";
+	color: #ED1809;
     position: absolute;
 }
 
 .newHighScoreScreen{
+	font-size: 20px;
+	font-family: "Retroville";
+	color: #ED1809;
     position: absolute;
 }
 
@@ -293,21 +303,22 @@ body{
 }
 
 #gameOverText{
-	bottom: 545px;
+	bottom: 540px;
 	left: 0px;
 	width: 530px;
 	font-size: 55px;
 	text-align: center;
-	/*color: #FF0000;*/
+	color: #ED1809;
 }
 
 #congratulations{
 	bottom: 375px;
 	left: 28px;
 	width: 450px;
+	font-family:"Retroville";
 	font-size: 24px;
 	text-align: center;
-	color: #FF0000;
+	color: #ED1809;
 	z-index:1;
 }
 
@@ -317,6 +328,7 @@ body{
 	width: 530px;
 	font-size: 40px;
 	text-align: center;
+	color: #ED1809;
 }
 #gameOverScore{
 	bottom: 528px;
@@ -335,7 +347,7 @@ body{
 }
 #config_Options{
 	bottom: 145px;
-	left: 175px;
+	left: 145px;
 	height: 40px;
 
 }
@@ -384,102 +396,122 @@ body{
 }
 
 #highScore1{
+	font-size: 20px;
 	bottom: 362px;
 	left: 35px;
 }
 
 #highScore2{
+	font-size: 20px;
 	bottom: 336px;
 	left: 35px;
 }
 
 #highScore3{
+	font-size: 20px;
 	bottom: 310px;
 	left: 35px;
 }
 
 #highScore4{
+	font-size: 20px;
 	bottom: 284px;
 	left: 35px;
 }
 
 #highScore5{
+	font-size: 20px;
 	bottom: 258px;
 	left: 35px;
 }
 
 #highScore6{
+	font-size: 20px;
 	bottom: 232px;
 	left: 35px;
 }
 
 #highScore7{
+	font-size: 20px;
 	bottom: 206px;
 	left: 35px;
 }
 
 #highScore8{
+	font-size: 20px;
 	bottom: 180px;
 	left: 35px;
 }
 
 #highScore9{
+	font-size: 20px;
 	bottom: 154px;
 	left: 35px;
 }
 
 #highScore10{
+	font-size: 20px;
 	bottom: 128px;
 	left: 35px;
 }
 
 
 #highScoreEnd1{
+	font-size: 20px;
 	bottom: 437px;
 	left: 35px;
 }
 
 #highScoreEnd2{
+	font-size: 20px;
 	bottom: 411px;
 	left: 35px;
 }
 
 #highScoreEnd3{
+	font-size: 20px;
 	bottom: 385px;
 	left: 35px;
 }
 
 #highScoreEnd4{
+	font-size: 20px;
 	bottom: 359px;
 	left: 35px;
 }
 
 #highScoreEnd5{
+	font-size: 20px;
 	bottom: 333px;
 	left: 35px;
 }
 
 #highScoreEnd6{
+	font-size: 20px;
 	bottom: 307px;
 	left: 35px;
 }
 
 #highScoreEnd7{
+	font-size: 20px;
 	bottom: 281px;
 	left: 35px;
 }
 
 #highScoreEnd8{
+	font-size: 20px;
 	bottom: 255px;
 	left: 35px;
 }
 
 #highScoreEnd9{
+	font-size: 20px;
 	bottom: 229px;
 	left: 35px;
 }
 
 #highScoreEnd10{
+	font-size: 20px;
 	bottom: 203px;
 	left: 35px;
 }
@@ -885,8 +917,9 @@ img#table{
 	width: 80%;
 	position: absolute;
 
-	font-size: 18px;
-	font-family: arial;
+	font-size: 25px;
+	color: white;
+	font-family: "CabinBold";
 	text-align: center;
 }
 
@@ -902,15 +935,13 @@ img#table{
 	width: 135px;
 }*/
 #colorMenu{
-	height: screen.height;
-	width: screen.width;
 	margin-top: 100px;
 	margin-left: auto;
 	width: 80%;
 	position: absolute;
 
-	font-size: 18px;
-	font-family: arial;
+	font-size: 22px;
+	font-family: "CabinBold";
 	text-align: center;
 }
 /*
@@ -952,6 +983,7 @@ img#table{
 }
 
 #indigo{
+	color: white;
 	background-color: indigo;
 }
 
@@ -972,6 +1004,7 @@ img#table{
 }
 
 #navy{
+	color: white;
 	background-color: navy;
 }
 
@@ -1027,6 +1060,11 @@ img#table{
 	width: 100%;
 	visibility: visible;
 }
+#MathMazeBackgroundMenu{
+	height: 640px;
+	width: 100%;
+	visibility: visible;
+}
 
 #textDiv{
 	height:100%;
@@ -1071,7 +1109,7 @@ img#table{
 
 #mazeDiv{
 	position: absolute;
-	left: 50%;
+	left: 53%;
 	top:  50px;
 }
 

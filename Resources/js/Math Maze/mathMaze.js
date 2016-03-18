@@ -206,7 +206,11 @@ function rect(x,y,w,h) {
 	ctx2.beginPath();
 	ctx2.rect(x,y,w,h);
 	ctx2.closePath();
-	ctx2.fill();	
+	ctx2.fill();
+	ctx2.lineWidth="2";
+	ctx2.strokeStyle="white";
+	ctx2.rect(x,y,w,h);
+	ctx2.stroke();	
 }
 
 /*
@@ -320,7 +324,7 @@ function drawEasyEquation(t, t2, questionNum, extraInput1, t3, extraInput2, extr
 		//Least common multiple		
 		case 6: 
 				start = funWidth * 0.025;
-				ctx.font = "24px CabinBold";				
+				ctx.font = "22px CabinBold";				
 				ctx.fillText(questNum + ".) " + "Find the least common multiple of " + t + " and " + t2, start, 30);
 				break;
 		//Simple two step equation
