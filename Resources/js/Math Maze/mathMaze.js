@@ -139,6 +139,7 @@ function play(color){
 	}
 	var temp = document.getElementById("menuLogo");
 	document.getElementById("colorMenu").style.display = "none";
+	document.getElementById("MathMazeBackgroundMenu").style.display = "none";
 	document.getElementById("MathMazeDiv").style.display = "inline";
 	document.getElementById("mazeDiv").style.display = "inline";
 	document.getElementById("functionDiv").style.display = "inline";

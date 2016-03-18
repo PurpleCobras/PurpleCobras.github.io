@@ -845,6 +845,7 @@ function loadControls(){
     }
 	$(".controls").hide();
 	$(".controls").fadeIn(600);
+	volumeIconSelector();
 }
 
 function loadHowToPlay(){
@@ -861,6 +862,7 @@ function loadHowToPlay(){
     }
 	$(".howToPlay").hide();
 	$(".howToPlay").fadeIn(600);
+	volumeIconSelector();
 }
 
 function loadoptions(){
@@ -877,6 +879,41 @@ function loadoptions(){
     }
 	$(".options").hide();
 	$(".options").fadeIn(600);
+	volumeIconSelector();
+}
+
+function volumeIconSelector(){
+	var temp;
+	if(mute == false){
+	temp = document.getElementById("volumeMuted");
+	temp.style.display = "none";
+	temp = document.getElementById("volumePlaying");
+	temp.style.display = "inline";
+	}
+	else{
+	temp = document.getElementById("volumeMuted");
+	temp.style.display = "inline";
+	temp = document.getElementById("volumePlaying");
+	temp.style.display = "none";
+	}
+}
+
+function toggleMusic(){
+	if(mute == false){
+		mute = true;
+		music.pause();
+		music.currentTime = 0;
+		collection.volume = 0;
+		miss.volume = 0;
+	}
+	else if(mute == true){
+		mute = false;
+		music.play();
+		collection.volume = sfx.value/100;
+		miss.volume = sfx.value/100;
+	}
+	
+	volumeIconSelector();
 }
 
 function loadMainMenu(){
@@ -892,8 +929,13 @@ function loadMainMenu(){
     for(i=0; i<temp.length; ++i){
         temp[i].style.display = "inline";
     }
+	
+	
+	
+	
 	$(".mainMenu").hide();
 	$(".mainMenu").fadeIn(600);
+	volumeIconSelector();
 }
 
 function loadMainMenuFirstTime(){
@@ -908,17 +950,23 @@ function loadMainMenuFirstTime(){
     for(i=0; i<temp.length; ++i){
         temp[i].style.display = "inline";
     }
+	
+	volumeIconSelector();
+	
 	$("#play").hide();
 	$("#howTo").hide();
 	$("#controls_MainMenu").hide();
 	$("#option").hide();
 	$("#highScores_MainMenu").hide();
 	
+	
 	$("#play").fadeIn(600);
 	$("#howTo").fadeIn(600);
 	$("#controls_MainMenu").fadeIn(600);
 	$("#option").fadeIn(600);
 	$("#highScores_MainMenu").fadeIn(600);
+	
+	
 }
 
 //main menu animation
@@ -1023,6 +1071,8 @@ function gamestartanimation(){
         temp[i].style.display = "inline";
     }
 	
+	volumeIconSelector();
+	
 	$(".mainMenuAnimation").hide();
 	$("#frame1").fadeIn(600, firstFrame());
 	
@@ -1061,10 +1111,9 @@ function loadHighScores(){
     }
 	$(".highScores").hide();
 	$(".highScores").fadeIn(600);
-
-    $(".highScores").hide();
-    $(".highScores").fadeIn(600);
-    
+	
+	
+	volumeIconSelector();
     setTimeout(cleanup, 100);   
 }
 

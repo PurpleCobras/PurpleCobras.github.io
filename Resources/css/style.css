@@ -206,6 +206,8 @@ body{
 	top: 2px;
 }
 
+
+
 .ui{
 	display: none;
 	font-weight: bold;
@@ -257,6 +259,16 @@ body{
 	height: 150px;
 	visibility: visible;
 }
+
+.volumeIcons{
+	visibility: visible;
+	position: absolute;
+	height: 40px;
+    width: 40px;
+    bottom: 7px;
+    left: 20px;
+}
+
 
 #frame1{
 	bottom: 415px;
