@@ -99,6 +99,7 @@ mainMenu(color)
 	-HitMiss visualization is created and init() is called
 */
 function play(color){
+	ga('send','event', 'Math Maze', 'colorChoice', color);
 	switch(color){
 		case 1:
 			playerColor = "red";
@@ -163,6 +164,7 @@ colorChoice(diff)
 	-The color choice menu is made visible while the main menu is hidden.
 */
 function colorChoice(diff){
+	ga('send','event', 'Math Maze', 'diffChoice', diff);
 	difficulty = diff;
 	document.getElementById("menu").style.display = "none";
 	document.getElementById("colorMenu").style.display = "inline";
@@ -738,6 +740,8 @@ correctAnswer(ans)
 	-Starts and stops the hit_Miss visualization
 */
 function correctAns(ans){
+	var time = current_time_ms - start_time_ms;
+	ga('send','event', 'Math Maze', 'mazeCompleteTime', time);
 	switch(ans){
 		case 1:
 			answer1status = 1;
@@ -776,6 +780,9 @@ function correctAns(ans){
 		visHitMiss.update(hit_Miss);
 		//Player has reached the end of the game
 		if(questionCounter == 15){
+			time = Date.now();
+			time = time - start_time_ms;
+			ga('send','event', 'Math Maze', 'gameCompleteTime', time);
 			paused = true;
 			loadEndMenu();
 		}
@@ -1324,8 +1331,4 @@ function clearScreen(){
 	ctx2.clearRect(0, 0, WIDTH, HEIGHT);
 	ctx.clearRect(0, 0, WIDTH, HEIGHT);
 }
-
-window.alert("WARNING!!! This game may experience issues in browsers other than Google Chrome.");
-//mainMenu();
-//init();				//Function call to start the game
 

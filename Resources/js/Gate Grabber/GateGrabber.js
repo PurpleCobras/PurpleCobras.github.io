@@ -10,6 +10,8 @@ var ctx = canvas.getContext("2d");
 
 var player_Name;
 
+var start_time = 0;
+var end_time = 0;
 
 //
 //Game Variables
@@ -38,7 +40,7 @@ var rightkey = 39;
 //
 //Gate Types
 //- Each gate will have 8 possible combination.
-//- Currently we only have AND & OR gates.
+//- Currently we have AND, OR, NOR, NAND, XOR, & XNOR gates.
 //- Gate image file name represents the formate of the gate:
 //  GATETYPE then 3 digits 1,0, or x(blank):
 //  -first = output
@@ -58,6 +60,7 @@ var gateType = [];
     gateType[5]=document.getElementById("AND1x1");
     gateType[6]=document.getElementById("AND10x");
     gateType[7]=document.getElementById("AND11x");
+
     gateType[8]=document.getElementById("OR00x");
     gateType[9]=document.getElementById("OR0x0");
     gateType[10]=document.getElementById("OR0x1");
@@ -67,8 +70,46 @@ var gateType = [];
     gateType[14]=document.getElementById("OR10x");
     gateType[15]=document.getElementById("OR11x");
 
+    // gateType[16]=document.getElementById("NOR00x");
+    // gateType[17]=document.getElementById("NOR0x0");
+    // gateType[18]=document.getElementById("NOR0x1");
+    // gateType[19]=document.getElementById("NOR01x");
+    // gateType[20]=document.getElementById("NOR1x0");
+    // gateType[21]=document.getElementById("NOR1x1");
+    // gateType[22]=document.getElementById("NOR10x");
+    // gateType[23]=document.getElementById("NOR11x");
+
+    // gateType[24]=document.getElementById("NAND00x");
+    // gateType[25]=document.getElementById("NAND0x0");
+    // gateType[26]=document.getElementById("NAND0x1");
+    // gateType[27]=document.getElementById("NAND01x");
+    // gateType[28]=document.getElementById("NAND1x0");
+    // gateType[29]=document.getElementById("NAND1x1");
+    // gateType[30]=document.getElementById("NAND10x");
+    // gateType[31]=document.getElementById("NAND11x");
+
+    // gateType[32]=document.getElementById("XOR00x");
+    // gateType[33]=document.getElementById("XOR0x0");
+    // gateType[34]=document.getElementById("XOR0x1");
+    // gateType[35]=document.getElementById("XOR01x");
+    // gateType[36]=document.getElementById("XOR1x0");
+    // gateType[37]=document.getElementById("XOR1x1");
+    // gateType[38]=document.getElementById("XOR10x");
+    // gateType[39]=document.getElementById("XOR11x");
+
+    // gateType[40]=document.getElementById("XNOR00x");
+    // gateType[41]=document.getElementById("XNOR0x0");
+    // gateType[42]=document.getElementById("XNOR0x1");
+    // gateType[43]=document.getElementById("XNOR01x");
+    // gateType[44]=document.getElementById("XNOR1x0");
+    // gateType[45]=document.getElementById("XNOR1x1");
+    // gateType[46]=document.getElementById("XNOR10x");
+    // gateType[47]=document.getElementById("XNOR11x");
+
+
 //corresponding value to satisfy each gate.
 var gateValue = [];
+    //AND 
     gateValue[0]=2;
     gateValue[1]=2;
     gateValue[2]=0;
@@ -77,6 +118,8 @@ var gateValue = [];
     gateValue[5]=1;
     gateValue[6]=3;
     gateValue[7]=1;
+
+    //OR 
     gateValue[8]=0;
     gateValue[9]=0;
     gateValue[10]=3;
@@ -85,6 +128,46 @@ var gateValue = [];
     gateValue[13]=2;
     gateValue[14]=1;
     gateValue[15]=2;
+
+    // //NOR 
+    // gateValue[16]=1;
+    // gateValue[17]=1;
+    // gateValue[18]=0;
+    // gateValue[19]=0;
+    // gateValue[20]=2;
+    // gateValue[21]=3;
+    // gateValue[22]=2;
+    // gateValue[23]=3;
+
+    // //NAND 
+    // gateValue[24]=3;
+    // gateValue[25]=3;
+    // gateValue[26]=2;
+    // gateValue[27]=2;
+    // gateValue[28]=1;
+    // gateValue[29]=0;
+    // gateValue[30]=1;
+    // gateValue[31]=0;
+
+    // //XOR 
+    // gateValue[32]=0;
+    // gateValue[33]=0;
+    // gateValue[34]=1;
+    // gateValue[35]=1;
+    // gateValue[36]=1;
+    // gateValue[37]=0;
+    // gateValue[38]=1;
+    // gateValue[39]=0;
+
+    // //XNOR 
+    // gateValue[40]=1;
+    // gateValue[41]=1;
+    // gateValue[42]=0;
+    // gateValue[43]=0;
+    // gateValue[44]=0;
+    // gateValue[45]=1;
+    // gateValue[46]=0;
+    // gateValue[47]=1;
 //
 //Ball Object
 // -radius
@@ -236,6 +319,7 @@ var collected2x_time_ms;
 var collected2x_limit;
 var doublepts_sound = new Audio('../Sounds/Doublepts.ogg');
 function draw2x() {
+
     ctx.beginPath();
     ctx.arc(doublepts.x, doublepts.y, doublepts.radius, 0, Math.PI * 2);
     ctx.fillStyle = "rgba(255, 0, 0," + doublepts.alpha + ")";
@@ -284,7 +368,7 @@ function changeGate(gate){
 
     //V Change value of the first gate V
     if(gate == 1){
-        temp = Math.floor(Math.random() * 16);
+        temp = Math.floor(Math.random() * 16); // change to 48 when gates are added
 
         gate1.type = temp;
         gate1.need = gateValue[temp];
@@ -292,7 +376,7 @@ function changeGate(gate){
 
     //V change the value of the second gate V
     if(gate == 2){
-        temp = Math.floor(Math.random() * 16);
+        temp = Math.floor(Math.random() * 16); // change to 48 when gates are added
 
         gate2.type = temp;
         gate2.need = gateValue[temp];
@@ -300,7 +384,7 @@ function changeGate(gate){
 
     //V change the value of the third gate V
     if(gate == 3){
-        temp = Math.floor(Math.random() * 16);
+        temp = Math.floor(Math.random() * 16); // change to 48 when gates are added
 
         gate3.type = temp;
         gate3.need = gateValue[temp];
@@ -486,16 +570,8 @@ function setUpScreen(time){
     previousFrameTime = time;
     ctx.font = "12px Verdana";
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //ctx.fillText(fpsSTRING, 0, 10);
-    //ctx.fillText("FPS", 20, 10);
-    //ctx.fillText("Score:", 0, 30);
-    //ctx.fillText(player.score, 40, 30);
 	document.getElementById("score").innerHTML = "Score: " + player.score;
-    //ctx.fillText("Lives:", 0, 50);
-    //ctx.fillText(player.lives.length, 40, 50);
 	document.getElementById("lives").innerHTML = "Lives: " + player.lives.length;
-    //ctx.fillText("Current Value:", 0, 600);
-    //ctx.fillText(player.value, 95, 600);
 }
 
 //changePlayerValue()
@@ -566,8 +642,6 @@ function pause(){
 var scored = false;
 
 function draw(time) {
-
-
     setUpScreen(time);
 
     checkCollision();
@@ -592,6 +666,7 @@ function draw(time) {
 
 
     if (spawn2x == true) {
+        ga('send','event', 'Gate Grabber', 'spawn', 'doublePoints');
         draw2x();
         doublepts.alpha = doublepts.alpha - .005;
         if (doublepts.alpha <= 0) doublepts.alpha = 1;
@@ -608,6 +683,7 @@ function draw(time) {
 
 
     if (spawnlife == true) {
+        ga('send','event', 'Gate Grabber', 'spawn', 'extraLife');
         drawextralife();
         extralife.alpha = extralife.alpha - .01;
         if (extralife.alpha <= 0) extralife.alpha = 1;
@@ -656,6 +732,9 @@ function draw(time) {
 
 
     if (player.lives == 0) {
+        end_time = Date.now();
+        var time = end_time - start_time;
+        ga('send', 'event', 'Gate Grabber', 'completeTime', time);
         scored = false;
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		document.getElementById("gameOverScore").innerHTML = "You scored " + player.score + " points!";
@@ -683,28 +762,30 @@ function draw(time) {
 ******High Score Functions*********
 */
 function checkHighScore(){
-var Score = Parse.Object.extend("Score");
-var query = new Parse.Query(Score);
-query.lessThan("score", player.score);
-query.count({
-  success: function(count) {
-	if(count > 0){
-		loadNewHighScoreScreen();
-	}
-	else{
-		loadEndMenu();
-	}
-  },
-  error: function(error) {
-    alert("Error retrieving high scores");
-	loadEndMenu();
-  }
-});	
+    var Score = Parse.Object.extend("Score");
+    var query = new Parse.Query(Score);
+    query.lessThan("score", player.score);
+    query.count({
+      success: function(count) {
+    	if(count > 0){
+            ga('send', 'event', 'Gate Grabber', 'highScore', 'achieved');
+    		loadNewHighScoreScreen();
+    	}
+    	else{
+    		loadEndMenu();
+    	}
+      },
+      error: function(error) {
+        alert("Error retrieving high scores");
+    	loadEndMenu();
+      }
+    });	
 	
 }
 
 
 function addNewHighScore(){
+    ga('send', 'event', 'Gate Grabber', 'highScore', 'submitted');
 	player_Name = document.getElementById("nameInput").value;
 	deleteLowScore();
 	pushNewHighScore();
@@ -758,48 +839,47 @@ function pushNewHighScore(){
 
 
 function refreshHighScores(){
-var Score = Parse.Object.extend("Score");
-var query = new Parse.Query(Score);
-query.descending("score");
-query.find({
-  success: function(results) {
+    var Score = Parse.Object.extend("Score");
+    var query = new Parse.Query(Score);
+    query.descending("score");
+    query.find({
+      success: function(results) {
 
 
-    for (var i = 0; i < results.length && i < 10; i++) {
-      var object = results[i];
-	  if(i==9){
-		 document.getElementById("highScore" + (i+1)).innerHTML = (i+1) + ". " + object.get('playerName') + " - " + object.get('score') + "pts"; 
-	  }
-	  else{
-		 document.getElementById("highScore" + (i+1)).innerHTML = (i+1) + ".   " + object.get('playerName') + " - " + object.get('score') + "pts"; 
-	  }
-      
-    }
-	
-	for (var i = 0; i < results.length && i < 10; i++) {
-      var object = results[i];
-	  if(i==9){
-		 document.getElementById("highScoreEnd" + (i+1)).innerHTML = (i+1) + ". " + object.get('playerName') + " - " + object.get('score') + "pts"; 
-	  }
-	  else{
-		 document.getElementById("highScoreEnd" + (i+1)).innerHTML = (i+1) + ".   " + object.get('playerName') + " - " + object.get('score') + "pts"; 
-	  }
-      
-    }
-	
-  },
-  error: function(error) {
+        for (var i = 0; i < results.length && i < 10; i++) {
+          var object = results[i];
+    	  if(i==9){
+    		 document.getElementById("highScore" + (i+1)).innerHTML = (i+1) + ". " + object.get('playerName') + " - " + object.get('score') + "pts"; 
+    	  }
+    	  else{
+    		 document.getElementById("highScore" + (i+1)).innerHTML = (i+1) + ".   " + object.get('playerName') + " - " + object.get('score') + "pts"; 
+    	  }
+          
+        }
+    	
+    	for (var i = 0; i < results.length && i < 10; i++) {
+          var object = results[i];
+    	  if(i==9){
+    		 document.getElementById("highScoreEnd" + (i+1)).innerHTML = (i+1) + ". " + object.get('playerName') + " - " + object.get('score') + "pts"; 
+    	  }
+    	  else{
+    		 document.getElementById("highScoreEnd" + (i+1)).innerHTML = (i+1) + ".   " + object.get('playerName') + " - " + object.get('score') + "pts"; 
+    	  }
+          
+        }
+    	
+      },
+      error: function(error) {
 
-    alert("Error retrieving high scores");
-  }
-});			
-
-
+        alert("Error retrieving high scores");
+      }
+    });			
 }
 
 
 
 function loadConfiguration() {
+    ga('send','event', 'Gate Grabber', 'choice', 'buttonConfig');
     //clear all user interface elements
     var temp = document.getElementsByClassName("ui");
     for (i = 0; i < temp.length; ++i) {
@@ -832,6 +912,7 @@ function assignright(key){
 
 
 function loadControls(){
+    ga('send','event', 'Gate Grabber', 'choice', 'Controls');
     //clear all user interface elements
 	$(".ui").fadeOut(600);
     var temp = document.getElementsByClassName("ui");
@@ -849,6 +930,7 @@ function loadControls(){
 }
 
 function loadHowToPlay(){
+    ga('send','event', 'Gate Grabber', 'choice', 'HowTo');
     //clear all user interface elements
 	$(".ui").fadeOut(600);
     var temp = document.getElementsByClassName("ui");
@@ -866,6 +948,7 @@ function loadHowToPlay(){
 }
 
 function loadoptions(){
+    ga('send','event', 'Gate Grabber', 'choice', 'Options');
     //clear all user interface elements
 	$(".ui").fadeOut(600);
     var temp = document.getElementsByClassName("ui");
@@ -885,21 +968,22 @@ function loadoptions(){
 function volumeIconSelector(){
 	var temp;
 	if(mute == false){
-	temp = document.getElementById("volumeMuted");
-	temp.style.display = "none";
-	temp = document.getElementById("volumePlaying");
-	temp.style.display = "inline";
+    	temp = document.getElementById("volumeMuted");
+    	temp.style.display = "none";
+    	temp = document.getElementById("volumePlaying");
+    	temp.style.display = "inline";
 	}
 	else{
-	temp = document.getElementById("volumeMuted");
-	temp.style.display = "inline";
-	temp = document.getElementById("volumePlaying");
-	temp.style.display = "none";
+    	temp = document.getElementById("volumeMuted");
+    	temp.style.display = "inline";
+    	temp = document.getElementById("volumePlaying");
+    	temp.style.display = "none";
 	}
 }
 
 function toggleMusic(){
 	if(mute == false){
+        ga('send','event', 'Gate Grabber', 'Music', 'off');
 		mute = true;
 		music.pause();
 		music.currentTime = 0;
@@ -907,6 +991,7 @@ function toggleMusic(){
 		miss.volume = 0;
 	}
 	else if(mute == true){
+        ga('send','event', 'Gate Grabber', 'Music', 'on');
 		mute = false;
 		music.play();
 		collection.volume = sfx.value/100;
@@ -929,9 +1014,6 @@ function loadMainMenu(){
     for(i=0; i<temp.length; ++i){
         temp[i].style.display = "inline";
     }
-	
-	
-	
 	
 	$(".mainMenu").hide();
 	$(".mainMenu").fadeIn(600);
@@ -1097,6 +1179,7 @@ function loadNewHighScoreScreen(){
 }
 
 function loadHighScores(){
+    ga('send','event', 'Gate Grabber', 'choice', 'highScore');
 	refreshHighScores();
 	$(".ui").fadeOut(600);
     //clear all user interface elements
@@ -1490,6 +1573,8 @@ function loadEndMenu(){
 }
 
 function newGame(){
+    ga('send','event', 'Gate Grabber', 'choice', 'Play');
+    start_time = Date.now();
     //clear all user interface elements
 	$(".ui").fadeOut(600);
     var temp = document.getElementsByClassName("ui");
@@ -1535,15 +1620,16 @@ function newGame(){
     requestAnimationFrame(draw);
 }
 
-	function quitGame(){
-    		paused = true;
-    		requestAnimationFrame(clearscreen);
-    		loadMainMenu();
-    	}
+function quitGame(){
+    ga('send','event', 'Gate Grabber', 'choice', 'Quit');
+	paused = true;
+	requestAnimationFrame(clearscreen);
+	loadMainMenu();
+}
 
-		function clearscreen(){
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
-		}
+function clearscreen(){
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
 		
 // V Main Event Loop V   <- this is what runs "sequentially" after everything has been loaded; good starting point for trying to figure out whats going on
 //loadMainMenu();
