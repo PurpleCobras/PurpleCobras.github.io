@@ -87,24 +87,61 @@ function test(){
             	this.visualize();							//visualizes the updated structure
             }
         } else if (this.dataStructureName == "speed") {
+					
+			//If statements will determine if the image is "off" the game screen
+			if(_data.gate1y > 0){
+				//Do we need to change the die image?
+				if (_data.rate1 != this.dataStructure.speed1)
+					this.dataStructure.change1 = true;
+				
+				//"fade" the image in
+				this.dataStructure.gate1.style.opacity = 1;
+				//Change the speed of the gate
+				this.dataStructure.speed1 = _data.rate1;
+			}
+			//Image is off the game screen
+			else{ 
+				this.dataStructure.speed1 = 0;	//Change speed of gate
+				this.dataStructure.gate1.style.opacity = 0.4;	//Fade image out
+				this.dataStructure.die1.style.backgroundImage = 'url(../dice/blank.png)'; //Remove the die image
+				setBarLength(this.dataStructure.div1, 0);	//Change the length of the bar to 0%
+			}
+			
+			if(_data.gate2y > 0){
+				if (_data.rate2 != this.dataStructure.speed2)
+					this.dataStructure.change2 = true;
+				//"fade" the image in
+				this.dataStructure.gate2.style.opacity = 1;
+				this.dataStructure.speed2 = _data.rate2;
+			}
+			
+			else{ 
+				this.dataStructure.speed2 = 0;
+				this.dataStructure.gate2.style.opacity = 0.4;
+				this.dataStructure.die2.style.backgroundImage = 'url(../dice/blank.png)';
+				setBarLength(this.dataStructure.div2, 0);
+			}
+			
+			if(_data.gate3y > 0){
+				if (_data.rate3 != this.dataStructure.speed3)
+					this.dataStructure.change3 = true;
+				//"fade" the image in
+				this.dataStructure.gate3.style.opacity = 1;
+				this.dataStructure.speed3 = _data.rate3;
+			}
+			
+			else{ 
+				this.dataStructure.speed3 = 0;
+				this.dataStructure.gate3.style.opacity = 0.4;
+				this.dataStructure.die3.style.backgroundImage = 'url(../dice/blank.png)';
+				setBarLength(this.dataStructure.div3, 0);
+			}
 			
 			//d3.select("#canvasSpeed").remove();
             this.dataStructure.gate1.src = _data.gate1;
             this.dataStructure.gate2.src = _data.gate2;
             this.dataStructure.gate3.src = _data.gate3;
-			
-            if (_data.rate1 != this.dataStructure.speed1)
-                this.dataStructure.change1 = true;
-            if (_data.rate2 != this.dataStructure.speed2)
-                this.dataStructure.change2 = true;
-            if (_data.rate3 != this.dataStructure.speed3)
-                this.dataStructure.change3 = true;
-
-
-            this.dataStructure.speed1 = _data.rate1;
-            this.dataStructure.speed2 = _data.rate2;
-            this.dataStructure.speed3 = _data.rate3;
-
+							
             this.visualize();
 
         }
@@ -124,14 +161,7 @@ function test(){
 
         } //End of  if dataStructure == array
         else if (this.dataStructureName == "speed") {
-			/*
-			this.canvas = d3.select(this.canvasLocation)		//Finds the specified location of the HTML file and appends a "canvas" to it
-            .append("svg")
-            .attr("id", "canvasSpeed")
-            .attr("width", this.locationWidth)
-            .attr("height", this.locationHeight);
-			*/
-			
+					
             var div1 = this.dataStructure.div1;
             var div2 = this.dataStructure.div2;
             var div3 = this.dataStructure.div3;
@@ -139,8 +169,6 @@ function test(){
             var vel1 = this.dataStructure.speed1;
             var vel2 = this.dataStructure.speed2;
             var vel3 = this.dataStructure.speed3;
-
-            //console.log("in visualize: rates: " + vec1 + " " + vec2 + " " + vec3);
 
             var die1 = this.dataStructure.die1;
             var die2 = this.dataStructure.die2;
@@ -219,10 +247,16 @@ function test(){
 
 //********************************* SPEED "OBJECT" *********************************
 function speed(){
+	
         this.gate1 = document.getElementById('gate1');
         this.gate2 = document.getElementById('gate2');
         this.gate3 = document.getElementById('gate3');
-
+		
+		//"fade" the images out
+		this.gate1.style.opacity = 0.4;
+		this.gate2.style.opacity = 0.4;
+		this.gate3.style.opacity = 0.4;
+		
         this.speed1 = 0;
         this.speed2 = 0;
         this.speed3 = 0;
@@ -243,11 +277,7 @@ function speed(){
         this.die1.style.backgroundSize = '100% 100%';
         this.die2.style.backgroundSize = '100% 100%';
         this.die3.style.backgroundSize = '100% 100%';
-
-        this.gate1.src = "../Gates/or00x.png"
-        this.gate2.src = "../Gates/and01x.png"
-        this.gate3.src = "../Gates/or1x0.png"
-
+				
         this.data = function(rate) {
             if (rate.rate1 != this.speed1)
                 this.change1 = true;
@@ -282,7 +312,7 @@ function setBarLength(divid, vel) {
             divid.style.height = '100%';
             break;
         default:
-            divid.style.height = '100%';
+            divid.style.height = '0%';
             break;
     }
 

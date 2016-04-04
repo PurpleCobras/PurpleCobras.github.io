@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<link rel="icon" 
-      type="image/png" 
-      href="../images/favicon/favicon.ico">
   <head>
     <title>Gate Grabber Information</title>
     <script>
@@ -32,17 +29,58 @@
 <br>
 	<h5>Gate Grabber Information</h5>
 
-	<p>This puzzle game is based on logic gate functionality. In this game the player will choose an input (0 or 1) that will satisfy the
-				gate that is on the screen. Each gate will have 2 inputs and 1 output. One of the inputs is given and the other comes from the player.  There is the possibility for gates that do not have a correct answer. In that case, no input should be given to the gate. </p>
-	<p>When the game starts, there are 3 gates that fall at a chosen rate. Each gate will reset when the player provides an input or the gate
-				falls off the screen. At this time, a new gate and rate is randomly generated. </p>
-	<p>If the player provides the correct value to satisfy the gate, the player receives 100 points. If the player provides an incorrect value to
-				the gate, the player will lose a life. The player starts off with 10 lives and 0 points. The game ends when the player has 0 lives left. If the player gets a score in the top 10 they will be asked for their name for the highscore board.</p>
-  <p>There are powerups that the player can retrieve. There is a x2 multiplier and a 1up powerup right now. The x2 multiplier lasts for 15 seconds. The 1up gives the player 1 extra life.</p>
-				<br><br>
-				<p>For help on logic gates, visit our Logic Gate Lesson:</p>
-				<p> <a href = "LogicGateLesson.html" class = "btn btn-default" role = "button"> 
-				Logic Gate Lesson </a> </p>
+	<p>This puzzle game is based on logic gate functionality. </p>
+	<p>Use the left and right arrow keys or your mouse to move the logic gate input across the bottom.</p>
+	<p><b>To change the value of the user input, press the left mouse button:  </b></p>
+	
+	<img id = "table" src = "../MainMenu/leftclick.png" alt = "left cleck" style="width:100px;height:150px;">
+	<br>
+	<br>
+	
+	<p>Collect the gates that satisfy the boolean logic output as they fall.</p>
+	
+	<p><b>For more information on logic gates, check out: </b>
+	<a class="btn btn-default" href="LogicGateLesson.html" role="button">Logic Gate Lesson &raquo;</a></p>
+
+	<br><br>
+	<p><b>The visualization on the right side of the screen contains a few key elements:</p></b>
+	<p>The logic gates currently falling are shown at the top.</p>
+	<p>The corresponding speed the gate is falling is shown below.</p>
+    <br>
+    <div class="row"> 
+     
+        <div class="col-md-2">
+	<img id = "table" src = "../images/visual.png" alt = "Arrow Keys" style="width:170px;height:270px;">
+</div>
+  
+  <div class="col-md-4">
+	<ul>
+		<br><br><br><br><br><br>
+		<li>On the dice, the number corresponds to the speed at which the gate will fall</li>
+		<br>
+		<li>The length of the bar also corresponds to the speed of the gate</li>
+    </ul>  
+
+  
+  </div>
+  </div>
+  <br>
+  <p><b>Hint: </b>There is a possibility that some gates do not have a correct answer. Collect as many correct gates as you can for the highest score!  </p>
+<br>
+	<p><b>Power-Ups:</b></p>
+	<p>Collect power-ups to increase your score!</p>
+    <div class="row"> 
+     
+    <div class="col-md-1">
+		<img id = "table" src = "../images/1up.png" alt = "1UP" style="width:50px;height:50px;">
+	</div>
+	<br><p>Collect for an extra life!</p><br><br>
+	<div class="col-md-1">
+		<img id = "table" src = "../images/2x.png" alt = "2X" style="width:50px;height:50px;">
+	</div>
+	<br><p>Collect to earn double points!</p>
+	</div>
+<br>
   <p><b>Coming Soon:</b>
       <ul>
         <li>Redesign</li>
@@ -172,7 +210,6 @@ query.exists("objectId");query.find({
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="../bootstrap/bootstrap.min.js"></script>
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>
 

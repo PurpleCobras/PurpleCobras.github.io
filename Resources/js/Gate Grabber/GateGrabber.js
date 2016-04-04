@@ -8,9 +8,24 @@ var previousFrameTime = 0;
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
+var canvas2 = document.getElementById("fpsCanvas");
+var ctx2 = canvas2.getContext("2d");
+
 var player_Name;
 
+var start_time = 0;
+var end_time = 0;
 
+ctx2.strokeStyle = "red";
+ctx2.lineWidth = 5;
+ctx2.lineCap = "butt";
+
+/*
+ctx2.beginPath();
+ctx2.moveTo(150, 147);
+ctx2.lineTo(102, 30);
+ctx2.stroke();
+*/
 //
 //Game Variables
 //
@@ -18,6 +33,8 @@ var match = false;
 var paused = false; //denotes whether the game is currently running
 var animationx = 0; //Animation coordinates for scoring animation
 var animationy = 0;
+
+var onMainMenu = false; //possibly used to change visualization when quitting the game
 //
 //Button Variables
 //
@@ -38,7 +55,7 @@ var rightkey = 39;
 //
 //Gate Types
 //- Each gate will have 8 possible combination.
-//- Currently we only have AND & OR gates.
+//- Currently we have AND, OR, NOR, NAND, XOR, & XNOR gates.
 //- Gate image file name represents the formate of the gate:
 //  GATETYPE then 3 digits 1,0, or x(blank):
 //  -first = output
@@ -58,6 +75,7 @@ var gateType = [];
     gateType[5]=document.getElementById("AND1x1");
     gateType[6]=document.getElementById("AND10x");
     gateType[7]=document.getElementById("AND11x");
+
     gateType[8]=document.getElementById("OR00x");
     gateType[9]=document.getElementById("OR0x0");
     gateType[10]=document.getElementById("OR0x1");
@@ -67,8 +85,46 @@ var gateType = [];
     gateType[14]=document.getElementById("OR10x");
     gateType[15]=document.getElementById("OR11x");
 
+    // gateType[16]=document.getElementById("NOR00x");
+    // gateType[17]=document.getElementById("NOR0x0");
+    // gateType[18]=document.getElementById("NOR0x1");
+    // gateType[19]=document.getElementById("NOR01x");
+    // gateType[20]=document.getElementById("NOR1x0");
+    // gateType[21]=document.getElementById("NOR1x1");
+    // gateType[22]=document.getElementById("NOR10x");
+    // gateType[23]=document.getElementById("NOR11x");
+
+    // gateType[24]=document.getElementById("NAND00x");
+    // gateType[25]=document.getElementById("NAND0x0");
+    // gateType[26]=document.getElementById("NAND0x1");
+    // gateType[27]=document.getElementById("NAND01x");
+    // gateType[28]=document.getElementById("NAND1x0");
+    // gateType[29]=document.getElementById("NAND1x1");
+    // gateType[30]=document.getElementById("NAND10x");
+    // gateType[31]=document.getElementById("NAND11x");
+
+    // gateType[32]=document.getElementById("XOR00x");
+    // gateType[33]=document.getElementById("XOR0x0");
+    // gateType[34]=document.getElementById("XOR0x1");
+    // gateType[35]=document.getElementById("XOR01x");
+    // gateType[36]=document.getElementById("XOR1x0");
+    // gateType[37]=document.getElementById("XOR1x1");
+    // gateType[38]=document.getElementById("XOR10x");
+    // gateType[39]=document.getElementById("XOR11x");
+
+    // gateType[40]=document.getElementById("XNOR00x");
+    // gateType[41]=document.getElementById("XNOR0x0");
+    // gateType[42]=document.getElementById("XNOR0x1");
+    // gateType[43]=document.getElementById("XNOR01x");
+    // gateType[44]=document.getElementById("XNOR1x0");
+    // gateType[45]=document.getElementById("XNOR1x1");
+    // gateType[46]=document.getElementById("XNOR10x");
+    // gateType[47]=document.getElementById("XNOR11x");
+
+
 //corresponding value to satisfy each gate.
 var gateValue = [];
+    //AND 
     gateValue[0]=2;
     gateValue[1]=2;
     gateValue[2]=0;
@@ -77,6 +133,8 @@ var gateValue = [];
     gateValue[5]=1;
     gateValue[6]=3;
     gateValue[7]=1;
+
+    //OR 
     gateValue[8]=0;
     gateValue[9]=0;
     gateValue[10]=3;
@@ -85,6 +143,46 @@ var gateValue = [];
     gateValue[13]=2;
     gateValue[14]=1;
     gateValue[15]=2;
+
+    // //NOR 
+    // gateValue[16]=1;
+    // gateValue[17]=1;
+    // gateValue[18]=0;
+    // gateValue[19]=0;
+    // gateValue[20]=2;
+    // gateValue[21]=3;
+    // gateValue[22]=2;
+    // gateValue[23]=3;
+
+    // //NAND 
+    // gateValue[24]=3;
+    // gateValue[25]=3;
+    // gateValue[26]=2;
+    // gateValue[27]=2;
+    // gateValue[28]=1;
+    // gateValue[29]=0;
+    // gateValue[30]=1;
+    // gateValue[31]=0;
+
+    // //XOR 
+    // gateValue[32]=0;
+    // gateValue[33]=0;
+    // gateValue[34]=1;
+    // gateValue[35]=1;
+    // gateValue[36]=1;
+    // gateValue[37]=0;
+    // gateValue[38]=1;
+    // gateValue[39]=0;
+
+    // //XNOR 
+    // gateValue[40]=1;
+    // gateValue[41]=1;
+    // gateValue[42]=0;
+    // gateValue[43]=0;
+    // gateValue[44]=0;
+    // gateValue[45]=1;
+    // gateValue[46]=0;
+    // gateValue[47]=1;
 //
 //Ball Object
 // -radius
@@ -118,13 +216,17 @@ while(gate3.rate == gate2.rate || gate3.rate == gate1.rate){
     gate3.rate = Math.floor((Math.random() * 4) +1);
 }
 
-var rate = {rate1 : gate1.rate, rate2 : gate2.rate, rate3 : gate3.rate};
+
+var rate = {rate1 :0, rate2 :0, rate3 : 0};
 
 var speedVis = new test();
 speedVis.structure("speed")
     .location("#speedDiv")
     .data(rate)
     .visualize();
+
+rate = {rate1 : gate1.rate, rate2 : gate2.rate, rate3 : gate3.rate};
+
 
 //
 //Event Listeners
@@ -162,6 +264,14 @@ var mute = false;
 var bgm = document.getElementById("bgm");
 var sfx = document.getElementById("sfx");
 
+var playing = false;
+
+/*Combo muliplier variables*/
+var streak = 0; //used to keep track of gate streak
+var isStreak = false;
+var streak_time;
+
+
 
 function keyDownHandler(e) {
     if(e.keyCode == rightkey) {
@@ -184,7 +294,9 @@ function keyDownHandler(e) {
             music.play();
         }
     }
-
+    if(e.keyCode == 80 && playing == true){
+        pause();
+    }
 }
 
 function keyUpHandler(e) {
@@ -236,6 +348,7 @@ var collected2x_time_ms;
 var collected2x_limit;
 var doublepts_sound = new Audio('../Sounds/Doublepts.ogg');
 function draw2x() {
+
     ctx.beginPath();
     ctx.arc(doublepts.x, doublepts.y, doublepts.radius, 0, Math.PI * 2);
     ctx.fillStyle = "rgba(255, 0, 0," + doublepts.alpha + ")";
@@ -259,6 +372,34 @@ function drawextralife(){
     ctx.closePath();
 }
 
+/* level()
+spawns gates depending on threshold
+ */
+function level(current_score){
+    var gateNum;
+    if(current_score < 1000){
+        gateNum = Math.floor((Math.random()* 8));
+    }
+    else if(current_score >= 1000 /*&& current_score < 2500*/ ){ //Uncomment the ANDs to include thresholds
+        gateNum = Math.floor(Math.random() * 16);
+    }
+    /*
+     else if(current_score >= 2500 && current_score < 4500){
+     gateNum = Math.floor(Math.random() * 24);
+     }
+     else if(current_score >= 4500 && current_score < 6000){
+     gateNum = Math.floor(Math.random() * 32);
+     }
+     else if(current_score >= 6000 && current_score < 8000){
+     gateNum = Math.floor(Math.random() * 40);
+     }
+     else if(current_score > 8000){
+     gateNum = Math.floor(Math.random() * 48);
+     }*/
+    return gateNum;
+}
+
+
 /*  drawGate()
  Creates a gate, given the x and y coordinates and an integer value represtening which gate type to draw.
  Gate Types:
@@ -281,10 +422,9 @@ function drawGate(x, y, gate){
 
  */
 function changeGate(gate){
-
     //V Change value of the first gate V
     if(gate == 1){
-        temp = Math.floor(Math.random() * 16);
+        temp = level(player.score);
 
         gate1.type = temp;
         gate1.need = gateValue[temp];
@@ -292,7 +432,7 @@ function changeGate(gate){
 
     //V change the value of the second gate V
     if(gate == 2){
-        temp = Math.floor(Math.random() * 16);
+        temp = level(player.value);
 
         gate2.type = temp;
         gate2.need = gateValue[temp];
@@ -300,13 +440,29 @@ function changeGate(gate){
 
     //V change the value of the third gate V
     if(gate == 3){
-        temp = Math.floor(Math.random() * 16);
+        temp = level(player.score);
 
         gate3.type = temp;
         gate3.need = gateValue[temp];
     }
 
 }
+/*  Multiplier
+ Gives a multiplier dependent on streak of gates
+Called in the checkMatch function
+*/
+
+
+function multiplier(){
+    if(streak >= 10)
+        return 2;
+    else if(streak < 10 && streak >= 4)
+        return 1.5;
+    else
+        return 1;
+
+}
+
 
 /*  checkMatch()
  Function called to check whether the player's value matches the gate the player grabbed.
@@ -319,10 +475,13 @@ function checkMatch(gate){
             scored = true;
             animationx = ball.x;
             animationy = ball.y;
-            if(collected2x == true) player.score+= 200;
+            if(collected2x == true) player.score+= 100 * multiplier() * 2;
             else
-            player.score += 100;
+            player.score += 100 * multiplier();
 
+            isStreak = true;
+            streak += 1;
+            streak_time = new Date().getTime()+5000;
             collection.pause();
             collection.currentTime = 0;
             collection.play();
@@ -330,6 +489,8 @@ function checkMatch(gate){
         else {
             player.lives.pop();
 
+            isStreak = false;
+            streak = 0;
             miss.pause();
             miss.currentTime = 0;
             miss.play();
@@ -340,16 +501,21 @@ function checkMatch(gate){
             scored = true;
             animationx = ball.x;
             animationy = ball.y;
-            if(collected2x == true) player.score+= 200;
+            if(collected2x == true) player.score+= 100 * multiplier() * 2;
             else
             player.score+= 100;
 
+            isStreak = true;
+            streak += 1;
+            streak_time = new Date().getTime()+5000;
             collection.pause();
             collection.currentTime = 0;
             collection.play();
         }else {
             player.lives.pop();
 
+            isStreak = false;
+            streak = 0;
             miss.pause();
             miss.currentTime = 0;
             miss.play();
@@ -360,16 +526,20 @@ function checkMatch(gate){
             scored = true;
             animationx = ball.x;
             animationy = ball.y;
-            if(collected2x == true) player.score+= 200;
+            if(collected2x == true) player.score+= 100 * multiplier() * 2;
             else
-            player.score+= 100;
+            player.score+= 100 * multiplier();
 
+            isStreak = true;
+            streak += 1;
+            streak_time = new Date().getTime() + 5000;
             collection.pause();
             collection.currentTime = 0;
             collection.play()
         }else{
             player.lives.pop();
-
+            isStreak = false;
+            streak = 0;
             miss.pause();
             miss.currentTime = 0;
             miss.play();
@@ -481,27 +651,59 @@ function checkCollision(){
 //
 function setUpScreen(time){
     var FPS = Math.floor(1000 / (time - previousFrameTime));
-    //var fpsSTRING = FPS.toString();
-	document.getElementById("framesPerSecond").innerHTML = FPS + " FPS";
+	displayFramesPerSecond(FPS);
     previousFrameTime = time;
     ctx.font = "12px Verdana";
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //ctx.fillText(fpsSTRING, 0, 10);
-    //ctx.fillText("FPS", 20, 10);
-    //ctx.fillText("Score:", 0, 30);
-    //ctx.fillText(player.score, 40, 30);
-	document.getElementById("score").innerHTML = "Score: " + player.score;
-    //ctx.fillText("Lives:", 0, 50);
-    //ctx.fillText(player.lives.length, 40, 50);
-	document.getElementById("lives").innerHTML = "Lives: " + player.lives.length;
-    //ctx.fillText("Current Value:", 0, 600);
-    //ctx.fillText(player.value, 95, 600);
+	document.getElementById("score").innerHTML = player.score;
+	displayLives();
+}
+
+//displayFramesPerSecond(rate)
+//Draws the needle on the spedometer. 150 and 147 are used because they are always the x and y start of the needle
+//(the part on the grey circle at the bottom). The spedometer goes up to 120, so the percentage of the spedometer that should be 
+//filled is calculated first. Then That percentage is taken and multiplied by 180 to get how many degrees up from 0 the needle
+//should be. Then the ending points are calculated using cartesian coordinates (https://en.wikipedia.org/wiki/Circle#Equations)
+//lastly, because canvases use the top left corner as (0,0), I have to pull some trickery and "reverse" the 
+//coordinates, for lack of a better term.
+// 
+function displayFramesPerSecond(rate){
+	var percentage = rate/120;
+	var angleindegrees = percentage * 180;
+	var newx = 150 + (127 * (Math.cos((Math.PI/180)* angleindegrees)));
+	var newy = 147 + (127 * (Math.sin((Math.PI/180)* angleindegrees)));
+	var xcorrect = newx - 150;
+	var ycorrect = newy - 147;
+	newx = 150 - xcorrect;
+	newy = 147 - ycorrect;
+	ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+	ctx2.beginPath();
+	ctx2.moveTo(150, 147);
+	ctx2.lineTo(newx, newy);
+	ctx2.stroke();
+}
+
+//displayLives()
+//displays the correct image for the lives meter
+//
+function displayLives(){
+	var temp = document.getElementsByClassName("livesMeter");
+    for(i=0; i<temp.length; ++i){
+        temp[i].style.display = "none";
+    }
+	
+	if(player.lives.length > 0){
+		var temp2 = player.lives.length + "lives";
+		var temp3 = document.getElementById(temp2);
+		temp3.style.display = "inline";
+	}
 }
 
 //changePlayerValue()
 //This function is called when the mouse has been clicked. It will  change playerValue from a 1 to a 0 or a 0 to a 1.
 //
 function changePlayerValue(){
+    ga('send', 'event', 'Gate Grabber', 'click', 'changed value');
     if(player.value == 0){
         player.value = 1;
     }
@@ -566,11 +768,11 @@ function pause(){
 var scored = false;
 
 function draw(time) {
-
-
     setUpScreen(time);
 
     checkCollision();
+    var spawn2xCount = 0;
+    var spawnLifeCount = 0;
 
     drawGate(gate1.x, gate1.y, gate1.type);
     drawGate(gate2.x, gate2.y, gate2.type);
@@ -584,14 +786,31 @@ function draw(time) {
     var current_time_ms = current_time.getTime();
     if (ref_time2x_ms + doubleptstimer - current_time_ms <= 1000 && ref_time2x_ms + doubleptstimer - current_time_ms >=0) {
         spawn2x = true;
+        spawn2xCount +=1;
     }
 
     if (ref_timelife_ms + extralifetimer - current_time_ms <= 1000 && ref_timelife_ms + extralifetimer - current_time_ms >=0) {
         spawnlife = true;
+        spawnLifeCount +=1;
     }
 
+    if(isStreak == true && current_time_ms < streak_time){
+        ctx.font = "18px Retroville";
+        ctx.fillText("X"+ streak, 10, canvas.height - 55);
+        if((multiplier() - 1)*100 > 0)
+            ctx.fillText("+"+((multiplier() - 1)*100) + "% Bonus", 10, canvas.height - 40);
+    }
+    //You get 5 seconds before streak resets
+    if(current_time_ms >= streak_time){
+        isStreak = false;
+        streak = 0;
+
+    }
 
     if (spawn2x == true) {
+        if(spawn2xCount ==1){
+            ga('send','event', 'Gate Grabber', 'spawn', 'Double Points');
+        }
         draw2x();
         doublepts.alpha = doublepts.alpha - .005;
         if (doublepts.alpha <= 0) doublepts.alpha = 1;
@@ -608,6 +827,9 @@ function draw(time) {
 
 
     if (spawnlife == true) {
+        if(spawnLifeCount ==1){
+            ga('send','event', 'Gate Grabber', 'spawn', 'Extra Life');
+        }
         drawextralife();
         extralife.alpha = extralife.alpha - .01;
         if (extralife.alpha <= 0) extralife.alpha = 1;
@@ -642,8 +864,12 @@ function draw(time) {
     gate3.y = gate3.y + gate3.rate;
 
 
-    var speed = {rate1: gate1.rate, rate2:gate2.rate, rate3: gate3.rate, gate1: gateType[gate1.type].src, gate2: gateType[gate2.type].src, gate3: gateType[gate3.type].src};
-    speedVis.update(speed);
+    var speed = {rate1: gate1.rate, rate2:gate2.rate, rate3: gate3.rate, 
+				 gate1: gateType[gate1.type].src, gate2: gateType[gate2.type].src, gate3: gateType[gate3.type].src,
+				 gate1y: gate1.y, gate2y: gate2.y, gate3y: gate3.y
+				};
+	
+		speedVis.update(speed);
 
     if (rightPressed && ball.x + ball.radius < canvas.width) {
         ball.x += 4;
@@ -656,11 +882,16 @@ function draw(time) {
 
 
     if (player.lives == 0) {
+        end_time = Date.now();
+        var time = end_time - start_time;
+        ga('send', 'event', 'Gate Grabber', 'completeTime', time);
         scored = false;
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
 		document.getElementById("gameOverScore").innerHTML = "You scored " + player.score + " points!";
 		checkHighScore();
 		pause();
+        playing = false;
         ctx.textAlign="start";
     }
 
@@ -670,11 +901,19 @@ function draw(time) {
     if (!paused){
         requestAnimationFrame(draw);
     }
+    else if(paused == true) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (playing == true) {
+        ctx.font = "30px Retroville";
+        ctx.fillText("PAUSED", canvas.width / 2 - 75, canvas.height / 2);
+        }
+    }
+
 //Animation runs when a player scores. Working on improving this animation later on
     if(scored == true){
         ctx.font = "14px Retroville";
-        if(collected2x == true) ctx.fillText("+200",animationx - 25, animationy);
-        else ctx.fillText("+100",animationx - 25, animationy);
+        if(collected2x == true) ctx.fillText("+"+ (100 * multiplier() * 2),animationx - 25, animationy);
+        else ctx.fillText("+"+ (100 * multiplier()),animationx - 25, animationy);
         animationy -= 3;
         if(animationy <= ball.y - 300) scored = false;
     }
@@ -683,28 +922,30 @@ function draw(time) {
 ******High Score Functions*********
 */
 function checkHighScore(){
-var Score = Parse.Object.extend("Score");
-var query = new Parse.Query(Score);
-query.lessThan("score", player.score);
-query.count({
-  success: function(count) {
-	if(count > 0){
-		loadNewHighScoreScreen();
-	}
-	else{
-		loadEndMenu();
-	}
-  },
-  error: function(error) {
-    alert("Error retrieving high scores");
-	loadEndMenu();
-  }
-});	
+    var Score = Parse.Object.extend("Score");
+    var query = new Parse.Query(Score);
+    query.lessThan("score", player.score);
+    query.count({
+      success: function(count) {
+    	if(count > 0){
+            ga('send', 'event', 'Gate Grabber', 'highScore', 'achieved');
+    		loadNewHighScoreScreen();
+    	}
+    	else{
+    		loadEndMenu();
+    	}
+      },
+      error: function(error) {
+        alert("Error retrieving high scores");
+    	loadEndMenu();
+      }
+    });	
 	
 }
 
 
 function addNewHighScore(){
+    ga('send', 'event', 'Gate Grabber', 'highScore', 'submitted');
 	player_Name = document.getElementById("nameInput").value;
 	deleteLowScore();
 	pushNewHighScore();
@@ -758,48 +999,47 @@ function pushNewHighScore(){
 
 
 function refreshHighScores(){
-var Score = Parse.Object.extend("Score");
-var query = new Parse.Query(Score);
-query.descending("score");
-query.find({
-  success: function(results) {
+    var Score = Parse.Object.extend("Score");
+    var query = new Parse.Query(Score);
+    query.descending("score");
+    query.find({
+      success: function(results) {
 
 
-    for (var i = 0; i < results.length && i < 10; i++) {
-      var object = results[i];
-	  if(i==9){
-		 document.getElementById("highScore" + (i+1)).innerHTML = (i+1) + ". " + object.get('playerName') + " - " + object.get('score') + "pts"; 
-	  }
-	  else{
-		 document.getElementById("highScore" + (i+1)).innerHTML = (i+1) + ".   " + object.get('playerName') + " - " + object.get('score') + "pts"; 
-	  }
-      
-    }
-	
-	for (var i = 0; i < results.length && i < 10; i++) {
-      var object = results[i];
-	  if(i==9){
-		 document.getElementById("highScoreEnd" + (i+1)).innerHTML = (i+1) + ". " + object.get('playerName') + " - " + object.get('score') + "pts"; 
-	  }
-	  else{
-		 document.getElementById("highScoreEnd" + (i+1)).innerHTML = (i+1) + ".   " + object.get('playerName') + " - " + object.get('score') + "pts"; 
-	  }
-      
-    }
-	
-  },
-  error: function(error) {
+        for (var i = 0; i < results.length && i < 10; i++) {
+          var object = results[i];
+    	  if(i==9){
+    		 document.getElementById("highScore" + (i+1)).innerHTML = (i+1) + ". " + object.get('playerName') + " - " + object.get('score') + "pts"; 
+    	  }
+    	  else{
+    		 document.getElementById("highScore" + (i+1)).innerHTML = (i+1) + ".   " + object.get('playerName') + " - " + object.get('score') + "pts"; 
+    	  }
+          
+        }
+    	
+    	for (var i = 0; i < results.length && i < 10; i++) {
+          var object = results[i];
+    	  if(i==9){
+    		 document.getElementById("highScoreEnd" + (i+1)).innerHTML = (i+1) + ". " + object.get('playerName') + " - " + object.get('score') + "pts"; 
+    	  }
+    	  else{
+    		 document.getElementById("highScoreEnd" + (i+1)).innerHTML = (i+1) + ".   " + object.get('playerName') + " - " + object.get('score') + "pts"; 
+    	  }
+          
+        }
+    	
+      },
+      error: function(error) {
 
-    alert("Error retrieving high scores");
-  }
-});			
-
-
+        alert("Error retrieving high scores");
+      }
+    });			
 }
 
 
 
 function loadConfiguration() {
+    ga('send','event', 'Gate Grabber', 'choice', 'buttonConfig');
     //clear all user interface elements
     var temp = document.getElementsByClassName("ui");
     for (i = 0; i < temp.length; ++i) {
@@ -832,6 +1072,7 @@ function assignright(key){
 
 
 function loadControls(){
+    ga('send','event', 'Gate Grabber', 'choice', 'Controls');
     //clear all user interface elements
 	$(".ui").fadeOut(600);
     var temp = document.getElementsByClassName("ui");
@@ -849,6 +1090,7 @@ function loadControls(){
 }
 
 function loadHowToPlay(){
+    ga('send','event', 'Gate Grabber', 'choice', 'HowTo');
     //clear all user interface elements
 	$(".ui").fadeOut(600);
     var temp = document.getElementsByClassName("ui");
@@ -866,6 +1108,7 @@ function loadHowToPlay(){
 }
 
 function loadoptions(){
+    ga('send','event', 'Gate Grabber', 'choice', 'Options');
     //clear all user interface elements
 	$(".ui").fadeOut(600);
     var temp = document.getElementsByClassName("ui");
@@ -885,21 +1128,22 @@ function loadoptions(){
 function volumeIconSelector(){
 	var temp;
 	if(mute == false){
-	temp = document.getElementById("volumeMuted");
-	temp.style.display = "none";
-	temp = document.getElementById("volumePlaying");
-	temp.style.display = "inline";
+    	temp = document.getElementById("volumeMuted");
+    	temp.style.display = "none";
+    	temp = document.getElementById("volumePlaying");
+    	temp.style.display = "inline";
 	}
 	else{
-	temp = document.getElementById("volumeMuted");
-	temp.style.display = "inline";
-	temp = document.getElementById("volumePlaying");
-	temp.style.display = "none";
+    	temp = document.getElementById("volumeMuted");
+    	temp.style.display = "inline";
+    	temp = document.getElementById("volumePlaying");
+    	temp.style.display = "none";
 	}
 }
 
 function toggleMusic(){
 	if(mute == false){
+        ga('send','event', 'Gate Grabber', 'Music', 'off');
 		mute = true;
 		music.pause();
 		music.currentTime = 0;
@@ -907,6 +1151,7 @@ function toggleMusic(){
 		miss.volume = 0;
 	}
 	else if(mute == true){
+        ga('send','event', 'Gate Grabber', 'Music', 'on');
 		mute = false;
 		music.play();
 		collection.volume = sfx.value/100;
@@ -930,8 +1175,12 @@ function loadMainMenu(){
         temp[i].style.display = "inline";
     }
 	
-	
-	
+	//Reset the visualization
+	var s = {rate1: gate1.rate, rate2: gate2.rate, rate3: gate3.rate, 
+				 gate1: gateType[gate1.type].src, gate2: gateType[gate2.type].src, gate3: gateType[gate3.type].src,
+				 gate1y:  -100, gate2y: -100, gate3y: -100
+				};
+	speedVis.update(s);
 	
 	$(".mainMenu").hide();
 	$(".mainMenu").fadeIn(600);
@@ -1097,6 +1346,7 @@ function loadNewHighScoreScreen(){
 }
 
 function loadHighScores(){
+    ga('send','event', 'Gate Grabber', 'choice', 'highScore');
 	refreshHighScores();
 	$(".ui").fadeOut(600);
     //clear all user interface elements
@@ -1117,357 +1367,7 @@ function loadHighScores(){
     setTimeout(cleanup, 100);   
 }
 
-function cleanup(){
-    //WARNING!!!!!! Some of the words/phrases below are highly offensive. read at your own risk
-    
-    $('.scoreList').profanityFilter({
-        customSwears: [ "2g1c",
-  "2 girls 1 cup",
-  "acrotomophilia",
-  "anal",
-  "anilingus",
-  "anus",
-  "arsehole",
-  "ass",
-  "asshole",
-  "assmunch",
-  "auto erotic",
-  "autoerotic",
-  "babeland",
-  "baby batter",
-  "ball gag",
-  "ball gravy",
-  "ball kicking",
-  "ball licking",
-  "ball sack",
-  "ball sucking",
-  "bangbros",
-  "bareback",
-  "barely legal",
-  "barenaked",
-  "bastardo",
-  "bastinado",
-  "bbw",
-  "bdsm",
-  "beaver cleaver",
-  "beaver lips",
-  "bestiality",
-  "bi curious",
-  "big black",
-  "big breasts",
-  "big knockers",
-  "big tits",
-  "bimbos",
-  "birdlock",
-  "bitch",
-  "black cock",
-  "blonde action",
-  "blonde on blonde action",
-  "blow j",
-  "blow your l",
-  "blue waffle",
-  "blumpkin",
-  "bollocks",
-  "bondage",
-  "boner",
-  "boob",
-  "boobs",
-  "booty call",
-  "brown showers",
-  "brunette action",
-  "bukkake",
-  "bulldyke",
-  "bullet vibe",
-  "bung hole",
-  "bunghole",
-  "busty",
-  "butt",
-  "buttcheeks",
-  "butthole",
-  "camel toe",
-  "camgirl",
-  "camslut",
-  "camwhore",
-  "carpet muncher",
-  "carpetmuncher",
-  "chocolate rosebuds",
-  "circlejerk",
-  "cleveland steamer",
-  "clit",
-  "clitoris",
-  "clover clamps",
-  "clusterfuck",
-  "cock",
-  "cocks",
-  "coprolagnia",
-  "coprophilia",
-  "cornhole",
-  "cum",
-  "cumming",
-  "cunnilingus",
-  "cunt",
-  "darkie",
-  "date rape",
-  "daterape",
-  "deep throat",
-  "deepthroat",
-  "dick",
-  "dildo",
-  "dirty pillows",
-  "dirty sanchez",
-  "dog style",
-  "doggie style",
-  "doggiestyle",
-  "doggy style",
-  "doggystyle",
-  "dolcett",
-  "domination",
-  "dominatrix",
-  "dommes",
-  "donkey punch",
-  "double dong",
-  "double penetration",
-  "dp action",
-  "eat my ass",
-  "ecchi",
-  "ejaculation",
-  "erotic",
-  "erotism",
-  "escort",
-  "ethical slut",
-  "eunuch",
-  "faggot",
-  "fecal",
-  "felch",
-  "fellatio",
-  "feltch",
-  "female squirting",
-  "femdom",
-  "figging",
-  "fingering",
-  "fisting",
-  "foot fetish",
-  "footjob",
-  "frotting",
-  "fuck",
-  "fuck buttons",
-  "fudge packer",
-  "fudgepacker",
-  "futanari",
-  "g-spot",
-  "gang bang",
-  "gay sex",
-  "genitals",
-  "giant cock",
-  "girl on",
-  "girl on top",
-  "girls gone wild",
-  "goatcx",
-  "goatse",
-  "gokkun",
-  "golden shower",
-  "goo girl",
-  "goodpoop",
-  "goregasm",
-  "grope",
-  "group sex",
-  "guro",
-  "hand job",
-  "handjob",
-  "hard core",
-  "hardcore",
-  "hentai",
-  "homoerotic",
-  "honkey",
-  "hooker",
-  "hot chick",
-  "how to kill",
-  "how to murder",
-  "huge fat",
-  "humping",
-  "incest",
-  "intercourse",
-  "jack off",
-  "jail bait",
-  "jailbait",
-  "jerk off",
-  "jigaboo",
-  "jiggaboo",
-  "jiggerboo",
-  "jizz",
-  "juggs",
-  "kike",
-  "kinbaku",
-  "kinkster",
-  "kinky",
-  "knobbing",
-  "leather restraint",
-  "leather straight jacket",
-  "lemon party",
-  "lolita",
-  "lovemaking",
-  "make me come",
-  "male squirting",
-  "masturbate",
-  "menage a trois",
-  "milf",
-  "missionary position",
-  "motherfucker",
-  "mound of venus",
-  "mr hands",
-  "muff diver",
-  "muffdiving",
-  "nambla",
-  "nawashi",
-  "negro",
-  "neonazi",
-  "nig nog",
-  "nigga",
-  "nigger",
-  "nimphomania",
-  "nipple",
-  "nipples",
-  "nsfw images",
-  "nude",
-  "nudity",
-  "nympho",
-  "nymphomania",
-  "octopussy",
-  "omorashi",
-  "one cup two girls",
-  "one guy one jar",
-  "orgasm",
-  "orgy",
-  "paedophile",
-  "panties",
-  "panty",
-  "pedobear",
-  "pedophile",
-  "pegging",
-  "penis",
-  "phone sex",
-  "piece of shit",
-  "piss pig",
-  "pissing",
-  "pisspig",
-  "playboy",
-  "pleasure chest",
-  "pole smoker",
-  "ponyplay",
-  "poof",
-  "poop chute",
-  "poopchute",
-  "porn",
-  "porno",
-  "pornography",
-  "prince albert piercing",
-  "pthc",
-  "pubes",
-  "pussy",
-  "queaf",
-  "raghead",
-  "raging boner",
-  "rape",
-  "raping",
-  "rapist",
-  "rectum",
-  "reverse cowgirl",
-  "rimjob",
-  "rimming",
-  "rosy palm",
-  "rosy palm and her 5 sisters",
-  "rusty trombone",
-  "s&m",
-  "sadism",
-  "scat",
-  "schlong",
-  "scissoring",
-  "semen",
-  "sex",
-  "sexo",
-  "sexy",
-  "shaved beaver",
-  "shaved pussy",
-  "shemale",
-  "shibari",
-  "shit",
-  "shota",
-  "shrimping",
-  "slanteye",
-  "slut",
-  "smut",
-  "snatch",
-  "snowballing",
-  "sodomize",
-  "sodomy",
-  "spic",
-  "spooge",
-  "spread legs",
-  "strap on",
-  "strapon",
-  "strappado",
-  "strip club",
-  "style doggy",
-  "suck",
-  "sucks",
-  "suicide girls",
-  "sultry women",
-  "swastika",
-  "swinger",
-  "tainted love",
-  "taste my",
-  "tea bagging",
-  "threesome",
-  "throating",
-  "tied up",
-  "tight white",
-  "tit",
-  "tits",
-  "titties",
-  "titty",
-  "tongue in a",
-  "topless",
-  "tosser",
-  "towelhead",
-  "tranny",
-  "tribadism",
-  "tub girl",
-  "tubgirl",
-  "tushy",
-  "twat",
-  "twink",
-  "twinkie",
-  "two girls one cup",
-  "undressing",
-  "upskirt",
-  "urethra play",
-  "urophilia",
-  "vagina",
-  "venus mound",
-  "vibrator",
-  "violet wand",
-  "vorarephilia",
-  "voyeur",
-  "vulva",
-  "wank",
-  "wet dream",
-  "wetback",
-  "white power",
-  "women rapping",
-  "wrapping men",
-  "wrinkled starfish",
-  "xx",
-  "xxx",
-  "yaoi",
-  "yellow showers",
-  "yiffy",
-  "zoophilia"
-]
 
-    });
-    
-    //WARNING!!!!!! Some of the words/phrases above are highly offensive. read at your own risk
-}
 
 function loadEndMenu(){
 	refreshHighScores();
@@ -1490,6 +1390,8 @@ function loadEndMenu(){
 }
 
 function newGame(){
+    ga('send','event', 'Gate Grabber', 'choice', 'Play');
+    start_time = Date.now();
     //clear all user interface elements
 	$(".ui").fadeOut(600);
     var temp = document.getElementsByClassName("ui");
@@ -1504,10 +1406,13 @@ function newGame(){
 	$(".inGame").hide();
 	$(".inGame").fadeIn(600);
     //reset game variables
+    var tempvar1 = Math.floor((Math.random()* 8));
+    var tempvar2 = Math.floor((Math.random()* 8));
+    var tempvar3 = Math.floor((Math.random()* 8));
     player = { lives:['L','L','L','L','L','L','L','L','L','L'], score:0, value:1};
-    		gate1 = { need: 0, x:(canvas.width/4), y:-200, type:3, rate: Math.floor((Math.random() * 4) +1)};
-    		gate2 = { need: 1, x:(2*(canvas.width/4)), y:-200, type:14, rate: Math.floor((Math.random() * 4) +1)};
-    		gate3 = { need: 0, x:(3*(canvas.width/4)), y:-200, type:9, rate: Math.floor((Math.random() * 4) +1)};
+    		gate1 = { need: gateValue[tempvar1], x:(canvas.width/4), y:-200, type:tempvar1, rate: Math.floor((Math.random() * 4) +1)};
+    		gate2 = { need: gateValue[tempvar2], x:(2*(canvas.width/4)), y:-200, type:tempvar2, rate: Math.floor((Math.random() * 4) +1)};
+    		gate3 = { need: gateValue[tempvar3], x:(3*(canvas.width/4)), y:-200, type:tempvar3, rate: Math.floor((Math.random() * 4) +1)};
 
         		while(gate2.rate == gate1.rate){
         			gate2.rate = Math.floor((Math.random() * 4) +1);
@@ -1531,23 +1436,26 @@ function newGame(){
     collected2x = false;
     scored = false; //tells if player scores
     //start the game
-    		paused = false;
+    playing = true;
+    paused = false;
     requestAnimationFrame(draw);
 }
 
-	function quitGame(){
-    		paused = true;
-    		requestAnimationFrame(clearscreen);
-    		loadMainMenu();
-    	}
+function quitGame(){
+    ga('send','event', 'Gate Grabber', 'choice', 'Quit');
+	paused = true;
+    playing = false;
+	requestAnimationFrame(clearscreen);
+	loadMainMenu();
+}
 
-		function clearscreen(){
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
-		}
+function clearscreen(){
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
 		
 // V Main Event Loop V   <- this is what runs "sequentially" after everything has been loaded; good starting point for trying to figure out whats going on
 //loadMainMenu();
 //wait for html to load before animating
+
 gamestartanimation();
 //loadMainMenuFirstTime();
-

@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-  <link rel="icon" 
-      type="image/png" 
-      href="../images/favicon/favicon.ico">
     <title>Gate Grabber</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script src="../js/Gate Grabber/jquery.profanityfilter.js" type="text/javascript"></script>
@@ -49,7 +46,7 @@
 <button type="button" id="mainMenu_NewHighScoreScreen" class="ui newHighScoreScreen buttons" onclick ="loadMainMenu()">No Thanks</button>
 <button type="button" id="submitHighScore" class="ui newHighScoreScreen buttons" onclick ="addNewHighScore()">Submit!</button>
 <button type="button" id="config_Options" class="ui options buttons" onclick ="loadConfiguration()">Button Configuration</button>
-<input type="text" id="nameInput" class="ui newHighScoreScreen" maxlength="20" >
+<input type="text" id="nameInput" class="ui newHighScoreScreen" maxlength="3" >
 <form id="opt" class ="ui options">
     Background Music
     <br>
@@ -84,17 +81,6 @@ High Scores
 Congratulations! You've recorded a new high Score! Please enter your name below.
 </form>
 
-<form id="framesPerSecond" class ="ui inGame statuses">
-
-</form>
-
-<form id="score" class ="ui inGame statuses">
-
-</form>
-
-<form id="lives" class ="ui inGame statuses">
-
-</form>
 
 <form id="highScore1" class ="ui highScores scoreList ">
 1.   nobody - 0pts
@@ -186,6 +172,10 @@ Congratulations! You've recorded a new high Score! Please enter your name below.
 Hint: Not all gates have a possible correct answer!
 </form>
 
+<form id="score" class ="ui inGame statuses">
+
+</form>
+
 <form id="controlsDescription" class ="ui controls">
 	Movement:
 </form>
@@ -214,6 +204,17 @@ Hint: Not all gates have a possible correct answer!
 <img  id= "textBackground4" src = "../MainMenu/textbackground.png" class="ui highScores">
 <img  id= "textBackground5" src = "../MainMenu/textbackground.png" class="ui endGame">
 <img  id= "textBackground6" src = "../MainMenu/textbackground.png" class="ui newHighScoreScreen">
+<img  id= "10lives" class="ui inGame livesMeter" src = "../images/10lives.png">
+<img  id= "9lives" class="ui inGame livesMeter" src = "../images/9lives.png">
+<img  id= "8lives" class="ui inGame livesMeter" src = "../images/8lives.png">
+<img  id= "7lives" class="ui inGame livesMeter" src = "../images/7lives.png">
+<img  id= "6lives" class="ui inGame livesMeter" src = "../images/6lives.png">
+<img  id= "5lives" class="ui inGame livesMeter" src = "../images/5lives.png">
+<img  id= "4lives" class="ui inGame livesMeter" src = "../images/4lives.png">
+<img  id= "3lives" class="ui inGame livesMeter" src = "../images/3lives.png">
+<img  id= "2lives" class="ui inGame livesMeter" src = "../images/2lives.png">
+<img  id= "1lives" class="ui inGame livesMeter" src = "../images/1lives.png">
+<img  id= "scoreBoard" class="ui inGame" src = "../images/scoreboard.png">
 
 <!-- main menu animation elements -->
 <img  id= "frame1" src = "../MainMenu/animation/cursor.png" class="ui mainMenuAnimation animationLogos">
@@ -232,6 +233,9 @@ Hint: Not all gates have a possible correct answer!
 <img  id= "frame14" src = "../MainMenu/animation/frame14.png" class="ui mainMenuAnimation animationLogos">
 </div>
 
+<div id = "fpsDiv" >
+<canvas id="fpsCanvas" width="300" height="152"></canvas>
+</div>
 
 <div id = "speedDiv" >
     <img  id= "gate1" src = "../Gates/and00x.png" class = "gateViz">
@@ -256,6 +260,8 @@ Hint: Not all gates have a possible correct answer!
 </div>
 
 
+
+
 <img  id= "AND00x" src = "../Gates/and00x.png">
 <img  id= "AND0x0" src = "../Gates/and0x0.png">
 <img  id= "AND0x1" src = "../Gates/and0x1.png">
@@ -276,13 +282,12 @@ Hint: Not all gates have a possible correct answer!
 <img  id= "playerIcon0" class="playerIcon" src= "../images/playericon0.png">
 <img  id= "playerIcon1" class="playerIcon" src = "../images/playericon1.png">
 
+
 <script src="../js/Visualization API/Resources/d3.min.js"></script>
 <script src="../js/Visualization API/Resources/d3plus.min.js"></script>
 <script src="../js/Visualization API/test.js"></script>
 <script src="http://www.parsecdn.com/js/parse-latest.js"></script>
 <script src="../js/Gate Grabber/GateGrabber.js"></script>
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
 
 
@@ -295,8 +300,6 @@ Hint: Not all gates have a possible correct answer!
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="../bootstrap/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>
 

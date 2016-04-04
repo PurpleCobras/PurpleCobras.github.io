@@ -47,6 +47,10 @@ body{
     src: url(fonts/RetrovilleNC.ttf);
 }
 @font-face{
+	font-family: "PressStart";
+    src: url(fonts/PressStart2P-Regular.ttf);
+}
+@font-face{
 	font-family: "Kinescope";
 	src: url(fonts/Kinescope.otf);
 }
@@ -86,11 +90,21 @@ body{
 	font-family: "MyWriting";
 	src: url(fonts/Mywriting.ttf);
 }
- 
+
 .statuses{
 	font-family: "Retroville";
 	position: absolute;
 	color: #ED1809;
+}
+
+#scoreBoard{
+	visibility: visible;
+	position: absolute;
+	width: 98px;
+	height: 60px;
+	top: 0px;
+	left: 12px;
+	z-index:0;
 }
 
 .scoreList{
@@ -105,17 +119,26 @@ body{
 	height: 91px;
 }
 
+#score{
+	position: absolute;
+	top: 27px;
+	left: 29px;
+	z-index:1;
+}
+
 #framesPerSecond{
     position: absolute;
 	top: 2px;
 	left: 17px;
 }
-
-#score{
-	position: absolute;
-	top: 15px;
-	left: 16px;
+/*
+#fpsMeter{
+	visibility: visible;
+	height: 152px;
+	width: 300px;
 }
+*/
+
 
 #lives{
 	position: absolute;
@@ -129,6 +152,12 @@ body{
 	margin: 0 auto;
 }
 
+#fpsCanvas {
+	background: url(../images/meter.png);
+	background-size: 100%;
+	display: block; 
+	margin: 0 auto;
+}
 
 
 #gameDiv{
@@ -136,19 +165,28 @@ body{
 	width:530px;
 	height: 600px;
 	top: 60px;
-	left: 200px;
+	left: 250px;
 	padding-right: 25px;
 	margin-bottom: 0px;
 }
 
+#fpsDiv{
+	position: absolute;
+	right: 27%;
+	width: 300px;
+	height: 152px;
+	top: 95px;
+}
 
 #speedDiv{
-	float: right;
+	position: absolute;
+	right: 5%;
 	/*float: left;*/
 	width: 25%;
 	/*width: 400px;*/
-	height: 350px;
+	height: 500px;
 	padding-top: 35px;
+	width: 295px;
 
 	/*border-style: solid;*/
 }
@@ -159,7 +197,7 @@ body{
 	/*float: left;*/
 	width: 80%;
 	/*width: 400px;*/
-	height: 20%;
+	height: 16%;
 	/*border-style: solid;*/
 }
 
@@ -206,6 +244,14 @@ body{
 	top: 2px;
 }
 
+.livesMeter{
+	visibility: visible;
+	position: absolute;
+	left: 13px;
+	bottom: -70px;
+	width:480px;
+	height: 60px;
+}
 
 
 .ui{
@@ -1121,6 +1167,8 @@ img#table{
 
 #mazeDiv{
 	position: absolute;
+	height:520px;
+	width:520px;
 	left: 53%;
 	top:  50px;
 }
@@ -1140,6 +1188,7 @@ img#table{
 }
 
 .mmEndButton {
+	left:50%;
 	border-radius: 12px;
 	background-color: red;
 	background-color: #ff4d4d;
@@ -1157,12 +1206,27 @@ img#table{
 	background-color:#363535;
 }
 
+#HighScoreTitle{
+	left:15%;
+	position: absolute;
+	color: white;
+	font-size: 44px;
+	font-family: "CabinBold";
+}
+#NewScore{
+	position: absolute;
+	top:12%;
+	left: 35%;
+	color: white;
+	font-size: 40px;
+	font-family: "CabinBold";
+}
 #mathMazeEndm{
 	width: 180px;
 	height: 50px;
 	font-size: 28px;
 	top: 45%;
-	left: 33%;
+	left: 35%;
 }
 
 #mathMazeReplay{
@@ -1170,7 +1234,33 @@ img#table{
 	height: 50px;
 	font-size: 28px;
 	top: 35%;
-	left: 33%;
+	left: 35%;
+}
+#MathMazeSubmitHighScore{
+	position: absolute;
+	border-radius: 12px;
+	background-color: #ffff80;
+	border:1px solid #1f1f1f;
+	color: white;
+	text-shadow:-1px 1px 2px #3b0404;
+	font-family: "CabinBold";
+	width: 180px;
+	height: 50px;
+	font-size: 28px;
+	top: 24%;
+	left: 60%;
+}
+#MathMazeNameInput{
+	background-color: rgba(0,0,0,0);
+	border-color: rgba(255,255,255,1);
+	border-width: 0px 0px 1px 0px;
+	position: absolute;
+	background
+	height: 50px;
+	font-family: "CabinBold";
+	color: white;
+	font-size: 24px;
+	top:25%;
 }
 
 .mm{
@@ -1200,4 +1290,62 @@ commentHeader{
 .commentContainer input {
         width: 100%;
         clear: both;
+}
+
+
+.EndGame{
+	font-size: 34px;
+	font-family: "CabinBold";
+	color:white;
+	position: absolute;
+}
+
+#MMhighScoreEnd1{
+	bottom: 80%;
+	left: 20%;
+}
+
+#MMhighScoreEnd2{
+	bottom: 72%;
+	left: 20%;
+}
+
+#MMhighScoreEnd3{
+	bottom: 64%;
+	left: 20%;
+}
+
+#MMhighScoreEnd4{
+	bottom: 56%;
+	left: 20%;
+}
+
+#MMhighScoreEnd5{
+	bottom: 48%;
+	left: 20%;
+}
+
+#MMhighScoreEnd6{
+	bottom: 40%;
+	left: 20%;
+}
+
+#MMhighScoreEnd7{
+	bottom: 32%;
+	left: 20%;
+}
+
+#MMhighScoreEnd8{
+	bottom: 24%;
+	left: 20%;
+}
+
+#MMhighScoreEnd9{
+	bottom: 16%;
+	left: 20%;
+}
+
+#MMhighScoreEnd10{
+	bottom: 8%;
+	left: 20%;
 }

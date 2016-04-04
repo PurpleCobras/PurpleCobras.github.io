@@ -25,9 +25,6 @@ document.write('<link rel="icon" href="../../favicon.ico">');
 
 
 document.write('<link href="../bootstrap/bootstrap.min.css" rel="stylesheet">');
-document.write('<link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">');
-document.write('<link href="navbar-fixed-top.css" rel="stylesheet">');
-document.write('<script src="../../assets/js/ie-emulation-modes-warning.js"></script>');
 
 document.write('<link rel="stylesheet" href="../css/style.css" type="text/css" />');
 

@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-  <link rel="icon" 
-      type="image/png" 
-      href="../images/favicon/favicon.ico">
     <title>Math Maze Information</title>
 <!-- For Parse -->
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
@@ -33,54 +30,102 @@
 	<h5>Math Maze Information</h5>
 
 	<p>This maze style game will help the player practice all kinds of mathematical functions in a fun and entertaining way. It is very easy to play and makes solving math problems more fun.</p>
-	<p>The first thing you do is choose the difficulty you want to play at. You then are able to choose the color of the player box in the game. When the maze loads, you are given a math problem to solve. The problems come in many forms based on the difficulty. There are some that ask for the greatest common factor, some that require a multistep solving process, and some that are just simple addition and subtraction.</p>
+	
+	<p><b>To get started, choose your difficulty: </b></p>
 
-	<p>First the player must solve the problem given. Then the player must find the correct answer in the maze. There are 4 answers placed on the for each problem. If the player retrieves a wrong answer the max possible score decreases and the miss count increases. The amount of possible points depends on the difficulty as well as the time that has elapsed. Once the player has retrieved the correct answer, points are awarded depending on difficulty and time and the hit count increases. There is a visualization for a correct and wrong answer. If the answer chosen is wrong a red 'x' floats up and the miss box in the visualization is made red for a few seconds. If the answer chosen is correct a green 'check' floats up and the hit box in the visualization is made green for a few seconds.  A different problem with a different maze is generated and loaded to the screen.</p>
-  <b>Difficulties:</b>
-  <ul>
-    <li><b>Easy</b></li>
-    <ul>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2">
+          <div class = "thumb">
+	<button class = "difficulty easy" id = "Easy" onclick ="#"> <font color= "white">Easy</font></button><br>
+      </div>
+  	<ul>
       <li>Addition</li>
       <li>Subtraction</li>
       <li>Greatest Common Factor</li>
-    </ul>
-    <li><b>Moderate</b></li>
-    <ul>
+    </ul>        
+        <br>
+        
+        </div>
+        <div class="col-md-2">
+          <div class = "thumb">
+    <button class = "difficulty moderate" id = "Moderate" onclick ="#"> Moderate </button><br>
+      </div>
+ <ul>
       <li>Multiplication</li>
       <li>Division</li>
       <li>Linear equations with one variable</li>
     </ul>
-    <li><b>Hard</b></li>
-    <ul>
+    <br>
+    </div>
+            <div class="col-md-2">
+          <div class = "thumb">
+    <button class = "difficulty hard" id = "Hard" onclick ="#"> <font color= "white">Hard</font></button><br>
+      </div>
+      <ul>
       <li>Exponents</li>
       <li>Least Common Multiple</li>
       <li>Linear equations with variables on both sides</li>
-    </ul>
-    <li><b>All</b></li>
-    <ul>
+    </ul>      
+        <br>
+        
+        </div>
+        <div class="col-md-2">
+          <div class = "thumb">
+    <button class = "difficulty all" id = "All" onclick ="#"> <font color= "white">All</font></button><br>
+      </div>
+	<ul>
       <li>Mix of all Easy, Moderate, and Hard problems</li>
     </ul>
+    <br>
+    </div>    
+    </div> <!-- /container -->
 
-  </ul>
-  <p><b>Coming Soon:</b>
-      <ul>
-        <li>Game Ending</li>
-        <li>Highscore board</li>
-        <li>Updated visuals</li>
-        <li>Sound Effects</li>
-        <li>More Mazes!</li>
-      </ul>
-    
-    </p>
-  <p>We are currently working on and improving this game. We will try to keep this information as up to date as possible. 
-  </p>
-				<br><br>
-				<!-- <p>            <a href = "LogicGateLesson.html" class = "btn btn-default" role = "button"> 
-				Logic Gate Lesson </a> </p> -->
-				
-	<!-- <p>For help on logic gates, click here!</p> -->
+	<p><b>Choose the color of the player box:</b></p>
+	
+	<div class="container">
+	<button class = "colors" id = "red" onclick = "#">RED</button>
+    <button class = "colors" id = "orange" onclick = "#">ORANGE</button>
+    <button class = "colors" id = "yellow" onclick = "#">YELLOW</button>
+    <button class = "colors" id = "green" onclick = "#">GREEN</button><br><br>
+    <button class = "colors" id = "blue" onclick = "#">BLUE</button>
+    <button class = "colors" id = "indigo" onclick = "#">INDIGO</button>
+    <button class = "colors" id = "violet" onclick = "#">VIOLET</button>
+    <button class = "colors" id = "cyan" onclick = "#">CYAN</button><br><br>
+    <button class = "colors" id = "chartreuse" onclick = "#">CHARTREUSE</button>
+    <button class = "colors" id = "magenta" onclick = "#">MAGENTA</button>
+    <button class = "colors" id = "navy" onclick = "#">NAVY</button>
+    <button class = "colors" id = "chocolate" onclick = "#">CHOCOLATE</button>
+	</div> <!-- /container -->
 
+	<br>
+	<br>
+	<p>The equation you must solve is shown to the left of the maze.  </p>
+	<p><b>Use the arrow keys to navigate through the maze.</p></b>
+	
+	<img id = "table" src = "../images/arrowkeys.png" alt = "Arrow Keys" style="width:128px;height:100px;">
+	<br><br>
+	
+	<p>There are 4 possible answers to the equation. Choose the correct answer quickly to get the most points and move to the next question.</p>
+	<p><b>If the chosen answer is correct, +1 will be added to the left side of the visualization counter: </b></p>
+	
+	<img id = "table" src = "../images/rightanswer.png" alt = "Correct" style="width:150px;height:75px;">
 
+	<br><br>
+	
+	<p>There are 4 possible answers to the equation. Choose the correct answer quickly to get the most points and move to the next question.</p>
+	<p><b>If the chosen answer is incorrect, +1 will be added to the right side of the visualization counter: </b></p>
+	
+	<img id = "table" src = "../images/wronganswer.png" alt = "Wrong" style="width:150px;height:75px;">
+
+	<br><br>
+	
+	<p>When you have chosen the correct answer, points are awarded to you based on the difficulty of the question and how quickly you solved it.</p>
+	
+	<p><b>Ready to play?</b></p>
+	<p><a class="btn btn-default" href="MathMaze.html" role="button">PLAY NOW! &raquo;</a></p>
+         
+<br><br>
 <div id="main">
 <p><b>We want to know what you think!</b> </p>
 
@@ -194,8 +239,6 @@ query.exists("objectId");query.find({
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="../bootstrap/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>
 

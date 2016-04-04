@@ -1,3 +1,5 @@
+Parse.initialize("diakk76G5jwfsXucNjRvR2aY3QzssM2fB23kYt6n", "roUhfgLuwVo6GljjAYuajInYxlSrMLXG9s440HD8");
+
 //Canvas variables
 var canvas = document.getElementById("function");
 var funWidth = canvas.width;
@@ -23,11 +25,11 @@ checkImg.crossOrigin = "anonymous";
 checkImg.src = "http://i.imgur.com/GAVvh4K.png"; 
 var img = new Image();
 img.crossOrigin = "anonymous";
-var possibleMazes = ["http://i.imgur.com/OQgTNuj.gif","http://i.imgur.com/flxIDNr.gif","http://i.imgur.com/pxR44tj.gif","http://i.imgur.com/q5tZz1U.gif",
-					 "http://i.imgur.com/sudypqL.gif","http://i.imgur.com/tFBMs81.gif","http://i.imgur.com/ItHvT7v.gif","http://i.imgur.com/r2oir1h.gif",
-					 "http://i.imgur.com/S3d0Wcr.gif","http://i.imgur.com/l7ZfTTL.gif","http://i.imgur.com/NGKX5tf.gif","http://i.imgur.com/qY1x4yk.gif",
-					 "http://i.imgur.com/9zTyyeJ.gif","http://i.imgur.com/2vUXB3g.gif","http://i.imgur.com/R8ZYvcP.gif","http://i.imgur.com/nzH3QuD.gif",
-					 "http://i.imgur.com/ooj3zxe.gif","http://i.imgur.com/NxDleTD.gif","http://i.imgur.com/OfqQYtJ.gif","http://i.imgur.com/jk0wHzz.gif"];
+var possibleMazes = ["http://i.imgur.com/iNDtyRa.png","http://i.imgur.com/f8vwqPf.png","http://i.imgur.com/vjpv5sd.png","http://i.imgur.com/98TMoVb.png",
+					 "http://i.imgur.com/wt0UVkW.png","http://i.imgur.com/LvZ6cfM.png","http://i.imgur.com/qz3LqKu.png","http://i.imgur.com/OQjHiFZ.png",
+					 "http://i.imgur.com/JPiXtck.png","http://i.imgur.com/LTcPoOH.png","http://i.imgur.com/vjOfQR7.png","http://i.imgur.com/Scvy9lk.png",
+					 "http://i.imgur.com/rD2ke5C.png","http://i.imgur.com/asX1KwO.png","http://i.imgur.com/jmvYGAb.png","http://i.imgur.com/Z33bcKc.png",
+					 "http://i.imgur.com/DG8FsKD.png","http://i.imgur.com/EeFX5kz.png","http://i.imgur.com/AbUVgpq.png","http://i.imgur.com/FlvlAiM.png"];
 
 
 var dx = 50;			//Change in the x postion when an arrow key is pressed
@@ -36,6 +38,7 @@ var player_x = 0;		//Players x coordinate
 var player_y = 0;		//Players y coordinate
 var player_score = 0;   //Players score
 var playerColor = "#6b2bab";
+var player_Name;
 
 var animationXCoord = 0, animationYCoord = 0; 			//Change in the x, y coordinate for animation when collecting wrong/right answers
 
@@ -99,6 +102,7 @@ mainMenu(color)
 	-HitMiss visualization is created and init() is called
 */
 function play(color){
+	ga('send','event', 'Math Maze', 'colorChoice', color);
 	switch(color){
 		case 1:
 			playerColor = "red";
@@ -163,6 +167,7 @@ colorChoice(diff)
 	-The color choice menu is made visible while the main menu is hidden.
 */
 function colorChoice(diff){
+	ga('send','event', 'Math Maze', 'diffChoice', diff);
 	difficulty = diff;
 	document.getElementById("menu").style.display = "none";
 	document.getElementById("colorMenu").style.display = "inline";
@@ -243,18 +248,18 @@ function chooseMaze(){
 	src = possibleMazes[temp];
 	maze_type = temp;
 
-	src = "http://i.imgur.com/iNDtyRa.png"
-// 	while(true){
+	//src = "http://i.imgur.com/iNDtyRa.png"
+	while(true){
 
-// 		src = possibleMazes[temp-1];
-// 		maze_type = temp;
+		src = possibleMazes[temp-1];
+		maze_type = temp;
 		
-// 		if(src == last_src){		//The new maze is the same as the old maze
-// 			temp = Math.floor(Math.random() * 20) + 1;
-// 		}
+		if(src == last_src){		//The new maze is the same as the old maze
+			temp = Math.floor(Math.random() * 20) + 1;
+		}
 		
-// 		else{ break;}				//The same maze wasn't used two times in a row
-// 	}	
+		else{ break;}				//The same maze wasn't used two times in a row
+	}	
 }
 
 /*
@@ -738,6 +743,8 @@ correctAnswer(ans)
 	-Starts and stops the hit_Miss visualization
 */
 function correctAns(ans){
+	var time = current_time_ms - start_time_ms;
+	ga('send','event', 'Math Maze', 'mazeCompleteTime', time, questionCounter);
 	switch(ans){
 		case 1:
 			answer1status = 1;
@@ -776,8 +783,13 @@ function correctAns(ans){
 		visHitMiss.update(hit_Miss);
 		//Player has reached the end of the game
 		if(questionCounter == 15){
+			time = Date.now();
+			time = time - start_time_ms;
+			ga('send','event', 'Math Maze', 'gameCompleteTime', time);
 			paused = true;
-			loadEndMenu();
+			refreshHighScores();
+			checkHighScore();
+			//loadEndMenu();
 		}
 		
 		if(!paused){ 
@@ -1272,6 +1284,18 @@ function random_character() {
 function newGame(){
 	//clear all user interface elements
 	$(".mm").fadeOut(600);
+	document.getElementById("MathMazeNameInput").style.display = "none";
+	document.getElementById("MathMazeSubmitHighScore").style.display = "none";
+	document.getElementById("EndGameScores").style.display = "none";
+	document.getElementById("HighScoreTitle").style.display = "none";
+	document.getElementById("NewScore").style.display = "none";
+	document.getElementById("maze").style.display = "inline";
+	document.getElementById("functionDiv").style.display = "inline";
+	document.getElementById("scoreboardDiv").style.display = "inline";
+	document.getElementById("hit_missDiv").style.display = "inline";
+
+	document.getElementById("MathMazeNameInput").placeholder = "Enter Name";
+	player_name = "";
     var temp = document.getElementsByClassName("mm");
     for(i=0; i<temp.length; ++i){
         temp[i].style.display = "none";
@@ -1299,6 +1323,17 @@ function newGame(){
 	-Function that will load the end of game menu to the screen
 */
 function loadEndMenu(){
+	document.getElementById("EndGameScores").style.display = "inline";
+	document.getElementById("functionDiv").style.display = "none";
+	document.getElementById("hit_missDiv").style.display = "none";
+	document.getElementById("scoreboardDiv").style.display = "none";
+	document.getElementById("maze").style.display = "none";
+	document.getElementById("HighScoreTitle").style.display = "none";
+	document.getElementById("MathMazeSubmitHighScore").style.display = "none";
+	document.getElementById("MathMazeNameInput").style.display = "none";
+	document.getElementById("NewScore").style.display = "none";
+
+
     //load all relevant user interface elements
     temp = document.getElementsByClassName("endGame");
     for(i=0; i<temp.length; ++i){
@@ -1306,7 +1341,28 @@ function loadEndMenu(){
     }
 	//setTimeout(refreshHighScores, 2500);
 }
+/* 
+ loadNewHighScoreScreen()
+*/
+function loadNewHighScoreScreen(){
+	document.getElementById("EndGameScores").style.display = "inline";
+	document.getElementById("functionDiv").style.display = "none";
+	document.getElementById("hit_missDiv").style.display = "none";
+	document.getElementById("scoreboardDiv").style.display = "none";
+	document.getElementById("maze").style.display = "none";
 
+	document.getElementById("HighScoreTitle").style.display = "inline";
+	document.getElementById("MathMazeSubmitHighScore").style.display = "inline";
+	document.getElementById("MathMazeNameInput").style.display = "inline";
+
+	document.getElementById("NewScore").style.display = "inline";
+	document.getElementById("NewScore").innerHTML = player_score + "pts";
+	//load all relevant user interface elements
+    temp = document.getElementsByClassName("endGame");
+    for(i=0; i<temp.length; ++i){
+        temp[i].style.display = "inline";
+    }
+}
 /*
 refresh()
 	-Function to reload the math maze HTML file
@@ -1325,7 +1381,200 @@ function clearScreen(){
 	ctx.clearRect(0, 0, WIDTH, HEIGHT);
 }
 
-window.alert("WARNING!!! This game may experience issues in browsers other than Google Chrome.");
-//mainMenu();
-//init();				//Function call to start the game
+/*
+******High Score Functions*********
+*/
+function checkHighScore(){
+    // var Score = Parse.Object.extend("MMScore");
+    var Score;
+    var query; 
 
+    switch(difficulty){
+    	case 0:
+    		Score = Parse.Object.extend("All");
+    		query = new Parse.Query(Score);
+			break;
+    	case 1:
+    		Score = Parse.Object.extend("Easy");
+    		query = new Parse.Query(Score);	
+    		break;
+    	case 2:
+    		Score = Parse.Object.extend("Moderate");
+    		query = new Parse.Query(Score);
+    		break;
+    	case 3:
+    		Score = Parse.Object.extend("Hard");
+    		query = new Parse.Query(Score);	
+    		break;
+    }
+
+    query.lessThan("Score", player_score);
+    query.count({
+      success: function(count) {
+    	if(count > 0){
+            ga('send', 'event', 'Math Maze', 'highScore', 'achieved');
+    		loadNewHighScoreScreen();
+    	}
+    	else{
+    		loadEndMenu();
+    	}
+      },
+      error: function(error) {
+        alert("Error retrieving high scores");
+    	loadEndMenu();
+      }
+    });	
+	
+}
+
+
+function addNewHighScore(){
+    ga('send', 'event', 'Math Maze', 'highScore', 'submitted', difficulty);
+	player_Name = document.getElementById("MathMazeNameInput").value;
+	deleteLowScore();
+	pushNewHighScore();
+	refreshHighScores();
+	loadEndMenu();
+}
+
+function deleteLowScore(){
+	var Score;
+    var query;
+
+    switch(difficulty){
+    	case 0:
+    		Score = Parse.Object.extend("All");
+    		query = new Parse.Query(Score);
+    		break;
+    	case 1:
+    		Score = Parse.Object.extend("Easy");
+    		query = new Parse.Query(Score);
+    		break;
+    	case 2:
+    		Score = Parse.Object.extend("Moderate");
+    		query = new Parse.Query(Score);
+    		break;
+    	case 3:
+    		Score = Parse.Object.extend("Hard");
+    		query = new Parse.Query(Score);
+    		break;
+    }
+
+	query.ascending("Score");
+	query.first({
+		success: function(object) {
+			object.destroy({
+				success: function(myObject) {
+					console.log('Object deleted from cloud');
+				},
+				error: function(myObject, error) {
+					alert("object not deleted from cloud");
+				}
+			});	
+		},
+		error: function(error) {
+			alert("Error retrieving high scores");
+		}
+	});
+}
+
+function pushNewHighScore(){
+	var Score;
+	var score;
+
+	switch(difficulty){
+    	case 0:
+    		Score = Parse.Object.extend("All");
+    		score = new Score();
+    		break;
+    	case 1:
+    		Score = Parse.Object.extend("Easy");
+    		score = new Score();
+    		break;
+    	case 2:
+    		Score = Parse.Object.extend("Moderate");
+    		score = new Score();
+    		break;
+    	case 3:
+    		Score = Parse.Object.extend("Hard");
+    		score = new Score();
+    		break;
+    }
+
+	score.set("Score", player_score);
+	score.set("Name", player_Name);
+
+	score.save(null, {
+		success: function(score) {
+
+
+				console.log('new high score saved succesfully');
+			},
+			error: function(score, error) {
+
+
+
+				
+				alert('Failed to save high score');
+				}
+				});
+}
+
+
+function refreshHighScores(){
+    var Score = Parse.Object.extend("MMScore");
+    var query = new Parse.Query(Score);
+
+    switch(difficulty){
+    	case 0:
+    		Score = Parse.Object.extend("All");
+    		query = new Parse.Query(Score);
+    		break;
+    	case 1:
+    		Score = Parse.Object.extend("Easy");
+    		query = new Parse.Query(Score);
+    		break;
+    	case 2:
+    		Score = Parse.Object.extend("Moderate");
+    		query = new Parse.Query(Score);
+    		break;
+    	case 3:
+    		Score = Parse.Object.extend("Hard");
+    		query = new Parse.Query(Score);
+    		break;
+    }
+
+    query.descending("Score");
+    query.find({
+      success: function(results) {
+
+
+       //  for (var i = 0; i < results.length && i < 10; i++) {
+       //    var object = results[i];
+    	  // if(i==9){
+    		 // document.getElementById("MMhighScore" + (i+1)).innerHTML = (i+1) + ". " +  object.get('score') + "pts 		- " + object.get('playerName'); 
+    	  // }
+    	  // else{
+    		 // document.getElementById("MMhighScore" + (i+1)).innerHTML = (i+1) + ". " +  object.get('score') + "pts 		- " + object.get('playerName');
+    	  // }
+          
+       //  }
+    	
+    	for (var i = 0; i < results.length && i < 10; i++) {
+          var object = results[i];
+    	  if(i==9){
+    		 document.getElementById("MMhighScoreEnd" + (i+1)).innerHTML = (i+1) + ". " +  object.get('Score') + "pts 		- " + object.get('Name');
+    	  }
+    	  else{
+    		 document.getElementById("MMhighScoreEnd" + (i+1)).innerHTML = (i+1) + ". " +  object.get('Score') + "pts 		- " + object.get('Name');
+    	  }
+          
+        }
+    	
+      },
+      error: function(error) {
+
+        alert("Error retrieving high scores");
+      }
+    });			
+}
