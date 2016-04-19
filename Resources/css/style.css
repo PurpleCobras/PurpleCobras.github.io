@@ -19,10 +19,10 @@
 	-moz-border-radius-bottomleft:42px;
 	border-bottom-left-radius:42px;
 	border:1px solid #1f1f1f;
-	color:#ed1809;
+	color:#1ff400;
 	height:62px;
 	line-height:100%;
-	text-shadow:-1px 1px 2px #3b0404;
+	text-shadow:-1px 2px 2px #0e6600;
 	font-family: "Retroville";
 }
 
@@ -39,24 +39,20 @@ body{
 	height: 100%;
 	width: 100%;
 	font-family: "Arial";
-	background-color:white;
-	}
+	background-color:"dimgrey";
+}
 /*Fonts being used in the website*/
 @font-face{
 	font-family: "Retroville";
-    src: url(fonts/RetrovilleNC.ttf);
+	src: url(fonts/RetrovilleNC.ttf);
 }
 @font-face{
 	font-family: "PressStart";
-    src: url(fonts/PressStart2P-Regular.ttf);
+	src: url(fonts/PressStart2P-Regular.ttf);
 }
 @font-face{
 	font-family: "Kinescope";
 	src: url(fonts/Kinescope.otf);
-}
-@font-face{
-	font-family: "VintageOne";
-	src: url(fonts/VintageOne.ttf);
 }
 @font-face{
 	font-family: "CabinBold";
@@ -66,68 +62,45 @@ body{
 	font-family: "CabinReg";
 	src: url(fonts/CabinSketch-Regular.otf);
 }
-@font-face{
-	font-family: "Writing";
-	src: url(fonts/PrestonsWriting.ttf);
-}
-@font-face{
-	font-family: "Sketch Nothing";
-	src: url(fonts/Sketch-Nothing.ttf);
-}
-@font-face{
-	font-family: "Sketchy";
-	src: url(fonts/Sketchy.ttf);
-}
-@font-face{
-	font-family: "SquareChalk";
-	src: url(fonts/SquareChalk.ttf);
-}
-@font-face{
-	font-family: "Writing Stuff";
-	src: url(fonts/Writing_Stuff.ttf);
-}
-@font-face{
-	font-family: "MyWriting";
-	src: url(fonts/Mywriting.ttf);
-}
 
 .statuses{
 	font-family: "Retroville";
 	position: absolute;
-	color: #ED1809;
+	color: #1ff400;
 }
 
 #scoreBoard{
 	visibility: visible;
 	position: absolute;
-	width: 98px;
-	height: 60px;
-	top: 0px;
-	left: 12px;
+	width: 7.2vw;
+	height: 8.9vh;
+	top: 1.7vh;
+	left: 1.2vw;
 	z-index:0;
 }
 
 .scoreList{
 	font-size: 190%;
-	color: #ED1809;
+	color: #1ff400;
 	z-index: 1;
 	white-space: pre;
 }
 
 #playerIcon{
-	width: 71px;
-	height: 91px;
+	width: 2vw;
+	height: 6vh;
 }
 
 #score{
 	position: absolute;
-	top: 27px;
+	top: 40px;
 	left: 29px;
+	font-size: 1vw;
 	z-index:1;
 }
 
 #framesPerSecond{
-    position: absolute;
+	position: absolute;
 	top: 2px;
 	left: 17px;
 }
@@ -147,110 +120,141 @@ body{
 }
 
 #myCanvas {
-	background: url(../Background/background.png);
-	display: block; 
+	background: url(../Background/circuit_background.jpg) no-repeat;
+	background-size: 100% 100%;
+	display: block;
+	border: 7px solid rgb(64,64,64);
 	margin: 0 auto;
+	height: 82.5vh;
+	width: 35.2vw;
 }
 
 #fpsCanvas {
-	background: url(../images/meter.png);
-	background-size: 100%;
-	display: block; 
+	background: url(../images/meter.png) no-repeat;
+
+	background-size: 100% 100%;
+	display: block;
 	margin: 0 auto;
+	width: 15vw;
+	height: 15vh;
 }
 
 
 #gameDiv{
 	position: absolute;
-	width:530px;
-	height: 600px;
-	top: 60px;
-	left: 250px;
-	padding-right: 25px;
-	margin-bottom: 0px;
+	width: 35.2vw;
+	height: 82.5vh;
+	right: 37%;
+	bottom: 8%;
+}
+#newLevel{
+	position: absolute;
+	text-align: center;
+	background-color: black;
+	border: 7px solid rgb(64,64,64);
+	width:75%;
+	height:50%;
+	top:20%;
+	left: 12.5%;
+
+	color:#1ff400;
+	font-family: "Retroville";
+	/*font-size: ;*/
+}
+#levelNum{
+
+	font-size: 100%;
+
+}
+
+#continue{
+	height: 15%;
+}
+#play1st{
+	height: 15%;
+}
+#help{
+	height: 15%;
 }
 
 #fpsDiv{
 	position: absolute;
-	right: 27%;
-	width: 300px;
-	height: 152px;
+	left: 2%;
+	width: 15vw;
+	height: 15vh;
 	top: 95px;
 }
 
 #speedDiv{
 	position: absolute;
 	right: 5%;
-	/*float: left;*/
-	width: 25%;
-	/*width: 400px;*/
-	height: 500px;
+	top: 10%;
+	left: 70%;
+	width: 17%;
+	height: 82.5vh;
 	padding-top: 35px;
-	width: 295px;
-
-	/*border-style: solid;*/
+	background-color: black;
+	border: 7px solid rgb(64,64,64);
 }
 
 
 #speedDivTop{
-	float: left;
-	/*float: left;*/
-	width: 80%;
-	/*width: 400px;*/
-	height: 16%;
-	/*border-style: solid;*/
+	left: 15vw;
+	width: 100%;
+	height: 40%;
 }
 
 #speedDivBottom{
-	float: left;
-	/*float: left;*/
-	width: 80%;
-	/*width: 400px;*/
+	left: 15vw;
+	width: 100%;
 	height: 60%;
-	padding-top: 5px;
-	/*border-style: solid;*/
+	/*padding-top: 5px;*/
 }
 
 .diceView{
 	float: left;
-	width:  40px; /*20%;*/
-	height: 40px; /*70%;*/
-	margin: 16px;
-	border-style: outset;
+	left: .2vw;
+	width:  4vw; /*20%;*/
+	height: 8vh; /*70%;*/
+	margin: 4%;
+	border: 3px solid rgb(64,64,64);
+	/*border-style: outset;*/
 }
 .gateViz{
 	float:left;
-	width:56px;
-	height:119px;
-	margin:8px;
+	width: 4.25vw;
+	height:14.5vh;
+	margin: 3.25%;
 	visibility: visible;
 
 }
 .speedView{
 	float: left;
-	width: 50px; /*20%;*/
-	height: 10px;
-	margin: 11px;
+	width: 4vw; /*20%;*/
+	height: 1vh;
+	margin: 4%;
 	background-color : #e60000;
-	border-style: outset;
+	border: 3px solid rgb(64,64,64);
+	/*border-style: outset;*/
 }
 
 
 
 #quitButton{
+	font-size: 11px;
 	height: 25px;
 	position: absolute;
-	left: 425px;
-	top: 2px;
+	left: 417px;
+	top: 10px;
 }
 
 .livesMeter{
 	visibility: visible;
 	position: absolute;
-	left: 13px;
-	bottom: -70px;
-	width:480px;
-	height: 60px;
+	left: 1vw;
+	top: 83vh;
+	width: 33vw;
+	height: 7vh;
 }
 
 
@@ -263,7 +267,7 @@ body{
 	position: absolute;
 	font-size:24px;
 	width: 180px;
-    height: 55px;
+	height: 55px;
 }
 
 .endGame {
@@ -272,21 +276,21 @@ body{
 }
 
 .options{
-    position: absolute;
+	position: absolute;
 }
 
 .highScores{
-	font-size: 20px;
+
 	font-family: "Retroville";
-	color: #ED1809;
-    position: absolute;
+	color: #1ff400;
+	position: absolute;
 }
 
 .newHighScoreScreen{
-	font-size: 20px;
+
 	font-family: "Retroville";
-	color: #ED1809;
-    position: absolute;
+	color: #1ff400;
+	position: absolute;
 }
 
 .howToPlay{
@@ -299,28 +303,21 @@ body{
 
 
 .logos{
-	bottom: 415px;
-	left: 105px;
-	width: 300px;
-	height: 150px;
-	visibility: visible;
+	top: 5vh;
+	left: 7vw;
+	width: 20vw;
+	height: 15vh;
+	visibility: visible
+
 }
 
 .volumeIcons{
 	visibility: visible;
 	position: absolute;
 	height: 40px;
-    width: 40px;
-    bottom: 7px;
-    left: 20px;
-}
-
-
-#frame1{
-	bottom: 415px;
-	left: 105px;
-	width: 300px;
-	height: 150px;
+	width: 40px;
+	bottom: 7px;
+	left: 20px;
 }
 
 .mainMenuAnimation{
@@ -328,70 +325,68 @@ body{
 }
 
 .animationLogos{
-	bottom: 415px;
-	left: 105px;
-	width: 300px;
-	height: 150px;
+	top: 3.5vh;
+	left: 6vw;
+	width: 23vw;
+	height: 22vh;
 	visibility: visible;
 }
 
 #nameInput{
-	bottom: 340px;
-	left: 100px;
-	width: 300px;
-	height: 30px;
+	bottom: 30vh;
+	left: 7vw;
+	width: 20vw;
+	height: 5vh;
 	z-index: 1;
 	font-size:20px;
 }
 
 #endm{
-	bottom: 75px;
-	left: 165px;
-	width: 180px;
-	height: 50px;
-	font-size: 24px;
+	bottom: 5vh;
+	left: 3vw;
+	width: 13vw;
+	height: 8vh;
 }
 
 #replay{
-	bottom: 135px;
-	left: 165px;
-	width: 180px;
-	height: 50px;
-	font-size: 24px;
+	bottom: 5vh;
+	left: 19vw;
+	width: 13vw;
+	height: 8vh;
 }
 
 #gameOverText{
-	bottom: 540px;
-	left: 0px;
-	width: 530px;
+	top: 1vh;
+	left: .5vw;
+	width: 35vw;
 	font-size: 55px;
 	text-align: center;
-	color: #ED1809;
+	color: #1ff400;
 }
 
 #congratulations{
-	bottom: 375px;
-	left: 28px;
-	width: 450px;
+	bottom: 40vh;
+	left: 2.66vw;
+	width: 30vw;
 	font-family:"Retroville";
 	font-size: 24px;
 	text-align: center;
-	color: #ED1809;
+	color: #1ff400;
 	z-index:1;
 }
 
 #highScoreLabel{
-	bottom: 471px;
-	left: 0px;
-	width: 530px;
+	top: 17vh;
+	width: 35vw;
+	left: 1vw;
 	font-size: 40px;
 	text-align: center;
-	color: #ED1809;
+	color: #1ff400;
 }
 #gameOverScore{
-	bottom: 528px;
-	left: 0px;
-	width: 530px;
+	top: 12vh;
+	left: .66vw;
+	width: 35vw;
 	text-align: center;
 	font-size: 24px;
 	/*color: #FF0000;*/
@@ -399,252 +394,257 @@ body{
 
 #back{
 	bottom: 1px;
-    left: 26px;
+	left: 26px;
 	width: 50px;
 	height: 30px;
 }
 #config_Options{
-	bottom: 145px;
-	left: 145px;
-	height: 40px;
+	bottom: 15vh;
+	left: 11vw;
+	width: 13vw;
+	height: 8vh;
 
 }
 
 #mainMenu_Options{
-    bottom: 85px;
-    left: 193px;
-    height: 40px;
-		width: 124px;
+	bottom: 5vh;
+	left: 11vw;
+	width: 13vw;
+	height: 8vh;
 }
 
 #mainMenu_HowTo{
-    bottom: 73px;
-    left: 193px;
-    height: 40px;
-		width: 124px;
+	bottom: 5vh;
+	left: 11vw;
+	width: 13vw;
+	height: 8vh;
 }
 
 
 #mainMenu_Controls{
-     bottom: 73px;
-    left: 193px;
-    height: 40px;
-		width: 124px;
+	bottom: 5vh;
+	left: 11vw;
+	width: 13vw;
+	height: 8vh;
 }
 
 #mainMenu_NewHighScoreScreen{
-     bottom: 218px;
-    left: 193px;
-    height: 40px;
-		width: 124px;
+	bottom: 5vh;
+	left: 11vw;
+	width: 13vw;
+	height: 8vh;
 }
 
 #submitHighScore{
-     bottom: 267px;
-    left: 193px;
-    height: 40px;
-		width: 124px;
+	bottom: 15vh;
+	left: 11vw;
+	width: 13vw;
+	height: 8vh;
 }
 
 #mainMenu_HighScores{
-     bottom: 73px;
-    left: 193px;
-    height: 40px;
-		width: 124px;
+	bottom: 5vh;
+	left: 11vw;
+	width: 13vw;
+	height: 8vh;
 }
 
 #highScore1{
 	font-size: 20px;
-	bottom: 362px;
-	left: 35px;
+	bottom: 50vh;
+	left: 2.5vw;
 }
 
 #highScore2{
 	font-size: 20px;
-	bottom: 336px;
-	left: 35px;
+	bottom: 47vh;
+	left: 2.5vw;
 }
 
 #highScore3{
 	font-size: 20px;
-	bottom: 310px;
-	left: 35px;
+	bottom: 44vh;
+	left: 2.5vw;
 }
 
 #highScore4{
 	font-size: 20px;
-	bottom: 284px;
-	left: 35px;
+	bottom: 41vh;
+	left: 2.5vw;
 }
 
 #highScore5{
 	font-size: 20px;
-	bottom: 258px;
-	left: 35px;
+	bottom: 38vh;
+	left: 2.5vw;
 }
 
 #highScore6{
 	font-size: 20px;
-	bottom: 232px;
-	left: 35px;
+	bottom: 35vh;
+	left: 2.5vw;
 }
 
 #highScore7{
 	font-size: 20px;
-	bottom: 206px;
-	left: 35px;
+	bottom: 32vh;
+	left: 2.5vw;
 }
 
 #highScore8{
 	font-size: 20px;
-	bottom: 180px;
-	left: 35px;
+	bottom: 29vh;
+	left: 2.5vw;
 }
 
 #highScore9{
 	font-size: 20px;
-	bottom: 154px;
-	left: 35px;
+	bottom: 26vh;
+	left: 2.5vw;
 }
 
 #highScore10{
 	font-size: 20px;
-	bottom: 128px;
-	left: 35px;
+	bottom: 23vh;
+	left: 2.5vw;
 }
 
 
 #highScoreEnd1{
 	font-size: 20px;
-	bottom: 437px;
-	left: 35px;
+	bottom: 50vh;
+	left: 2.5vw;
 }
 
 #highScoreEnd2{
 	font-size: 20px;
-	bottom: 411px;
-	left: 35px;
+	bottom: 47vh;
+	left: 2.5vw;
 }
 
 #highScoreEnd3{
 	font-size: 20px;
-	bottom: 385px;
-	left: 35px;
+	bottom: 44vh;
+	left: 2.5vw;
 }
 
 #highScoreEnd4{
 	font-size: 20px;
-	bottom: 359px;
-	left: 35px;
+	bottom: 41vh;
+	left: 2.5vw;
 }
 
 #highScoreEnd5{
 	font-size: 20px;
-	bottom: 333px;
-	left: 35px;
+	bottom: 38vh;
+	left: 2.5vw;
 }
 
 #highScoreEnd6{
 	font-size: 20px;
-	bottom: 307px;
-	left: 35px;
+	bottom: 35vh;
+	left: 2.5vw;
 }
 
 #highScoreEnd7{
 	font-size: 20px;
-	bottom: 281px;
-	left: 35px;
+	bottom: 32vh;
+	left: 2.5vw;
 }
 
 #highScoreEnd8{
 	font-size: 20px;
-	bottom: 255px;
-	left: 35px;
+	bottom: 29vh;
+	left: 2.5vw;
 }
 
 #highScoreEnd9{
 	font-size: 20px;
-	bottom: 229px;
-	left: 35px;
+	bottom: 26vh;
+	left: 2.5vw;
 }
 
 #highScoreEnd10{
 	font-size: 20px;
-	bottom: 203px;
-	left: 35px;
+	bottom: 23vh;
+	left: 2.5vw;
 }
+
 #textBackground{
+	border: 7px solid rgb(64,64,64);
 	visibility: visible;
 	position: absolute;
-	height: 280px;
-	width: 378px;
-	bottom: 125px;
-	left: 65px;
+	height: 43vh;
+	bottom: 19vh;
+	left: 1.5vw;
+	width: 32vw;
 	z-index: 0;
-	
+
 }
 
 #textBackground2{
+	border: 7px solid rgb(64,64,64);
 	visibility: visible;
 	position: absolute;
-	height: 225px;
-	width: 369px;
-	bottom: 140px;
-	left: 65px;
+	height: 43vh;
+	bottom: 19vh;
+	left: 1.5vw;
+	width: 32vw;
 	z-index: 0;
-	
+
 }
 
 #textBackground3{
+	border: 7px solid rgb(64,64,64);
 	visibility: visible;
 	position: absolute;
-	height: 140px;
-	width: 278px;
-	bottom: 220px;
-	left: 115px;
+	height: 25vh;
+	bottom: 30vh;
+	left: 1.5vw;
+	width: 32vw;
 	z-index: 0;
-	
+
 }
 
 #textBackground4{
+	border: 7px solid rgb(64,64,64);
 	visibility: visible;
 	position: absolute;
-	height: 275px;
-	width: 450px;
-	bottom: 125px;
-	left: 30px;
+	height: 33vh;
+	bottom: 22vh;
+	left: 1.5vw;
+	width: 32vw;
 	z-index: 0;
-	
+
 }
 
 #textBackground5{
+	border: 7px solid rgb(64,64,64);
 	visibility: visible;
-	position: absolute;
-	height: 275px;
-	width: 450px;
-	bottom: 200px;
-	left: 30px;
+	height: 33vh;
+	bottom: 22vh;
+	left: 1.5vw;
+	width: 32vw;
 	z-index: 0;
-	
 }
 
 #textBackground6{
+	border: 7px solid rgb(64,64,64);
 	visibility: visible;
 	position: absolute;
-	height: 160px;
-	width: 450px;
-	bottom: 325px;
-	left: 28px;
+	height: 37vh;
+	bottom: 25vh;
+	left: 1.5vw;
+	width: 32vw;
 	z-index: 0;
-	
 }
 #gameWelcome{
 	text-align: center;
 	font-size: 165%;
-	bottom: 380px;
-	left: 90px;
-    width: 330px;
-	color: #ED1809;
+	top: 22vh;
+	left: 5vw;
+	width: 25vw;
+	color: #1ff400;
 	z-index: 1;
 }
 
@@ -677,11 +677,11 @@ body{
 
 #gameDescription{
 	text-align: center;
-	bottom: 182px;
-	left: 73px;
-  width: 364px;
+	top: 28vh;
+	left: 2.5vw;
+	width: 30vw;
 	font-size: 98%;
-	color: #ED1809;
+	color: #1ff400;
 	z-index: 1;
 }
 
@@ -690,7 +690,7 @@ body{
 	left: 73px;
 	font-size: 180%;
 	z-index: 1;
-	color: #ED1809;
+	color: #1ff400;
 }
 
 #controlsDescription2{
@@ -698,7 +698,7 @@ body{
 	left: 73px;
 	font-size: 180%;
 	z-index: 1;
-	color: #ED1809;
+	color: #1ff400;
 }
 
 #controlsDescription3{
@@ -706,58 +706,67 @@ body{
 	left: 327px;
 	font-size: 180%;
 	z-index: 1;
-	color: #ED1809;
+	color: #1ff400;
 }
 
 #hint{
 	text-align: center;
-	bottom: 125px;
-	left: 90px;
-    width: 330px;
-	color: #ED1809;
+	bottom: 20vh;
+	left: 8vw;
+	width: 20vw;
+	color: #1ff400;
 	z-index: 1;
 }
 
 
 #howTo{
-	bottom: 260px;
-	left: 165px;
-	
+	bottom: 35vh;
+	left: 11vw;
+	width: 13vw;
+	height: 8vh;
 }
 
 #play{
-	bottom: 335px;
-	left: 165px;
+	bottom: 45vh;
+	left: 11vw;
+	width: 13vw;
+	height: 8vh;
 }
 
 #highScores_MainMenu{
-	bottom: 35px;
-    left: 165px;
+	bottom: 5vh;
+	left: 11vw;
+	width: 13vw;
+	height: 8vh
 }
 #controls_MainMenu{
-	bottom: 185px;
-    left: 165px;
+	bottom: 25vh;
+	left: 11vw;
+	width: 13vw;
+	height: 8vh
 }
 
 #option{
-    bottom: 110px;
-    left: 165px;
+	bottom: 15vh;
+	left: 11vw;
+	width: 13vw;
+	height: 8vh
 }
 
 #opt{
-    bottom: 215px;
-    left: 130px;
-    width: 250px;
-		z-index: 1;
-	color: #ED1809;
+	bottom: 215px;
+	left: 130px;
+	width: 250px;
+	z-index: 1;
+	color: #1ff400;
 }
 
 #menuLogo{
-	bottom: 415px;
-	left: 105px;
-	width: 300px;
-	height: 150px;
-	visibility: visible;
+	top: 3.5vh;
+	left: 6vw;
+	width: 23vw;
+	height: 22vh;
+	visibility: visible
 }
 h1{
 	text-align:center;
@@ -776,13 +785,13 @@ h3{
 }
 
 h4{
-text-align:right;
-position:absolute;
-font-family: 'Molengo', Georgia, Times, serif;
-margin:0;
-color:white;
-    font-size: 56px;
-    line-height: 80px;
+	text-align:right;
+	position:absolute;
+	font-family: 'Molengo', Georgia, Times, serif;
+	margin:0;
+	color:white;
+	font-size: 56px;
+	line-height: 80px;
 }
 
 h5{
@@ -797,9 +806,9 @@ pre{
 }
 
 ul#menu{
-    list-style-type: none;
-    margin: 100px;
-    padding: 0;
+	list-style-type: none;
+	margin: 100px;
+	padding: 0;
 }
 
 ul#menu li{
@@ -808,31 +817,31 @@ ul#menu li{
 }
 
 ul#menu li a{
-    margin: 0px 0;
-    background-color: black;
-    text-align:left;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 10px 10px 10px 10px;
+	margin: 0px 0;
+	background-color: black;
+	text-align:left;
+	color: white;
+	padding: 10px 20px;
+	text-decoration: none;
+	border-radius: 10px 10px 10px 10px;
 }
 ul#menu li a:hover {
-    background-color: white;
-    color:black;
+	background-color: white;
+	color:black;
 }
 
 ul#menu li ul.dropdown{
-    background-color: black;
-    display: none;
-    position: absolute;   
-   	padding-top: 10px;
+	background-color: black;
+	display: none;
+	position: absolute;
+	padding-top: 10px;
 	padding-left: 0px;
 	padding-bottom: 10px;
 	padding-right: 10px;
-   
-    top: 100%;
-    z-index: 99999;
-    left: 0;
+
+	top: 100%;
+	z-index: 99999;
+	left: 0;
 }
 ul#menu li:hover ul.dropdown{
 	display: inline-table;
@@ -840,7 +849,7 @@ ul#menu li:hover ul.dropdown{
 ul#menu li ul.dropdown li{
 	margin: 10px 10px;
 
-    display: inline-table;
+	display: inline-table;
 }
 
 
@@ -849,15 +858,15 @@ ul#games li{
 }
 
 ul#games li a{
-    background-color: black;
-    color: white;
-    padding: 3px 7px;
-    text-decoration: none;
-    border-radius: 10px 10px 10px 10px;
+	background-color: black;
+	color: white;
+	padding: 3px 7px;
+	text-decoration: none;
+	border-radius: 10px 10px 10px 10px;
 }
 ul#games li a:hover {
-    background-color: white;
-    color:black;
+	background-color: white;
+	color:black;
 }
 
 img{
@@ -867,100 +876,100 @@ img{
 }
 img#table{
 	visibility:visible;
-	height: 300px;
-	width: 250px;
+	height: 125px;
+	width: 684px;
 }
 
 .thumb img {
-    max-width: 200px;
-    max-height: 150px;
-    min-width: 200px;
-    min-height: 150px;
+	max-width: 200px;
+	max-height: 150px;
+	min-width: 200px;
+	min-height: 150px;
 }
 
 
 
 .navbar-default {
-  background-color: #6b2bab;
-  border-color: #5e1590;
+	background-color: #6b2bab;
+	border-color: #5e1590;
 }
 .navbar-default .navbar-brand {
-  color: #ecf0f1;
+	color: #ecf0f1;
 }
 .navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
-  color: #ffffff;
+	color: #ffffff;
 }
 .navbar-default .navbar-text {
-  color: #ecf0f1;
+	color: #ecf0f1;
 }
 .navbar-default .navbar-nav > li > a {
-  color: #ecf0f1;
+	color: #ecf0f1;
 }
 .navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-  color: #ffffff;
+	color: #ffffff;
 }
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
-  color: #ffffff;
-  background-color: #5e1590;
+	color: #ffffff;
+	background-color: #5e1590;
 }
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
-  color: #ffffff;
-  background-color: #5e1590;
+	color: #ffffff;
+	background-color: #5e1590;
 }
 .navbar-default .navbar-toggle {
-  border-color: #5e1590;
+	border-color: #5e1590;
 }
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-  background-color: #5e1590;
+	background-color: #5e1590;
 }
 .navbar-default .navbar-toggle .icon-bar {
-  background-color: #ecf0f1;
+	background-color: #ecf0f1;
 }
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form {
-  border-color: #ecf0f1;
+	border-color: #ecf0f1;
 }
 .navbar-default .navbar-link {
-  color: #ecf0f1;
+	color: #ecf0f1;
 }
 .navbar-default .navbar-link:hover {
-  color: #ffffff;
+	color: #ffffff;
 }
 
 @media (max-width: 767px) {
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-    color: #ecf0f1;
-  }
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: #ffffff;
-  }
-  .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
-    color: #ffffff;
-    background-color: #5e1590;
-  }
+	.navbar-default .navbar-nav .open .dropdown-menu > li > a {
+		color: #ecf0f1;
+	}
+	.navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+		color: #ffffff;
+	}
+	.navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+		color: #ffffff;
+		background-color: #5e1590;
+	}
 }
 
 /*Below this is CSS for the math maze game*/
 
 .textTitle{
-		white-space: pre;
-		font-family: "Lucida Console", monospace;
-		font-weight: bold;
-		height: 50px;
-		width: 400px;
-		position: absolute;
-		left: 50px;
-		top:  125px;
+	white-space: pre;
+	font-family: "Lucida Console", monospace;
+	font-weight: bold;
+	height: 50px;
+	width: 400px;
+	position: absolute;
+	left: 50px;
+	top:  125px;
 }
 
 .textBody{
-		font-family: "Lucida Console", monospace;
-		font-weight: bold;
-		height: 100px;
-		width: 400px;
-		position: absolute;
-		left: 50px;
-		top:  175px;
+	font-family: "Lucida Console", monospace;
+	font-weight: bold;
+	height: 100px;
+	width: 400px;
+	position: absolute;
+	left: 50px;
+	top:  175px;
 }
 
 /*
@@ -1007,17 +1016,17 @@ img#table{
 */
 .colors{
 	border-radius: 20px;
-    border: none;
+	border: none;
 	color:black;
-    padding: 10px 25px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 20px;
-    margin: 10px 5px;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    cursor: pointer;
+	padding: 10px 25px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 20px;
+	margin: 10px 5px;
+	-webkit-transition-duration: 0.4s; /* Safari */
+	transition-duration: 0.4s;
+	cursor: pointer;
 
 }
 .colors:hover{
@@ -1027,7 +1036,7 @@ img#table{
 	background-color: red;
 }
 #orange{
-	background-color: orange; 
+	background-color: orange;
 }
 #yellow{
 	background-color: yellow;
@@ -1072,36 +1081,36 @@ img#table{
 
 .difficulty {
 	border-radius: 20px;
-    border: none;
+	border: none;
 	color:black;
-    padding: 10px 25px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 20px;
-    margin: 4px 2px;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    cursor: pointer;
+	padding: 10px 25px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 20px;
+	margin: 4px 2px;
+	-webkit-transition-duration: 0.4s; /* Safari */
+	transition-duration: 0.4s;
+	cursor: pointer;
 }
 .difficulty:hover{
 	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
 .all {
-	background-color: #0000e6;
+	background-color: #AEC6CF;
 }
 
 .easy {
-    background-color: #006600;
+	background-color: #66ff66;
 }
 
 .moderate {
-    background-color: #ffff00;
+	background-color: #FDFD96;
 }
 
 .hard {
-	background-color: #e60000;
+	background-color: #FF6961;
 }
 #MathMazeDiv{
 	position: absolute;
@@ -1133,7 +1142,7 @@ img#table{
 }
 #scoreboardDiv{
 	width: 100%;
-	height: 150px;
+	height: 200px;
 	position: absolute;
 	left: 20%;
 	top: 55%;
@@ -1145,18 +1154,18 @@ img#table{
 	height: 90px;
 	width: 180px;
 	position: absolute;
-	top: 30%;
+	top: 15%;
 	left: 35%;
 	font-family: "CabinBold";
 	color: white;
 }
-		
+
 #functionDiv{
 	width:100%;
 	height: 100px;
 	position: absolute;
 	text-align: center;
-	top: 15%;
+	top: 30%;
 	left: 5%;
 	font-family: "CabinBold";
 }
@@ -1271,9 +1280,9 @@ img#table{
 /* CSS for comment section */
 
 #commentsDiv{
-    background-color: white;
+	background-color: white;
 	width: 505px;
-		padding: 20px;
+	padding: 20px;
 	border: 3px solid black;
 	margin: 0px;
 }
@@ -1284,12 +1293,12 @@ commentHeader{
 }
 
 .commentContainer {
-        width: 505px;
-        clear: both;
+	width: 505px;
+	clear: both;
 }
 .commentContainer input {
-        width: 100%;
-        clear: both;
+	width: 100%;
+	clear: both;
 }
 
 
@@ -1349,3 +1358,34 @@ commentHeader{
 	bottom: 8%;
 	left: 20%;
 }
+
+
+.GGLogo {
+	height:330px;
+	width:356px;
+	background: url('../images/GG_static.png');
+	position: relative;
+	opacity: 0.9;
+}
+/*this is the hover event trigger*/
+.GGLogo:hover {
+	height:330px;
+	width:356px;
+	background:url('../images/GG_logo.gif');
+	opacity: 1.0;
+}
+.MMLogo {
+	height:330px;
+	width:356px;
+	background: url('../images/MM_static.png');
+	position: relative;
+	opacity: 0.9;
+}
+/*this is the hover event trigger*/
+.MMLogo:hover {
+	height:330px;
+	width:356px;
+	background:url('../images/MM_logo.gif');
+	opacity: 1.0;
+}
+

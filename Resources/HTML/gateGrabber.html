@@ -29,219 +29,230 @@
  
 <!--Some buttons below have similar names such as "mainMenu_Controls" and "mainMenu_HowTo". The names represent "whereTheButtonWillTakeYou_whatScreenItsOn".
     So for example, "mainMenu_Controls" will take you to the main menu from the controls screen. -->
-<div id="gameDiv"> 
-<canvas id="myCanvas" width="480" height="600"></canvas>
-<button type="button" id="quitButton" class="ui inGame buttons" onclick="quitGame()">Quit</button>
-<button type="button" id="play" class="ui mainMenu buttons" onclick="newGame()">Play!</button>
-<button type="button" id="howTo" class="ui mainMenu buttons" onclick="loadHowToPlay()">How to Play</button>
-<button type="button" id="option" class="ui mainMenu buttons" onclick="loadoptions()">Options</button>
-<button type="button" id="replay" class="ui endGame buttons" onclick="newGame()">Replay</button>
-<button type="button" id="endm" class="ui endGame buttons" onclick="quitGame()">Main Menu</button>
-<button type="button" id="mainMenu_Options" class="ui options buttons" onclick ="loadMainMenu()">Main Menu</button>
-<button type="button" id="mainMenu_HowTo" class="ui howToPlay buttons" onclick ="loadMainMenu()">Main Menu</button>
-<button type="button" id="mainMenu_Controls" class="ui controls buttons" onclick ="loadMainMenu()">Main Menu</button>
-<button type="button" id="controls_MainMenu" class="ui mainMenu buttons" onclick ="loadControls()">Controls</button>
-<button type="button" id="highScores_MainMenu" class="ui mainMenu buttons" onclick ="loadHighScores()">High Scores</button>
-<button type="button" id="mainMenu_HighScores" class="ui highScores buttons" onclick ="loadMainMenu()">Main Menu</button>
-<button type="button" id="mainMenu_NewHighScoreScreen" class="ui newHighScoreScreen buttons" onclick ="loadMainMenu()">No Thanks</button>
-<button type="button" id="submitHighScore" class="ui newHighScoreScreen buttons" onclick ="addNewHighScore()">Submit!</button>
-<button type="button" id="config_Options" class="ui options buttons" onclick ="loadConfiguration()">Button Configuration</button>
-<input type="text" id="nameInput" class="ui newHighScoreScreen" maxlength="3" >
-<form id="opt" class ="ui options">
-    Background Music
+<div id="gameDiv">
+  <canvas id="myCanvas" width="405px" height="567px"></canvas>
+  <div id="newLevel" style = "display:none">
     <br>
-    <input type="range" id="bgm" min="0" max="100"
-           step="1" value ="50">
+    <p id="levelNum">LEVEL      1</p>
+    <br>
+    <p id="description">    Use the mouse to move
+                    <br>Left click to change value</p>
+    <p id="gateType"> Gates: AND </p>
+    <br>
+    <button  id="help" class = "buttons" onclick="openLesson()" style = "display:none">Help</button>
+    <button  id="continue" class = "buttons" onclick="continueToNextLevel()" style = "display:none">Continue</button>
+  </div>
+  <button type="button" id="quitButton" class="ui inGame buttons" onclick="quitGame()">Quit</button>
+  <button type="button" id="play" class="ui mainMenu buttons" onclick="newGame()">Play!</button>
+  <button type="button" id="howTo" class="ui mainMenu buttons" onclick="loadHowToPlay()">How to Play</button>
+  <button type="button" id="option" class="ui mainMenu buttons" onclick="loadoptions()">Options</button>
+  <button type="button" id="replay" class="ui endGame buttons" onclick="newGame()">Replay</button>
+  <button type="button" id="endm" class="ui endGame buttons" onclick="quitGame()">Main Menu</button>
+  <button type="button" id="mainMenu_Options" class="ui options buttons" onclick ="loadMainMenu()">Main Menu</button>
+  <button type="button" id="mainMenu_HowTo" class="ui howToPlay buttons" onclick ="loadMainMenu()">Main Menu</button>
+  <button type="button" id="mainMenu_Controls" class="ui controls buttons" onclick ="loadMainMenu()">Main Menu</button>
+  <button type="button" id="controls_MainMenu" class="ui mainMenu buttons" onclick ="loadControls()">Controls</button>
+  <button type="button" id="highScores_MainMenu" class="ui mainMenu buttons" onclick ="loadHighScores()">High Scores</button>
+  <button type="button" id="mainMenu_HighScores" class="ui highScores buttons" onclick ="loadMainMenu()">Main Menu</button>
+  <button type="button" id="mainMenu_NewHighScoreScreen" class="ui newHighScoreScreen buttons" onclick ="loadMainMenu()">No Thanks</button>
+  <button type="button" id="submitHighScore" class="ui newHighScoreScreen buttons" onclick ="addNewHighScore()">Submit!</button>
+  <button type="button" id="config_Options" class="ui options buttons" onclick ="loadConfiguration()">Button Configuration</button>
+  <input type="text" id="nameInput" class="ui newHighScoreScreen" maxlength="3" >
+  <form id="opt" class ="ui options">
+      Background Music
+      <br>
+      <input type="range" id="bgm" min="0" max="100"
+             step="1" value ="50">
+      <br>
+      <br>
+      Sound Effects
+      <br>
+      <input type="range" id="sfx" min="0" max="100"
+             step="1" value ="50">
+
+      <br>
+  </form>
+
+  <form id="gameWelcome" class ="ui howToPlay">
+  	Welcome to Gate Grabber!
+  </form>
+
+  <form id="gameOverText" class ="ui endGame newHighScoreScreen">
+  GAME OVER!
+  </form>
+
+  <form id="highScoreLabel" class ="ui endGame">
+  High Scores
+  </form>
+  <form id="gameOverScore" class ="ui endGame newHighScoreScreen">
+
+  </form>
+
+  <form id="congratulations" class ="ui newHighScoreScreen">
+  Congratulations! You've recorded a new high Score! Please enter your name below.
+  </form>
+
+
+  <form id="highScore1" class ="ui highScores scoreList ">
+  1.   nobody - 0pts
+  </form>
+
+  <form id="highScore2" class ="ui highScores scoreList">
+  2.   nobody - 0pts
+  </form>
+
+  <form id="highScore3" class ="ui highScores scoreList">
+  3.   nobody - 0pts
+  </form>
+
+  <form id="highScore4" class ="ui highScores scoreList">
+  4.   nobody - 0pts
+  </form>
+
+  <form id="highScore5" class ="ui highScores scoreList">
+  5.   nobody - 0pts
+  </form>
+
+  <form id="highScore6" class ="ui highScores scoreList">
+  6.   nobody - 0pts
+  </form>
+
+  <form id="highScore7" class ="ui highScores scoreList">
+  7.   nobody - 0pts
+  </form>
+
+  <form id="highScore8" class ="ui highScores scoreList">
+  8.   nobody - 0pts
+  </form>
+
+  <form id="highScore9" class ="ui highScores scoreList">
+  9.   nobody - 0pts
+  </form>
+
+  <form id="highScore10" class ="ui highScores scoreList">
+  10. nobody - 0pts
+  </form>
+
+  <form id="highScoreEnd1" class ="ui endGame scoreList ">
+  1.   nobody - 0pts
+  </form>
+
+  <form id="highScoreEnd2" class ="ui endGame scoreList">
+  2.   nobody - 0pts
+  </form>
+
+  <form id="highScoreEnd3" class ="ui endGame scoreList">
+  3.   nobody - 0pts
+  </form>
+
+  <form id="highScoreEnd4" class ="ui endGame scoreList">
+  4.   nobody - 0pts
+  </form>
+
+  <form id="highScoreEnd5" class ="ui endGame scoreList">
+  5.   nobody - 0pts
+  </form>
+
+  <form id="highScoreEnd6" class ="ui endGame scoreList">
+  6.   nobody - 0pts
+  </form>
+
+  <form id="highScoreEnd7" class ="ui endGame scoreList">
+  7.   nobody - 0pts
+  </form>
+
+  <form id="highScoreEnd8" class ="ui endGame scoreList">
+  8.   nobody - 0pts
+  </form>
+
+  <form id="highScoreEnd9" class ="ui endGame scoreList">
+  9.   nobody - 0pts
+  </form>
+
+  <form id="highScoreEnd10" class ="ui endGame scoreList">
+  10. nobody - 0pts
+  </form>
+  <form id="gameDescription" class ="ui howToPlay">
+  	Gate Grabber is a game that helps you learn basic Boolean logic gates.
+    <br> 
+    <br>Each falling gate has a predetermined output and one given input. Inorder to get points, you have to provide the correct missing input to the falling gates. You are able to change your value by left clicking the mouse or pressing the space bar. You move by using the mouse or the left and right arrows.
     <br>
     <br>
-    Sound Effects
+    If you need more help check out the information page.
     <br>
-    <input type="range" id="sfx" min="0" max="100"
-           step="1" value ="50">
+    <br> Good Luck!
+  </form>
 
-    <br>
-</form>
+  <form id="score" class ="ui inGame statuses">
 
-<form id="gameWelcome" class ="ui howToPlay">
-	Welcome to Gate Grabber!
-</form>
+  </form>
 
-<form id="gameOverText" class ="ui endGame newHighScoreScreen">
-GAME OVER!
-</form>
+  <form id="controlsDescription" class ="ui controls">
+  	Movement:
+  </form>
 
-<form id="highScoreLabel" class ="ui endGame">
-High Scores
-</form>
-<form id="gameOverScore" class ="ui endGame newHighScoreScreen">
+  <form id="controlsDescription2" class ="ui controls">
+  	Change Player Value:
+  </form>
 
-</form>
+  <form id="controlsDescription3" class ="ui controls">
+  	Or
+  </form>
 
-<form id="congratulations" class ="ui newHighScoreScreen">
-Congratulations! You've recorded a new high Score! Please enter your name below.
-</form>
+  <img  id= "menuLogo" src = "../MainMenu/logo.png" class="ui mainMenu logos">
+  <img  id= "highScoresLogo" src = "../MainMenu/highscores.png" class="ui highScores logos">
+  <img  id= "optionsLogo" src = "../MainMenu/options.png" class="ui options logos">
+  <img  id= "howToLogo" src = "../MainMenu/howto.png" class="ui howToPlay logos">
+  <img  id= "controlsLogo" src = "../MainMenu/controls.png" class="ui controls logos">
+  <img  id= "arrowKeys" src = "../MainMenu/arrowkeys.png" class="ui controls">
+  <img  id= "mouseCursor" src = "../MainMenu/mousecursor.png" class="ui controls">
+  <img  id= "leftClick" src = "../MainMenu/leftclick.png" class="ui controls">
+  <img  id= "volumePlaying" src = "../images/volumeon.png" onclick="toggleMusic()" class="ui mainMenu volumeIcons options controls highScores howToPlay">
+  <img  id= "volumeMuted" src = "../images/mute.png" onclick="toggleMusic()" class="ui mainMenu volumeIcons options controls highScores howToPlay">
+  <img  id= "textBackground" src = "../MainMenu/textbackground.png" class="ui howToPlay">
+  <img  id= "textBackground2" src = "../MainMenu/textbackground.png" class="ui controls">
+  <img  id= "textBackground3" src = "../MainMenu/textbackground.png" class="ui options">
+  <img  id= "textBackground4" src = "../MainMenu/textbackground.png" class="ui highScores">
+  <img  id= "textBackground5" src = "../MainMenu/textbackground.png" class="ui endGame">
+  <img  id= "textBackground6" src = "../MainMenu/textbackground.png" class="ui newHighScoreScreen">
+  <img  id= "10lives" class="ui inGame livesMeter" src = "../images/10lives.png">
+  <img  id= "9lives" class="ui inGame livesMeter" src = "../images/9lives.png">
+  <img  id= "8lives" class="ui inGame livesMeter" src = "../images/8lives.png">
+  <img  id= "7lives" class="ui inGame livesMeter" src = "../images/7lives.png">
+  <img  id= "6lives" class="ui inGame livesMeter" src = "../images/6lives.png">
+  <img  id= "5lives" class="ui inGame livesMeter" src = "../images/5lives.png">
+  <img  id= "4lives" class="ui inGame livesMeter" src = "../images/4lives.png">
+  <img  id= "3lives" class="ui inGame livesMeter" src = "../images/3lives.png">
+  <img  id= "2lives" class="ui inGame livesMeter" src = "../images/2lives.png">
+  <img  id= "1lives" class="ui inGame livesMeter" src = "../images/1lives.png">
+  <img  id= "scoreBoard" class="ui inGame" src = "../images/scoreboard.png">
 
-
-<form id="highScore1" class ="ui highScores scoreList ">
-1.   nobody - 0pts
-</form>
-
-<form id="highScore2" class ="ui highScores scoreList">
-2.   nobody - 0pts
-</form>
-
-<form id="highScore3" class ="ui highScores scoreList">
-3.   nobody - 0pts
-</form>
-
-<form id="highScore4" class ="ui highScores scoreList">
-4.   nobody - 0pts
-</form>
-
-<form id="highScore5" class ="ui highScores scoreList">
-5.   nobody - 0pts
-</form>
-
-<form id="highScore6" class ="ui highScores scoreList">
-6.   nobody - 0pts
-</form>
-
-<form id="highScore7" class ="ui highScores scoreList">
-7.   nobody - 0pts
-</form>
-
-<form id="highScore8" class ="ui highScores scoreList">
-8.   nobody - 0pts
-</form>
-
-<form id="highScore9" class ="ui highScores scoreList">
-9.   nobody - 0pts
-</form>
-
-<form id="highScore10" class ="ui highScores scoreList">
-10. nobody - 0pts
-</form>
-
-<form id="highScoreEnd1" class ="ui endGame scoreList ">
-1.   nobody - 0pts
-</form>
-
-<form id="highScoreEnd2" class ="ui endGame scoreList">
-2.   nobody - 0pts
-</form>
-
-<form id="highScoreEnd3" class ="ui endGame scoreList">
-3.   nobody - 0pts
-</form>
-
-<form id="highScoreEnd4" class ="ui endGame scoreList">
-4.   nobody - 0pts
-</form>
-
-<form id="highScoreEnd5" class ="ui endGame scoreList">
-5.   nobody - 0pts
-</form>
-
-<form id="highScoreEnd6" class ="ui endGame scoreList">
-6.   nobody - 0pts
-</form>
-
-<form id="highScoreEnd7" class ="ui endGame scoreList">
-7.   nobody - 0pts
-</form>
-
-<form id="highScoreEnd8" class ="ui endGame scoreList">
-8.   nobody - 0pts
-</form>
-
-<form id="highScoreEnd9" class ="ui endGame scoreList">
-9.   nobody - 0pts
-</form>
-
-<form id="highScoreEnd10" class ="ui endGame scoreList">
-10. nobody - 0pts
-</form>
-<form id="gameDescription" class ="ui howToPlay">
-	Gate Grabber is a game that is based on the concepts of basic Boolean logic gates. The goal of the game is to collect as many of the gates as you can 
-	by inputting the value that causes them to evaluate to a logical 1, or "true". When a gate is collected and the input evaluates to a 1 you will recieve points.
-	However, collecting a gate that evaluates to a logical 0, or "false" will cause you to lose a life. There is no penalty for not collecting all the gates, only for 
-	inputting incorrect answers.
-</form>
-
-<form id="hint" class ="ui howToPlay">
-Hint: Not all gates have a possible correct answer!
-</form>
-
-<form id="score" class ="ui inGame statuses">
-
-</form>
-
-<form id="controlsDescription" class ="ui controls">
-	Movement:
-</form>
-
-<form id="controlsDescription2" class ="ui controls">
-	Change Player Value:
-</form>
-
-<form id="controlsDescription3" class ="ui controls">
-	Or
-</form>
-
-<img  id= "menuLogo" src = "../MainMenu/logo.png" class="ui mainMenu logos">
-<img  id= "highScoresLogo" src = "../MainMenu/highscores.png" class="ui highScores logos">
-<img  id= "optionsLogo" src = "../MainMenu/options.png" class="ui options logos">
-<img  id= "howToLogo" src = "../MainMenu/howto.png" class="ui howToPlay logos">
-<img  id= "controlsLogo" src = "../MainMenu/controls.png" class="ui controls logos">
-<img  id= "arrowKeys" src = "../MainMenu/arrowkeys.png" class="ui controls">
-<img  id= "mouseCursor" src = "../MainMenu/mousecursor.png" class="ui controls">
-<img  id= "leftClick" src = "../MainMenu/leftclick.png" class="ui controls">
-<img  id= "volumePlaying" src = "../images/volumeon.png" onclick="toggleMusic()" class="ui mainMenu volumeIcons options controls highScores howToPlay">
-<img  id= "volumeMuted" src = "../images/mute.png" onclick="toggleMusic()" class="ui mainMenu volumeIcons options controls highScores howToPlay">
-<img  id= "textBackground" src = "../MainMenu/textbackground.png" class="ui howToPlay">
-<img  id= "textBackground2" src = "../MainMenu/textbackground.png" class="ui controls">
-<img  id= "textBackground3" src = "../MainMenu/textbackground.png" class="ui options">
-<img  id= "textBackground4" src = "../MainMenu/textbackground.png" class="ui highScores">
-<img  id= "textBackground5" src = "../MainMenu/textbackground.png" class="ui endGame">
-<img  id= "textBackground6" src = "../MainMenu/textbackground.png" class="ui newHighScoreScreen">
-<img  id= "10lives" class="ui inGame livesMeter" src = "../images/10lives.png">
-<img  id= "9lives" class="ui inGame livesMeter" src = "../images/9lives.png">
-<img  id= "8lives" class="ui inGame livesMeter" src = "../images/8lives.png">
-<img  id= "7lives" class="ui inGame livesMeter" src = "../images/7lives.png">
-<img  id= "6lives" class="ui inGame livesMeter" src = "../images/6lives.png">
-<img  id= "5lives" class="ui inGame livesMeter" src = "../images/5lives.png">
-<img  id= "4lives" class="ui inGame livesMeter" src = "../images/4lives.png">
-<img  id= "3lives" class="ui inGame livesMeter" src = "../images/3lives.png">
-<img  id= "2lives" class="ui inGame livesMeter" src = "../images/2lives.png">
-<img  id= "1lives" class="ui inGame livesMeter" src = "../images/1lives.png">
-<img  id= "scoreBoard" class="ui inGame" src = "../images/scoreboard.png">
-
-<!-- main menu animation elements -->
-<img  id= "frame1" src = "../MainMenu/animation/cursor.png" class="ui mainMenuAnimation animationLogos">
-<img  id= "frame2" src = "../MainMenu/animation/nocursor.png" class="ui mainMenuAnimation animationLogos">
-<img  id= "frame3" src = "../MainMenu/animation/frame3.png" class="ui mainMenuAnimation animationLogos">
-<img  id= "frame4" src = "../MainMenu/animation/frame4.png" class="ui mainMenuAnimation animationLogos">
-<img  id= "frame5" src = "../MainMenu/animation/frame5.png" class="ui mainMenuAnimation animationLogos">
-<img  id= "frame6" src = "../MainMenu/animation/frame6.png" class="ui mainMenuAnimation animationLogos">
-<img  id= "frame7" src = "../MainMenu/animation/frame7.png" class="ui mainMenuAnimation animationLogos">
-<img  id= "frame8" src = "../MainMenu/animation/frame8.png" class="ui mainMenuAnimation animationLogos">
-<img  id= "frame9" src = "../MainMenu/animation/frame9.png" class="ui mainMenuAnimation animationLogos">
-<img  id= "frame10" src = "../MainMenu/animation/frame10.png" class="ui mainMenuAnimation animationLogos">
-<img  id= "frame11" src = "../MainMenu/animation/frame11.png" class="ui mainMenuAnimation animationLogos">
-<img  id= "frame12" src = "../MainMenu/animation/frame12.png" class="ui mainMenuAnimation animationLogos">
-<img  id= "frame13" src = "../MainMenu/animation/frame13.png" class="ui mainMenuAnimation animationLogos">
-<img  id= "frame14" src = "../MainMenu/animation/frame14.png" class="ui mainMenuAnimation animationLogos">
+  <!-- main menu animation elements -->
+  <img  id= "frame1" src = "../MainMenu/animation/cursor.png" class="ui mainMenuAnimation animationLogos">
+  <img  id= "frame2" src = "../MainMenu/animation/nocursor.png" class="ui mainMenuAnimation animationLogos">
+  <img  id= "frame3" src = "../MainMenu/animation/frame3.png" class="ui mainMenuAnimation animationLogos">
+  <img  id= "frame4" src = "../MainMenu/animation/frame4.png" class="ui mainMenuAnimation animationLogos">
+  <img  id= "frame5" src = "../MainMenu/animation/frame5.png" class="ui mainMenuAnimation animationLogos">
+  <img  id= "frame6" src = "../MainMenu/animation/frame6.png" class="ui mainMenuAnimation animationLogos">
+  <img  id= "frame7" src = "../MainMenu/animation/frame7.png" class="ui mainMenuAnimation animationLogos">
+  <img  id= "frame8" src = "../MainMenu/animation/frame8.png" class="ui mainMenuAnimation animationLogos">
+  <img  id= "frame9" src = "../MainMenu/animation/frame9.png" class="ui mainMenuAnimation animationLogos">
+  <img  id= "frame10" src = "../MainMenu/animation/frame10.png" class="ui mainMenuAnimation animationLogos">
+  <img  id= "frame11" src = "../MainMenu/animation/frame11.png" class="ui mainMenuAnimation animationLogos">
+  <img  id= "frame12" src = "../MainMenu/animation/frame12.png" class="ui mainMenuAnimation animationLogos">
+  <img  id= "frame13" src = "../MainMenu/animation/frame13.png" class="ui mainMenuAnimation animationLogos">
+  <img  id= "frame14" src = "../MainMenu/animation/frame14.png" class="ui mainMenuAnimation animationLogos">
 </div>
 
 <div id = "fpsDiv" >
-<canvas id="fpsCanvas" width="300" height="152"></canvas>
+  <canvas id="fpsCanvas" width="300" height="152"></canvas>
 </div>
 
 <div id = "speedDiv" >
-    <img  id= "gate1" src = "../Gates/and00x.png" class = "gateViz">
-    <img  id= "gate2" src = "../Gates/and00x.png" class = "gateViz">
-    <img  id= "gate3" src = "../Gates/and00x.png" class = "gateViz">
     <div id = "speedDivTop">
+        <img  id= "gate1" src = "../Gates/and00x.png" class = "gateViz">
+        <img  id= "gate2" src = "../Gates/and00x.png" class = "gateViz">
+        <img  id= "gate3" src = "../Gates/and00x.png" class = "gateViz">
         <div id = "dice1Div" class =  "diceView" >
         </div>
         <div id = "dice2Div" class =  "diceView" >
@@ -270,6 +281,7 @@ Hint: Not all gates have a possible correct answer!
 <img  id= "AND1x1" src = "../Gates/and1x1.png">
 <img  id= "AND10x" src = "../Gates/and10x.png">
 <img  id= "AND11x" src = "../Gates/and11x.png">
+
 <img  id= "OR00x" src = "../Gates/or00x.png">
 <img  id= "OR0x0" src = "../Gates/or0x0.png">
 <img  id= "OR0x1" src = "../Gates/or0x1.png">
@@ -278,6 +290,43 @@ Hint: Not all gates have a possible correct answer!
 <img  id= "OR1x1" src = "../Gates/or1x1.png">
 <img  id= "OR10x" src = "../Gates/or10x.png">
 <img  id= "OR11x" src = "../Gates/or11x.png">
+
+<img  id= "NAND00x" src = "../Gates/nand00x.png">
+<img  id= "NAND0x0" src = "../Gates/nand0x0.png">
+<img  id= "NAND0x1" src = "../Gates/nand0x1.png">
+<img  id= "NAND01x" src = "../Gates/nand01x.png">
+<img  id= "NAND1x0" src = "../Gates/nand1x0.png">
+<img  id= "NAND1x1" src = "../Gates/nand1x1.png">
+<img  id= "NAND10x" src = "../Gates/nand10x.png">
+<img  id= "NAND11x" src = "../Gates/nand11x.png">
+
+<img  id= "NOR00x" src = "../Gates/nor00x.png">
+<img  id= "NOR0x0" src = "../Gates/nor0x0.png">
+<img  id= "NOR0x1" src = "../Gates/nor0x1.png">
+<img  id= "NOR01x" src = "../Gates/nor01x.png">
+<img  id= "NOR1x0" src = "../Gates/nor1x0.png">
+<img  id= "NOR1x1" src = "../Gates/nor1x1.png">
+<img  id= "NOR10x" src = "../Gates/nor10x.png">
+<img  id= "NOR11x" src = "../Gates/nor11x.png">
+
+<img  id= "XOR00x" src = "../Gates/xor00x.png">
+<img  id= "XOR0x0" src = "../Gates/xor0x0.png">
+<img  id= "XOR0x1" src = "../Gates/xor0x1.png">
+<img  id= "XOR01x" src = "../Gates/xor01x.png">
+<img  id= "XOR1x0" src = "../Gates/xor1x0.png">
+<img  id= "XOR1x1" src = "../Gates/xor1x1.png">
+<img  id= "XOR10x" src = "../Gates/xor10x.png">
+<img  id= "XOR11x" src = "../Gates/xor11x.png">
+
+<img  id= "XNOR00x" src = "../Gates/xnor00x.png">
+<img  id= "XNOR0x0" src = "../Gates/xnor0x0.png">
+<img  id= "XNOR0x1" src = "../Gates/xnor0x1.png">
+<img  id= "XNOR01x" src = "../Gates/xnor01x.png">
+<img  id= "XNOR1x0" src = "../Gates/xnor1x0.png">
+<img  id= "XNOR1x1" src = "../Gates/xnor1x1.png">
+<img  id= "XNOR10x" src = "../Gates/xnor10x.png">
+<img  id= "XNOR11x" src = "../Gates/xnor11x.png">
+
 
 <img  id= "playerIcon0" class="playerIcon" src= "../images/playericon0.png">
 <img  id= "playerIcon1" class="playerIcon" src = "../images/playericon1.png">

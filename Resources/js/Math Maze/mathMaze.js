@@ -15,7 +15,6 @@ var ctx3 = scoreboard.getContext("2d");
 var WIDTH = 600;			//width of the maze canvas
 var HEIGHT = 600;			//height of the maze canvas
 
-var maze_type;			//Variable to determine what maze was picked
 var src, last_src= "_";
 var xImg = new Image();	//Variable to hold the red x image
 xImg.crossOrigin = "anonymous";
@@ -25,7 +24,7 @@ checkImg.crossOrigin = "anonymous";
 checkImg.src = "http://i.imgur.com/GAVvh4K.png"; 
 var img = new Image();
 img.crossOrigin = "anonymous";
-var possibleMazes = ["http://i.imgur.com/iNDtyRa.png","http://i.imgur.com/f8vwqPf.png","http://i.imgur.com/vjpv5sd.png","http://i.imgur.com/98TMoVb.png",
+var possibleMazes = ["http://i.imgur.com/iNDtyRa.png",/*"http://i.imgur.com/f8vwqPf.png",*/"http://i.imgur.com/vjpv5sd.png","http://i.imgur.com/98TMoVb.png",
 					 "http://i.imgur.com/wt0UVkW.png","http://i.imgur.com/LvZ6cfM.png","http://i.imgur.com/qz3LqKu.png","http://i.imgur.com/OQjHiFZ.png",
 					 "http://i.imgur.com/JPiXtck.png","http://i.imgur.com/LTcPoOH.png","http://i.imgur.com/vjOfQR7.png","http://i.imgur.com/Scvy9lk.png",
 					 "http://i.imgur.com/rD2ke5C.png","http://i.imgur.com/asX1KwO.png","http://i.imgur.com/jmvYGAb.png","http://i.imgur.com/Z33bcKc.png",
@@ -68,6 +67,10 @@ var rightAnswer = false;
 var wrongCount = 0; //Used for penalty when obtaining the wrong answer
 var questionCounter = 0; //Used to count how many questions have been answered
 var paused = false; //Variable to determine whether the game is paused or not
+var scoreDifference = -1;
+var previousPoints = 0;
+var prevQuestion = 0;
+var prevScore = 0;
 
 //Timer variables
 var start_time;
@@ -194,7 +197,7 @@ function init(){
 	
 	last_src = src;					//Store the last maze (used in chooseMaze)
 	img.src = src;
-	visHitMiss.attr("index-color", "#484848");
+	visHitMiss.attr("index-color", "rgba(0,0,0,0)");
 	visHitMiss.attr("text-color", "white");
 	visHitMiss.update(hit_Miss);	
 		
@@ -242,24 +245,16 @@ chooseMaze()
 		-About: http://hereandabove.com/maze/maze.about.html
 */
 function chooseMaze(){
-	var temp = Math.floor(Math.random() * 20) + 1;
+	var temp = Math.floor(Math.random() * 19);
+	//temp = 1;
 	player_x = 260;
 	player_y = 210;
 	src = possibleMazes[temp];
-	maze_type = temp;
 
-	//src = "http://i.imgur.com/iNDtyRa.png"
-	while(true){
-
-		src = possibleMazes[temp-1];
-		maze_type = temp;
-		
-		if(src == last_src){		//The new maze is the same as the old maze
-			temp = Math.floor(Math.random() * 20) + 1;
-		}
-		
-		else{ break;}				//The same maze wasn't used two times in a row
-	}	
+	if(src == last_src){		//The new maze is the same as the old maze
+		temp = Math.floor(Math.random() * 19);
+	}
+			
 }
 
 /*
@@ -558,8 +553,9 @@ function draw(){
 			drawCheckOrX(checkImg, animationXCoord, animationYCoord);
 			animationYCoord -= 1;
 		}
-    }
+		
 	
+    }
 	requestAnimationFrame(draw);
 }
 
@@ -676,7 +672,9 @@ function checkForAnswer(){
 	var temp1 = possibleAnswers[0].toString(),
 		temp2 = possibleAnswers[1].toString(),
 		temp3 = possibleAnswers[2].toString(),
-		temp4 = possibleAnswers[3].toString();				
+		temp4 = possibleAnswers[3].toString();	
+	//Hold the previous question number
+	prevQuestion = questionCounter;
 	
 	//Set the coordinates for the animation to start at
 	//Checking !wrongAnswer prevents the animation moving with player on a wrong answer
@@ -769,6 +767,7 @@ function correctAns(ans){
 
 	//Update Score and hit_Miss
 	ctx3.clearRect(0,0,scoreboard.width,scoreboard.height);
+	prevScore = player_score;
 	player_score += points(start_time, current_time_ms);
 	hit_Miss[0] += 1;
 	visHitMiss.attr("index-color", "green", 0);
@@ -779,7 +778,7 @@ function correctAns(ans){
 	//Stops visualization
 	setTimeout(function() {
 		rightAnswer = false;
-		visHitMiss.attr("index-color", "#484848", 0);
+		visHitMiss.attr("index-color", "rgba(0,0,0,0)", 0);
 		visHitMiss.update(hit_Miss);
 		//Player has reached the end of the game
 		if(questionCounter == 15){
@@ -835,7 +834,7 @@ function wrongAns(ans){
 	wrongCount += 1;
 	//Ends visualization
 	setTimeout(function(){
-		visHitMiss.attr("index-color", "#484848", 1);
+		visHitMiss.attr("index-color", "rgba(0,0,0,0)", 1);
 		visHitMiss.update(hit_Miss);
 		wrongAnswer = false;		//"end" the animation
 	}, 1500);
@@ -1034,7 +1033,7 @@ function generateQuestion(){
 					drawEasyEquation(t, t2, questionNum);
 					break;
 			//Algebraic question with variables on both sides
-			case 9: 
+			case 9:
 					coeff = getRandomInt(2,15);
 					variable = random_character();
 					const2 = getRandomInt(1,50);
@@ -1203,29 +1202,86 @@ scoreboarddisplay(timer)
  */
 function scoreboarddisplay(timer){
 	previousTimer = timer;
-
+	
+	//Determine possible points currently
+	var tempPoints = points(start_time_ms, current_time_ms);
+	
+	//Did the question change?
+	//If so -> make previousPoints == tempPoints so no extra text is displayed
+	if(prevQuestion != questionCounter){
+		previousPoints = tempPoints;
+	}
+	
 	var sec = Math.floor(timer /1000);
 	seconds = sec%60;
 	minutes = Math.floor(sec/60);
 	hours = Math.floor(sec/3600);
-	var level;
+	var level, col;
 	//bookmark
 	if(lastQuestionType == 1 || lastQuestionType == 2 || lastQuestionType == 8){
 		level = "Easy";
+		col = "#66ff66";
 	}
 	else if(lastQuestionType == 3 || lastQuestionType == 5 || lastQuestionType == 7){
 		level = "Moderate";
+		col = "#FDFD96";
 	}
 	else if(lastQuestionType == 4 || lastQuestionType == 6 || lastQuestionType == 9){
 		level = "Hard";
+		col = "	#FF6961";
 	}
-	ctx3.font="40px CabinBold";
-	ctx3.fillStyle = "white";
-	ctx3.fillText("Score: " + player_score ,0, 30);
-	ctx3.fillText("Timer: " + minutes + " mins " + seconds +" secs	",0, 65);
-	ctx3.fillText("Level: "+ level, 0, 100);
-	ctx3.fillText("Max points: " + points(start_time_ms, current_time_ms), 0, 135);
+	
+	//User selected "all" difficulty
+	if(difficulty == 0){
+		level = "All";
+		col = "#AEC6CF";
+	}
 
+	//previousScore was getting set as 'undefined' at the beginning for some reason
+	//the extra condition seems to fix it...
+	if(previousPoints == 0 || typeof previousPoints === 'undefined'){
+		previousPoints = tempPoints;
+	}	
+	
+	ctx3.font="50px CabinBold";
+	ctx3.fillStyle = "white";
+	//Was the right answer selected?
+	if(rightAnswer){
+		ctx3.fillText("Total Score: " + prevScore ,0, 40);
+		ctx3.fillStyle = "#66ff66";
+		var h = ctx3.measureText("Total Score: " + prevScore);
+		ctx3.fillText(" +" + tempPoints, h.width, 40);
+		ctx3.fillStyle = "white";
+	}
+	
+	else{
+		ctx3.fillText("Total Score: " + player_score ,0, 40);
+	}
+	ctx3.font="30px CabinBold";
+	ctx3.fillText("Timer: " + minutes + " mins " + seconds +" secs	",0, 85);
+	ctx3.fillText("Difficulty: ", 0, 130);
+	ctx3.fillStyle = col;
+	ctx3.fillText(level, 145, 130);
+	ctx3.fillStyle = "white";
+		
+	//Has there been a change in the points possible?
+	if(previousPoints != tempPoints){
+		scoreDifference = previousPoints - tempPoints;
+		
+		ctx3.fillText("Possible points: " + previousPoints, 0, 175);
+		var g = ctx3.measureText("Possible points: " + previousPoints); //Get the x coordinate necessary
+		ctx3.fillStyle = "#FF6961";
+		ctx3.fillText(" -" + scoreDifference, g.width, 175);
+		
+		//Remove the additional text
+		setTimeout(function() {
+			previousPoints = tempPoints;
+		}, 2000);
+	}
+	
+	else{	
+		ctx3.fillText("Possible points: " + tempPoints, 0, 175);
+	} 
 }
 
 /*
@@ -1242,7 +1298,9 @@ function points(start, elapsed){
 		else if (elapsed - start <= 60000) {
 			return Math.floor(basepoints * 1.25);
 		}
-		else return Math.floor(basepoints);
+		else{
+			return Math.floor(basepoints);
+		}
 	}
 	else if(lastQuestionType == 3 || lastQuestionType == 5 || lastQuestionType == 7){
 		basepoints = 200/(Math.pow(2,wrongCount));
@@ -1252,8 +1310,9 @@ function points(start, elapsed){
 		else if (elapsed - start <= 60000) {
 			return Math.floor(basepoints * 1.25);
 		}
-		else return Math.floor(basepoints);
-
+		else{
+			return Math.floor(basepoints); 
+		}
 	}
 	else if(lastQuestionType == 4 || lastQuestionType == 6 || lastQuestionType == 9){
 		basepoints = 300/(Math.pow(2,wrongCount));
@@ -1263,8 +1322,9 @@ function points(start, elapsed){
 		else if (elapsed - start <= 60000) {
 			return Math.floor(basepoints * 1.25);
 		}
-		else return Math.floor(basepoints);
-
+		else{
+			return Math.floor(basepoints); 
+		}
 	}
 }
 

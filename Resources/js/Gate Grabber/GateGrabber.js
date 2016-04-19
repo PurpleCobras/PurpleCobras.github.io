@@ -7,6 +7,8 @@ Parse.initialize("AfffIqRQX8tPjgqj7lO935JbzMsISdKgJQNNfFtw", "VsEBibf30t1iYMvCql
 var previousFrameTime = 0;
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
+ctx.canvas.width  = window.innerWidth*.352;
+ctx.canvas.height = window.innerHeight*.825;
 
 var canvas2 = document.getElementById("fpsCanvas");
 var ctx2 = canvas2.getContext("2d");
@@ -20,12 +22,11 @@ ctx2.strokeStyle = "red";
 ctx2.lineWidth = 5;
 ctx2.lineCap = "butt";
 
-/*
-ctx2.beginPath();
-ctx2.moveTo(150, 147);
-ctx2.lineTo(102, 30);
-ctx2.stroke();
-*/
+var fpsX;
+var fpsY;
+var fpsTarget = 1;
+var fpsCurrent = 1;
+
 //
 //Game Variables
 //
@@ -33,6 +34,7 @@ var match = false;
 var paused = false; //denotes whether the game is currently running
 var animationx = 0; //Animation coordinates for scoring animation
 var animationy = 0;
+var level = 0;
 
 var onMainMenu = false; //possibly used to change visualization when quitting the game
 //
@@ -85,41 +87,41 @@ var gateType = [];
     gateType[14]=document.getElementById("OR10x");
     gateType[15]=document.getElementById("OR11x");
 
-    // gateType[16]=document.getElementById("NOR00x");
-    // gateType[17]=document.getElementById("NOR0x0");
-    // gateType[18]=document.getElementById("NOR0x1");
-    // gateType[19]=document.getElementById("NOR01x");
-    // gateType[20]=document.getElementById("NOR1x0");
-    // gateType[21]=document.getElementById("NOR1x1");
-    // gateType[22]=document.getElementById("NOR10x");
-    // gateType[23]=document.getElementById("NOR11x");
+    gateType[16]=document.getElementById("NAND00x");
+    gateType[17]=document.getElementById("NAND0x0");
+    gateType[18]=document.getElementById("NAND0x1");
+    gateType[19]=document.getElementById("NAND01x");
+    gateType[20]=document.getElementById("NAND1x0");
+    gateType[21]=document.getElementById("NAND1x1");
+    gateType[22]=document.getElementById("NAND10x");
+    gateType[23]=document.getElementById("NAND11x");
 
-    // gateType[24]=document.getElementById("NAND00x");
-    // gateType[25]=document.getElementById("NAND0x0");
-    // gateType[26]=document.getElementById("NAND0x1");
-    // gateType[27]=document.getElementById("NAND01x");
-    // gateType[28]=document.getElementById("NAND1x0");
-    // gateType[29]=document.getElementById("NAND1x1");
-    // gateType[30]=document.getElementById("NAND10x");
-    // gateType[31]=document.getElementById("NAND11x");
+    gateType[24]=document.getElementById("NOR00x");
+    gateType[25]=document.getElementById("NOR0x0");
+    gateType[26]=document.getElementById("NOR0x1");
+    gateType[27]=document.getElementById("NOR01x");
+    gateType[28]=document.getElementById("NOR1x0");
+    gateType[29]=document.getElementById("NOR1x1");
+    gateType[30]=document.getElementById("NOR10x");
+    gateType[31]=document.getElementById("NOR11x");
 
-    // gateType[32]=document.getElementById("XOR00x");
-    // gateType[33]=document.getElementById("XOR0x0");
-    // gateType[34]=document.getElementById("XOR0x1");
-    // gateType[35]=document.getElementById("XOR01x");
-    // gateType[36]=document.getElementById("XOR1x0");
-    // gateType[37]=document.getElementById("XOR1x1");
-    // gateType[38]=document.getElementById("XOR10x");
-    // gateType[39]=document.getElementById("XOR11x");
+    gateType[32]=document.getElementById("XOR00x");
+    gateType[33]=document.getElementById("XOR0x0");
+    gateType[34]=document.getElementById("XOR0x1");
+    gateType[35]=document.getElementById("XOR01x");
+    gateType[36]=document.getElementById("XOR1x0");
+    gateType[37]=document.getElementById("XOR1x1");
+    gateType[38]=document.getElementById("XOR10x");
+    gateType[39]=document.getElementById("XOR11x");
 
-    // gateType[40]=document.getElementById("XNOR00x");
-    // gateType[41]=document.getElementById("XNOR0x0");
-    // gateType[42]=document.getElementById("XNOR0x1");
-    // gateType[43]=document.getElementById("XNOR01x");
-    // gateType[44]=document.getElementById("XNOR1x0");
-    // gateType[45]=document.getElementById("XNOR1x1");
-    // gateType[46]=document.getElementById("XNOR10x");
-    // gateType[47]=document.getElementById("XNOR11x");
+    gateType[40]=document.getElementById("XNOR00x");
+    gateType[41]=document.getElementById("XNOR0x0");
+    gateType[42]=document.getElementById("XNOR0x1");
+    gateType[43]=document.getElementById("XNOR01x");
+    gateType[44]=document.getElementById("XNOR1x0");
+    gateType[45]=document.getElementById("XNOR1x1");
+    gateType[46]=document.getElementById("XNOR10x");
+    gateType[47]=document.getElementById("XNOR11x");
 
 
 //corresponding value to satisfy each gate.
@@ -144,51 +146,51 @@ var gateValue = [];
     gateValue[14]=1;
     gateValue[15]=2;
 
-    // //NOR 
-    // gateValue[16]=1;
-    // gateValue[17]=1;
-    // gateValue[18]=0;
-    // gateValue[19]=0;
-    // gateValue[20]=2;
-    // gateValue[21]=3;
-    // gateValue[22]=2;
-    // gateValue[23]=3;
+    //NAND 
+    gateValue[16]=3;
+    gateValue[17]=3;
+    gateValue[18]=2;
+    gateValue[19]=2;
+    gateValue[20]=1;
+    gateValue[21]=0;
+    gateValue[22]=1;
+    gateValue[23]=0;
 
-    // //NAND 
-    // gateValue[24]=3;
-    // gateValue[25]=3;
-    // gateValue[26]=2;
-    // gateValue[27]=2;
-    // gateValue[28]=1;
-    // gateValue[29]=0;
-    // gateValue[30]=1;
-    // gateValue[31]=0;
+    //NOR 
+    gateValue[24]=1;
+    gateValue[25]=1;
+    gateValue[26]=0;
+    gateValue[27]=0;
+    gateValue[28]=2;
+    gateValue[29]=3;
+    gateValue[30]=2;
+    gateValue[31]=3;
 
-    // //XOR 
-    // gateValue[32]=0;
-    // gateValue[33]=0;
-    // gateValue[34]=1;
-    // gateValue[35]=1;
-    // gateValue[36]=1;
-    // gateValue[37]=0;
-    // gateValue[38]=1;
-    // gateValue[39]=0;
+    //XOR 
+    gateValue[32]=0;
+    gateValue[33]=0;
+    gateValue[34]=1;
+    gateValue[35]=1;
+    gateValue[36]=1;
+    gateValue[37]=0;
+    gateValue[38]=1;
+    gateValue[39]=0;
 
-    // //XNOR 
-    // gateValue[40]=1;
-    // gateValue[41]=1;
-    // gateValue[42]=0;
-    // gateValue[43]=0;
-    // gateValue[44]=0;
-    // gateValue[45]=1;
-    // gateValue[46]=0;
-    // gateValue[47]=1;
+    //XNOR 
+    gateValue[40]=1;
+    gateValue[41]=1;
+    gateValue[42]=0;
+    gateValue[43]=0;
+    gateValue[44]=0;
+    gateValue[45]=1;
+    gateValue[46]=0;
+    gateValue[47]=1;
 //
 //Ball Object
 // -radius
 // -Coords - x and y
 //
-var ball = { radius:10, x: (canvas.width/2), y: (canvas.height-30)};
+var ball = { radius: (canvas.width *.05), x: (canvas.width/2), y: (canvas.height-(canvas.height *.1))};
 
 //
 //Player Object
@@ -281,6 +283,7 @@ function keyDownHandler(e) {
         leftPressed = true;
     }
     if(e.keyCode == 32){
+        changePlayerValue();
         spacePressed = true;
     }
     if(e.keyCode == 77){
@@ -308,6 +311,7 @@ function keyUpHandler(e) {
     }
     if(e.keyCode == 32){
         spacePressed = false;
+
     }
 }
 
@@ -315,20 +319,18 @@ function keyUpHandler(e) {
 //  drawBall()
 //  Creates ball at the bottom of the screen that the player uses to match their value to the gates falling.
 //
+
+//bookmark
 function drawBall(){
-    /*ctx.beginPath();
-    ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
-    ctx.fillStyle = "#000000";
-    ctx.fill();
-    ctx.closePath();*/
+
 	if(player.value == 1){
 		ctx.beginPath();
-		ctx.drawImage(playerIcon1, ball.x-18 , ball.y-25 , 36, 50);
+		ctx.drawImage(playerIcon1, ball.x-(canvas.width *.04) , ball.y - (canvas.height *.05), canvas.width *.08, canvas.height *.1);
 		ctx.closePath();
 	}
 	else{
 		ctx.beginPath();
-		ctx.drawImage(playerIcon0, ball.x-18 , ball.y-25 , 36, 50);
+		ctx.drawImage(playerIcon0, ball.x-(canvas.width *.04) , ball.y - (canvas.height *.05), canvas.width *.08, canvas.height *.1);
 		ctx.closePath();
 	}
 
@@ -337,7 +339,7 @@ function drawBall(){
 
 //power up variables
 //2x
-var doublepts = { radius:20, x:(Math.random() * canvas.width), y:-100, alpha:1}; //variable for double points
+var doublepts = { radius:canvas.width *.05, x:(Math.random() * canvas.width), y:-100, alpha:1}; //variable for double points
 var doubleptstimer = Math.floor(((Math.random()*60)+30)*1000); //random time interval to spawn between 30 to 90 sec
 var ref_time2x = new Date();
 var ref_time2x_ms = ref_time2x.getTime();
@@ -358,7 +360,7 @@ function draw2x() {
 
 
 //extra life
-var extralife ={radius:20,x:(Math.random()* canvas.width), y:-100, alpha:1 };//variable for extra life
+var extralife ={radius:canvas.width *.05,x:(Math.random()* canvas.width), y:-100, alpha:1 };//variable for extra life
 var extralifetimer = Math.floor((Math.random()+1)*60000);//random spawn between 1 to 2 min
 var ref_timelife = new Date();
 var ref_timelife_ms = ref_timelife.getTime();
@@ -372,48 +374,242 @@ function drawextralife(){
     ctx.closePath();
 }
 
-/* level()
+/* levelGates(current_level)
 spawns gates depending on threshold
  */
-function level(current_score){
+function levelGates(current_level){
     var gateNum;
-    if(current_score < 1000){
-        gateNum = Math.floor((Math.random()* 8));
+    switch(current_level){
+        case 1:
+            gateNum = Math.floor((Math.random()* 8));
+            while(gateNum == 4 || gateNum == 6){
+                gateNum = Math.floor((Math.random()* 8));
+            }
+            break;
+        case 2:
+            gateNum = Math.floor((Math.random() * 8));
+            break;
+        case 3:
+            gateNum = Math.floor((Math.random()*8))+8;
+            while(gateNum == 10 || gateNum == 11){
+                gateNum = Math.floor((Math.random()* 8))+8;
+            }
+            break;
+        case 4:
+            gateNum = Math.floor((Math.random()*8))+8;
+            break;
+        case 5:
+            gateNum = Math.floor((Math.random()*16));
+            break;
+        case 6:
+            gateNum = Math.floor((Math.random()*8))+16;
+            while(gateNum ==  16 || gateNum == 17){
+                 gateNum = Math.floor((Math.random()*8))+16;
+            }
+            break;
+        case 7:
+            gateNum = Math.floor((Math.random()*8))+16;
+            break;
+        case 8:
+            gateNum = Math.floor((Math.random()*8))+24;
+            while(gateNum ==  29 || gateNum == 31){
+                 gateNum = Math.floor((Math.random()*8))+24;
+            }
+            break;
+        case 9:
+            gateNum = Math.floor((Math.random()*8))+24;
+            break;
+        case 10:
+            gateNum = Math.floor((Math.random()*16))+16;
+            break;
+        case 11:
+            gateNum = Math.floor((Math.random()*32));
+            break;
+        case 12:
+            gateNum = Math.floor((Math.random()*8))+32;
+            break;
+        case 13:
+            gateNum = Math.floor((Math.random()*8))+40;
+            break;
+        case 14:
+            gateNum = Math.floor((Math.random()*16))+32;
+            break;
+        case 15:
+            gateNum = Math.floor((Math.random()*48));
+            break;
+        
     }
-    else if(current_score >= 1000 /*&& current_score < 2500*/ ){ //Uncomment the ANDs to include thresholds
-        gateNum = Math.floor(Math.random() * 16);
-    }
-    /*
-     else if(current_score >= 2500 && current_score < 4500){
-     gateNum = Math.floor(Math.random() * 24);
-     }
-     else if(current_score >= 4500 && current_score < 6000){
-     gateNum = Math.floor(Math.random() * 32);
-     }
-     else if(current_score >= 6000 && current_score < 8000){
-     gateNum = Math.floor(Math.random() * 40);
-     }
-     else if(current_score > 8000){
-     gateNum = Math.floor(Math.random() * 48);
-     }*/
     return gateNum;
 }
+/*checkLevel()
+    Checks the players score and changes levels if needed
+*/
+function checkLevel(){
+    if(player.score < 1000){
+        level=1;
+    }
+    else if(player.score >= 1000 && player.score < 2000){
+        level=2;
+    }
+    else if(player.score >= 2000 && player.score < 3000){
+        level=3;
+    }
+    else if(player.score >= 3000 && player.score < 4000){
+        level=4;
+    }
+    else if(player.score >= 4000 && player.score < 5000){
+        level=5;
+    }
+    else if(player.score >= 5000 && player.score < 6000){
+        level=6;
+    }
+    else if(player.score >= 6000 && player.score < 7000){
+        level=7;
+    }
+    else if(player.score >= 7000 && player.score < 8000){
+        level=8;
+    }
+    else if(player.score >= 8000 && player.score < 9000){
+        level=9;
+    }
+    else if(player.score >= 9000 && player.score < 10000){
+        level=10;
+    }
+    else if(player.score >= 10000 && player.score < 11000){
+        level=11;
+    }
+    else if(player.score >= 11000 && player.score < 12000){
+        level=12;
+    }
+    else if(player.score >= 12000 && player.score < 13000){
+        level=13;
+    }
+    else if(player.score >= 13000 && player.score < 14000){
+        level=14;
+    }
+    else if(player.score >= 14000){
+        level=15;
+    }
 
+}
+
+/*newLevel(lvl)
+    creates new level screen 
+*/
+function newLevel(lvl){
+    switch(lvl){
+        case 1:
+            document.getElementById("levelNum").innerHTML = "LEVEL          1";
+            document.getElementById("description").innerHTML = "Use the mouse or arrows to move<br />Left click or hit the space bar to change value";
+            document.getElementById("gateType").innerHTML = "Gates: AND"
+            break;
+        case 2:
+            document.getElementById("levelNum").innerHTML = "LEVEL         2";
+            document.getElementById("description").innerHTML = "Be careful, now there are AND gates with no possible solution.";
+            document.getElementById("gateType").innerHTML = "Gates: AND"
+            break;
+        case 3:
+            document.getElementById("levelNum").innerHTML = "LEVEL          3";
+            document.getElementById("description").innerHTML = "Good job!<br />Now that you understand AND gates, let's try OR gates";
+            document.getElementById("gateType").innerHTML = "Gates: OR";
+            break;
+        case 4:
+            document.getElementById("levelNum").innerHTML = "LEVEL         4";
+            document.getElementById("description").innerHTML = "Be careful, now there are OR gates with no possible solution.";
+            document.getElementById("gateType").innerHTML = "Gates: OR"
+            break;
+        case 5:
+            document.getElementById("levelNum").innerHTML = "LEVEL          5";
+            document.getElementById("description").innerHTML = "Let's see if you can handle both AND & OR gates at the same time.";
+            document.getElementById("gateType").innerHTML = "Gates: AND & OR";
+            break;
+        case 6:
+            document.getElementById("levelNum").innerHTML = "LEVEL          6";
+            document.getElementById("description").innerHTML = "Now we're going to try NAND Gates.";
+            document.getElementById("gateType").innerHTML = "Gates: NAND<br />Need help with NAND gates? Take a look at the lesson page.";
+            break;
+        case 7:
+            document.getElementById("levelNum").innerHTML = "LEVEL          7";
+            document.getElementById("description").innerHTML = "Let's see if you can handle those tricky gates again.";
+            document.getElementById("gateType").innerHTML = "Gates: NAND";
+            break;
+        case 8:
+            document.getElementById("levelNum").innerHTML = "LEVEL          8";
+            document.getElementById("description").innerHTML = "Let's move onto NOR gates now. These are inverted OR gates.";
+            document.getElementById("gateType").innerHTML = "Gates: NOR";
+            break;
+        case 9:
+            document.getElementById("levelNum").innerHTML = "LEVEL          9";
+            document.getElementById("description").innerHTML = "Now it is possible to have unsolvable NOR gates.";
+            document.getElementById("gateType").innerHTML = "Gates: NOR";
+            break;
+        case 10:
+            document.getElementById("levelNum").innerHTML = "LEVEL          10";
+            document.getElementById("description").innerHTML = "Let's test out how well you know the new gates just introduced.";
+            document.getElementById("gateType").innerHTML = "Gates: NAND & NOR";
+            break;
+        case 11:
+            document.getElementById("levelNum").innerHTML = "LEVEL          11";
+            document.getElementById("description").innerHTML = "You've now seen four types of logic gates. Can you handle all of them at once?";
+            document.getElementById("gateType").innerHTML = "Gates: AND, OR, NAND & NOR<br />You may want to refresh on what you've learned.";
+            break;
+        case 12:
+            document.getElementById("levelNum").innerHTML = "LEVEL          12";
+            document.getElementById("description").innerHTML = "This level introduces the XOR gate. This is a new gate.";
+            document.getElementById("gateType").innerHTML = "Gates: XOR<br />You may want to take a look at the lesson page.";
+            break;
+        case 13:
+            document.getElementById("levelNum").innerHTML = "LEVEL          13";
+            document.getElementById("description").innerHTML = "This level consists of only XNOR gates. This is very similar to XOR gates.";
+            document.getElementById("gateType").innerHTML = "Gates: XNOR.";
+            break;
+        case 14:
+            document.getElementById("levelNum").innerHTML = "LEVEL          14";
+            document.getElementById("description").innerHTML = "This level will have both XOR and XNOR gates, be careful!";
+            document.getElementById("gateType").innerHTML = "Gates: XOR & XNOR";
+            break;
+        case 15:
+            document.getElementById("levelNum").innerHTML = "LEVEL          15";
+            document.getElementById("description").innerHTML = "This level will truely test you boolean logic knowledge. All the gates you have learned!";
+            document.getElementById("gateType").innerHTML = "Gates: AND, OR, NAND, NOR, XOR & XNOR<br /> Good Luck!!";
+            break;
+
+    }
+    paused = true;
+    
+    document.getElementById("continue").style.display = "inline";
+    document.getElementById("help").style.display = "inline";
+    document.getElementById("newLevel").style.display = "inline";
+}
+
+function continueToNextLevel(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    resetGates(1);
+    resetGates(2);
+    resetGates(3);
+    paused = false;
+    requestAnimationFrame(draw);
+
+}
+
+function openLesson(){
+    window.open("http://purplecobras.github.io/Resources/HTML/LogicGateLesson.html");
+}
 
 /*  drawGate()
  Creates a gate, given the x and y coordinates and an integer value represtening which gate type to draw.
  Gate Types:
+ 8 gates for each type
  -AND
- 8 different AND gate images.
  -OR
- 8 differet OR gate images.
-
- //-NAND  to be added??
- //-XOR    to be added??
+ -NAND
+ -NOR
+ -XOR
+ -XNOR
  */
 function drawGate(x, y, gate){
     ctx.beginPath();
-    ctx.drawImage(gateType[gate],x ,y ,60,120);
+    ctx.drawImage(gateType[gate],x-(canvas.width *.0625),y-(canvas.height *.1) , canvas.width *.1875, canvas.height *.293);
     ctx.closePath();
 }
 
@@ -424,7 +620,7 @@ function drawGate(x, y, gate){
 function changeGate(gate){
     //V Change value of the first gate V
     if(gate == 1){
-        temp = level(player.score);
+        temp = levelGates(level);
 
         gate1.type = temp;
         gate1.need = gateValue[temp];
@@ -432,7 +628,7 @@ function changeGate(gate){
 
     //V change the value of the second gate V
     if(gate == 2){
-        temp = level(player.value);
+        temp = levelGates(level);
 
         gate2.type = temp;
         gate2.need = gateValue[temp];
@@ -440,7 +636,7 @@ function changeGate(gate){
 
     //V change the value of the third gate V
     if(gate == 3){
-        temp = level(player.score);
+        temp = levelGates(level);
 
         gate3.type = temp;
         gate3.need = gateValue[temp];
@@ -556,7 +752,13 @@ function resetGates(gate){
 
     if(gate == 1){
         changeGate(1);
-        gate1.rate = Math.floor((Math.random() * 4) +1);
+        if(level == 1 || level == 2 || level == 3){
+            gate1.rate = Math.floor((Math.random() * 2) + 1);
+        }
+        else if(level == 4){
+            gate1.rate = Math.floor((Math.random() * 3) + 2);
+        }
+        
         while(gate1.rate == gate2.rate || gate1.rate == gate3.rate){
             gate1.rate = Math.floor((Math.random() * 4) +1);
         }
@@ -585,31 +787,32 @@ function resetGates(gate){
  This function is called everytime the screen is drawn. It checks whether the gates have either hit the bottom of the window or have hit the ball. This is done by checking the the x and y coordinates of the ball and the gates. If the gates hit the bottom of the window, they are reset and the player loses a life. If the gates come in contact with the ball, the player's vlaue and the gates needed value are checked. If they match, the score is increased by 100. If the values don't match, the player loses a life.
 
  */
+//bookmark
 function checkCollision(){
 
-    if((gate1.y-10) >= canvas.height){
+    if((gate1.y-canvas.height *.2) >= canvas.height){
         resetGates(1);
     }
-    if((gate2.y-10) >= canvas.height){
+    if((gate2.y-canvas.height *.2) >= canvas.height){
         resetGates(2);
     }
-    if((gate3.y-10) >= canvas.height){
+    if((gate3.y-canvas.height *.2) >= canvas.height){
         resetGates(3);
     }
-    if(ball.x >=gate1.x && ball.x <= (gate1.x+60) && (gate1.y+120) >= (ball.radius + ball.y)){
+    if(ball.x+ball.radius >=(canvas.width/4)-(canvas.width *.025) && ball.x-ball.radius <= ((canvas.width/4)+(canvas.width *.025)) && (gate1.y+(canvas.height *.1)) >= (ball.y - ball.radius) && gate1.y <= ball.radius + ball.y){
         checkMatch("gate1");
         resetGates(1);
     }
-    if(ball.x >=gate2.x && ball.x <= (gate2.x+60) && (gate2.y+120) >= (ball.radius + ball.y)){
+    if(ball.x+ball.radius >=(2*canvas.width/4)-(canvas.width *.025) && ball.x-ball.radius <= ((2*canvas.width/4)+(canvas.width *.025)) && (gate2.y+(canvas.height *.1)) >= (ball.y - ball.radius) && gate2.y <= ball.radius + ball.y){
         checkMatch("gate2");
         resetGates(2);
     }
-    if(ball.x >=gate3.x && ball.x <= (gate3.x+60) && (gate3.y+120) >= (ball.radius + ball.y)){
+    if(ball.x+ball.radius >=(3*canvas.width/4)-(canvas.width *.025) && ball.x-ball.radius <= ((3*canvas.width/4)+(canvas.width *.025)) && (gate3.y+(canvas.height *.1)) >= (ball.y - ball.radius) && gate3.y <= ball.radius + ball.y){
         checkMatch("gate3");
         resetGates(3);
     }
 
-    if(doublepts.y - 20 >= canvas.height){
+    if(doublepts.y - doublepts.radius >= canvas.height){
         doublepts.x = Math.random() * canvas.width;
         doublepts.y = -100;
         doubleptstimer = Math.floor((Math.random() +1)*60000);
@@ -619,7 +822,10 @@ function checkCollision(){
 
     }
 
-    if((ball.x >= doublepts.x-20) && (ball.x <= doublepts.x+20) && (ball.y <= doublepts.y+20) && (ball.y >=doublepts.y-20)){
+    if((ball.x+ball.radius >= doublepts.x-doublepts.radius) &&
+        (ball.x-ball.radius <= doublepts.x+doublepts.radius) &&
+        (ball.y-ball.radius <= doublepts.y+doublepts.radius) &&
+        (ball.y+ ball.radius >=doublepts.y-doublepts.radius)) {
         collected2x = true;
         collected2x_time = new Date();
         collected2x_time_ms = collected2x_time.getTime();
@@ -629,14 +835,17 @@ function checkCollision(){
         doublepts.y = -100;
     }
 
-    if(extralife.y - 20 >= canvas.height){
+    if(extralife.y - extralife.radius >= canvas.height){
         extralife.x = Math.random() * canvas.width;
         extralife.y = -100;
         extralifetimer = Math.floor((Math.random() +2)*60000);
         spawnlife = false;
     }
 
-    if((ball.x >= extralife.x-20) && (ball.x <= extralife.x+20) && (ball.y <= extralife.y+20) && (ball.y >=extralife.y-20)){
+    if((ball.x+ball.radius >= extralife.x-extralife.radius) &&
+        (ball.x-ball.radius <= extralife.x+20) &&
+        (ball.y-ball.radius <= extralife.y+extralife.radius) &&
+        (ball.y+ball.radius >=extralife.y-extralife.radius)){
         extralife.y = -100;
         extralife_sound.play();
         player.lives.push('L');
@@ -651,6 +860,7 @@ function checkCollision(){
 //
 function setUpScreen(time){
     var FPS = Math.floor(1000 / (time - previousFrameTime));
+    document.getElementById("newLevel").style.display = "none";
 	displayFramesPerSecond(FPS);
     previousFrameTime = time;
     ctx.font = "12px Verdana";
@@ -669,18 +879,47 @@ function setUpScreen(time){
 // 
 function displayFramesPerSecond(rate){
 	var percentage = rate/120;
-	var angleindegrees = percentage * 180;
-	var newx = 150 + (127 * (Math.cos((Math.PI/180)* angleindegrees)));
-	var newy = 147 + (127 * (Math.sin((Math.PI/180)* angleindegrees)));
-	var xcorrect = newx - 150;
-	var ycorrect = newy - 147;
-	newx = 150 - xcorrect;
-	newy = 147 - ycorrect;
-	ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
-	ctx2.beginPath();
-	ctx2.moveTo(150, 147);
-	ctx2.lineTo(newx, newy);
-	ctx2.stroke();
+	var angleindegrees = Math.round(percentage * 180);
+	if(fpsTarget != angleindegrees){
+		fpsTarget = angleindegrees;
+	}
+	
+}
+
+function drawneedlesmoothly(){
+	if(fpsTarget + 1 > fpsCurrent){
+		
+			var newx = 150 + (127 * (Math.cos((Math.PI/180)* fpsCurrent)));
+			var newy = 147 + (127 * (Math.sin((Math.PI/180)* fpsCurrent)));
+			var xcorrect = newx - 150;
+			var ycorrect = newy - 147;
+			newx = 150 - xcorrect;
+			newy = 147 - ycorrect;
+			ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+			ctx2.beginPath();
+			ctx2.moveTo(150, 147);
+			ctx2.lineTo(newx, newy);
+			ctx2.stroke();
+			fpsCurrent+=1;
+			
+		
+	}
+	else if(fpsTarget + 1 < fpsCurrent){
+			var newx = 150 + (127 * (Math.cos((Math.PI/180)* fpsCurrent)));
+			var newy = 147 + (127 * (Math.sin((Math.PI/180)* fpsCurrent)));
+			var xcorrect = newx - 150;
+			var ycorrect = newy - 147;
+			newx = 150 - xcorrect;
+			newy = 147 - ycorrect;
+			ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+			ctx2.beginPath();
+			ctx2.moveTo(150, 147);
+			ctx2.lineTo(newx, newy);
+			ctx2.stroke();
+			fpsCurrent-=1;
+			
+		
+	}
 }
 
 //displayLives()
@@ -768,15 +1007,22 @@ function pause(){
 var scored = false;
 
 function draw(time) {
+    updateSizes();
     setUpScreen(time);
+
+    currentLevel = level;
+    checkLevel();
+    if(currentLevel != level){
+        newLevel(level);
+    }
 
     checkCollision();
     var spawn2xCount = 0;
     var spawnLifeCount = 0;
 
-    drawGate(gate1.x, gate1.y, gate1.type);
-    drawGate(gate2.x, gate2.y, gate2.type);
-    drawGate(gate3.x, gate3.y, gate3.type);
+    drawGate((canvas.width / 4), gate1.y, gate1.type);
+    drawGate(2 * (canvas.width / 4), gate2.y, gate2.type);
+    drawGate(3 * (canvas.width / 4), gate3.y, gate3.type);
 
     drawBall();
     ctx.fillStyle = "#FF0000";
@@ -784,32 +1030,32 @@ function draw(time) {
 
     var current_time = new Date();
     var current_time_ms = current_time.getTime();
-    if (ref_time2x_ms + doubleptstimer - current_time_ms <= 1000 && ref_time2x_ms + doubleptstimer - current_time_ms >=0) {
+    if (ref_time2x_ms + doubleptstimer - current_time_ms <= 1000 && ref_time2x_ms + doubleptstimer - current_time_ms >= 0 && spawn2x == false) {
         spawn2x = true;
-        spawn2xCount +=1;
+        spawn2xCount += 1;
     }
 
-    if (ref_timelife_ms + extralifetimer - current_time_ms <= 1000 && ref_timelife_ms + extralifetimer - current_time_ms >=0) {
+    if (ref_timelife_ms + extralifetimer - current_time_ms <= 1000 && ref_timelife_ms + extralifetimer - current_time_ms >= 0 && spawnlife == false) {
         spawnlife = true;
-        spawnLifeCount +=1;
+        spawnLifeCount += 1;
     }
 
-    if(isStreak == true && current_time_ms < streak_time){
+    if (isStreak == true && current_time_ms < streak_time) {
         ctx.font = "18px Retroville";
-        ctx.fillText("X"+ streak, 10, canvas.height - 55);
-        if((multiplier() - 1)*100 > 0)
-            ctx.fillText("+"+((multiplier() - 1)*100) + "% Bonus", 10, canvas.height - 40);
+        ctx.fillText("X" + streak, 10, canvas.height - 55);
+        if ((multiplier() - 1) * 100 > 0)
+            ctx.fillText("+" + ((multiplier() - 1) * 100) + "% Bonus", 10, canvas.height - 40);
     }
     //You get 5 seconds before streak resets
-    if(current_time_ms >= streak_time){
+    if (current_time_ms >= streak_time) {
         isStreak = false;
         streak = 0;
 
     }
 
     if (spawn2x == true) {
-        if(spawn2xCount ==1){
-            ga('send','event', 'Gate Grabber', 'spawn', 'Double Points');
+        if (spawn2xCount == 1) {
+            ga('send', 'event', 'Gate Grabber', 'spawn', 'Double Points');
         }
         draw2x();
         doublepts.alpha = doublepts.alpha - .005;
@@ -817,18 +1063,17 @@ function draw(time) {
 
         doublepts.y = doublepts.y + 2;
 
-        ctx.fillStyle ="#FFFF00";
+        ctx.fillStyle = "#FFFF00";
         ctx.font = "20px Retroville";
         ctx.fillText("2x", doublepts.x - 16, doublepts.y + 6);
-        ctx.fillStyle ="#FF0000";
+        ctx.fillStyle = "#FF0000";
         ctx.font = "12px Retroville"
     }
 
 
-
     if (spawnlife == true) {
-        if(spawnLifeCount ==1){
-            ga('send','event', 'Gate Grabber', 'spawn', 'Extra Life');
+        if (spawnLifeCount == 1) {
+            ga('send', 'event', 'Gate Grabber', 'spawn', 'Extra Life');
         }
         drawextralife();
         extralife.alpha = extralife.alpha - .01;
@@ -836,22 +1081,22 @@ function draw(time) {
 
         extralife.y = extralife.y + 2;
 
-        ctx.fillStyle ="#1D7CF2";
+        ctx.fillStyle = "#1D7CF2";
         ctx.font = "16px Retroville";
         ctx.fillText("1UP", extralife.x - 18, extralife.y + 6);
-        ctx.fillStyle ="#FF0000";
+        ctx.fillStyle = "#FF0000";
         ctx.font = "12px Retroville";
     }
 
 
-    if(collected2x == true) {
+    if (collected2x == true) {
         ctx.font = "16px Retroville";
-        ctx.fillText("2x: " + Math.floor((collected2x_limit - current_time_ms) / 1000) +" Sec", 0, canvas.height / 2);
+        ctx.fillText("2x: " + Math.floor((collected2x_limit - current_time_ms) / 1000) + " Sec", 0, canvas.height / 2);
 
-        if(current_time_ms  >= collected2x_limit){
+        if (current_time_ms >= collected2x_limit) {
             doublepts.x = Math.random() * canvas.width;
             doublepts.y = -100;
-            doubleptstimer = Math.floor((Math.random() +1)*60000);
+            doubleptstimer = Math.floor((Math.random() + 1) * 60000);
             ref_time2x = new Date();
             ref_time2x_ms = ref_time2x.getTime();
             collected2x = false;
@@ -864,20 +1109,30 @@ function draw(time) {
     gate3.y = gate3.y + gate3.rate;
 
 
-    var speed = {rate1: gate1.rate, rate2:gate2.rate, rate3: gate3.rate, 
-				 gate1: gateType[gate1.type].src, gate2: gateType[gate2.type].src, gate3: gateType[gate3.type].src,
-				 gate1y: gate1.y, gate2y: gate2.y, gate3y: gate3.y
-				};
-	
-		speedVis.update(speed);
+    var speed = {
+        rate1: gate1.rate, rate2: gate2.rate, rate3: gate3.rate,
+        gate1: gateType[gate1.type].src, gate2: gateType[gate2.type].src, gate3: gateType[gate3.type].src,
+        gate1y: gate1.y, gate2y: gate2.y, gate3y: gate3.y
+    };
+
+    speedVis.update(speed);
 
     if (rightPressed && ball.x + ball.radius < canvas.width) {
         ball.x += 4;
+        ball.y = (canvas.height - (canvas.height * .1))
     }
     if (leftPressed && ball.x - ball.radius > 0) {
         ball.x -= 4;
+        ball.y = (canvas.height - (canvas.height * .1))
     }
-
+    if ((rightPressed && ball.x + ball.radius > canvas.width)) {
+        ball.x = canvas.width - ball.radius;
+        ball.y = (canvas.height - (canvas.height * .1));
+    }
+    if (leftPressed && ball.x - ball.radius < 0) {
+        ball.x = ball.radius;
+        ball.y = (canvas.height - (canvas.height * .1));
+    }
     canvas.onclick = changePlayerValue;
 
 
@@ -887,7 +1142,7 @@ function draw(time) {
         ga('send', 'event', 'Gate Grabber', 'completeTime', time);
         scored = false;
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+		fpsTarget = 1;
 		document.getElementById("gameOverScore").innerHTML = "You scored " + player.score + " points!";
 		checkHighScore();
 		pause();
@@ -903,9 +1158,10 @@ function draw(time) {
     }
     else if(paused == true) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+		fpsTarget = 1;
         if (playing == true) {
-        ctx.font = "30px Retroville";
-        ctx.fillText("PAUSED", canvas.width / 2 - 75, canvas.height / 2);
+            ctx.font = "30px Retroville";
+            ctx.fillText("PAUSED", canvas.width / 2 - 75, canvas.height / 2);
         }
     }
 
@@ -997,7 +1253,6 @@ function pushNewHighScore(){
 				});
 }
 
-
 function refreshHighScores(){
     var Score = Parse.Object.extend("Score");
     var query = new Parse.Query(Score);
@@ -1036,8 +1291,6 @@ function refreshHighScores(){
     });			
 }
 
-
-
 function loadConfiguration() {
     ga('send','event', 'Gate Grabber', 'choice', 'buttonConfig');
     //clear all user interface elements
@@ -1047,7 +1300,7 @@ function loadConfiguration() {
     }
     //receive new keystrokes
     ctx.font = "20px Retroville";
-    ctx.fillStyle ="#FF0000";
+    ctx.fillStyle ="#1ff400";
     ctx.textAlign="center";
     ctx.fillText("Input left movement key", canvas.width / 2, canvas.height / 2);
     document.addEventListener("keydown", assignleft, false);
@@ -1069,7 +1322,6 @@ function assignright(key){
     loadoptions();
     document.removeEventListener("keydown", assignright, false);
 }
-
 
 function loadControls(){
     ga('send','event', 'Gate Grabber', 'choice', 'Controls');
@@ -1162,6 +1414,8 @@ function toggleMusic(){
 }
 
 function loadMainMenu(){
+    document.getElementById("myCanvas").style.background = "url(../Background/circuit_background.jpg) ";
+    document.getElementById("myCanvas").style.backgroundSize = "100%";
 	refreshHighScores();
 	$(".ui").fadeOut(600);
     //clear all user interface elements
@@ -1213,9 +1467,7 @@ function loadMainMenuFirstTime(){
 	$("#howTo").fadeIn(600);
 	$("#controls_MainMenu").fadeIn(600);
 	$("#option").fadeIn(600);
-	$("#highScores_MainMenu").fadeIn(600);
-	
-	
+	$("#highScores_MainMenu").fadeIn(600);	
 }
 
 //main menu animation
@@ -1324,8 +1576,6 @@ function gamestartanimation(){
 	
 	$(".mainMenuAnimation").hide();
 	$("#frame1").fadeIn(600, firstFrame());
-	
-	
 }
 
 function loadNewHighScoreScreen(){
@@ -1341,8 +1591,7 @@ function loadNewHighScoreScreen(){
         temp[i].style.display = "inline";
     }
 	$(".newHighScoreScreen").hide();
-	$(".newHighScoreScreen").fadeIn(600);
-	
+	$(".newHighScoreScreen").fadeIn(600);	
 }
 
 function loadHighScores(){
@@ -1390,6 +1639,12 @@ function loadEndMenu(){
 }
 
 function newGame(){
+
+    $("#newLevel").fadeIn(600);
+    document.getElementById("myCanvas").style.background = "linear-gradient(black, gray)";
+
+
+    level = 1;
     ga('send','event', 'Gate Grabber', 'choice', 'Play');
     start_time = Date.now();
     //clear all user interface elements
@@ -1410,16 +1665,16 @@ function newGame(){
     var tempvar2 = Math.floor((Math.random()* 8));
     var tempvar3 = Math.floor((Math.random()* 8));
     player = { lives:['L','L','L','L','L','L','L','L','L','L'], score:0, value:1};
-    		gate1 = { need: gateValue[tempvar1], x:(canvas.width/4), y:-200, type:tempvar1, rate: Math.floor((Math.random() * 4) +1)};
-    		gate2 = { need: gateValue[tempvar2], x:(2*(canvas.width/4)), y:-200, type:tempvar2, rate: Math.floor((Math.random() * 4) +1)};
-    		gate3 = { need: gateValue[tempvar3], x:(3*(canvas.width/4)), y:-200, type:tempvar3, rate: Math.floor((Math.random() * 4) +1)};
+	gate1 = { need: gateValue[tempvar1], x:(canvas.width/4), y:-200, type:tempvar1, rate: Math.floor((Math.random() * 4) +1)};
+	gate2 = { need: gateValue[tempvar2], x:(2*(canvas.width/4)), y:-200, type:tempvar2, rate: Math.floor((Math.random() * 4) +1)};
+	gate3 = { need: gateValue[tempvar3], x:(3*(canvas.width/4)), y:-200, type:tempvar3, rate: Math.floor((Math.random() * 4) +1)};
 
-        		while(gate2.rate == gate1.rate){
-        			gate2.rate = Math.floor((Math.random() * 4) +1);
-        		}
-    		while(gate3.rate == gate2.rate || gate3.rate == gate1.rate){
-        			gate3.rate = Math.floor((Math.random() * 4) +1);
-        		}
+	while(gate2.rate == gate1.rate){
+		gate2.rate = Math.floor((Math.random() * 4) +1);
+	}
+	while(gate3.rate == gate2.rate || gate3.rate == gate1.rate){
+		gate3.rate = Math.floor((Math.random() * 4) +1);
+	}
     extralife ={radius:20,x:(Math.random()* canvas.width), y:-100, alpha:1 };//variable for extra life
     extralife.x = Math.random()*canvas.width;
     extralife.y = -100;
@@ -1438,14 +1693,24 @@ function newGame(){
     //start the game
     playing = true;
     paused = false;
-    requestAnimationFrame(draw);
+    newLevel(level);
+    // document.getElementById("levelNum").innerHTML = "LEVEL          1";
+    // document.getElementById("description").innerHTML = "Use the mouse to move<br />Left click to change value";
+    // document.getElementById("gateType").innerHTML = "Gates: AND"
+    // document.getElementById("continue").style.display = "none";
+    // document.getElementById("play1st").style.display = "inline";
+    // document.getElementById("newLevel").style.display = "inline";
+        //requestAnimationFrame(draw);
 }
 
 function quitGame(){
     ga('send','event', 'Gate Grabber', 'choice', 'Quit');
+    document.getElementById("newLevel").style.display="none";
+	fpsTarget = 1;
 	paused = true;
     playing = false;
 	requestAnimationFrame(clearscreen);
+	fpsTarget = 1;
 	loadMainMenu();
 }
 
@@ -1459,3 +1724,14 @@ function clearscreen(){
 
 gamestartanimation();
 //loadMainMenuFirstTime();
+var needleinterval = setInterval(drawneedlesmoothly, 11);
+
+//updateSizes - updates sizes when screen size changes
+//bookmark
+function updateSizes(){
+    ctx.canvas.width  = window.innerWidth*.352;
+    ctx.canvas.height = window.innerHeight*.825;
+    ball.radius = .1*canvas.width/2;
+    ball.y = (canvas.height-(canvas.height *.1));
+
+}

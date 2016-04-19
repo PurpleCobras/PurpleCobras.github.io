@@ -437,7 +437,7 @@ function visualizeArray(object){
 					.attr("fill", tempColor)		//Sets the background color of each rectangle
 					.attr("class", "shape")									//Sets a class name for each rectangle
 					.attr("stroke-width", 2)								//Sets the border-width of each rectangle
-					.attr("stroke", "black");								//Sets the color of the border
+					.attr("stroke", "white");								//Sets the color of the border
 
                 object.canvas.selectAll("svg")
                     .data([1])
