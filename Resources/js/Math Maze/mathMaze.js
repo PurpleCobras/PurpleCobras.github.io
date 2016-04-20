@@ -1282,6 +1282,11 @@ function scoreboarddisplay(timer){
 	else{	
 		ctx3.fillText("Possible points: " + tempPoints, 0, 175);
 	} 
+	ctx3.fillStyle = "white";
+	ctx3.fillText("Question: "+(questionCounter+1)+ "/15", 0, 220);
+	
+	document.getElementById("hit").innerHTML = "Correct";
+	document.getElementById("miss").innerHTML = "Wrong";
 }
 
 /*

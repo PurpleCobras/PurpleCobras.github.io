@@ -37,8 +37,13 @@ document.write('<span class="icon-bar"></span>');
 document.write('<span class="icon-bar"></span>');
 document.write('<span class="icon-bar"></span>');
 document.write('</button>');
-document.write('<a class="navbar-brand" href="../../index.html">Purple Cobras</a>');
+
+
+document.write('<a class="navbar-brand" href="../../index.html">');
+document.write('<div><img id="table" src = "../images/favicon/android-icon-36x36.png" alt = "1UP" style="width:23px;height:23px;">    Purple Cobras		</div></a>');
 document.write('</div>');
+
+
 document.write('<div id="navbar" class="navbar-collapse collapse">');
 document.write('<ul class="nav navbar-nav">');
 document.write('<li class="active"><a href="../../index.html">Home</a></li>');

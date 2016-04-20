@@ -33,13 +33,25 @@
 	background-color:#363535;
 }
 
+.jumbotron{
+	position: absolute;
+	top:7.5vh;
+	width: 83.5vw;
+	background-color: rgba(128,128,128,.90);
+	border-radius: 0px;
 
+}
+.lesson{
+	left:8vw;
+}
 body{
 	/*padding-top: 100px;*/
 	height: 100%;
 	width: 100%;
 	font-family: "Arial";
 	background-color:"dimgrey";
+	background-image: url("../images/brick.jpg");
+	/*opacity: 0.96;*/
 }
 /*Fonts being used in the website*/
 @font-face{
@@ -85,18 +97,20 @@ body{
 	z-index: 1;
 	white-space: pre;
 }
+#levelNum{
+	font-size: 1vw;
+}
+
+#description{
+	font-size: 1vw;
+}
+#gateType{
+	font-size: 1vw;
+}
 
 #playerIcon{
 	width: 2vw;
 	height: 6vh;
-}
-
-#score{
-	position: absolute;
-	top: 40px;
-	left: 29px;
-	font-size: 1vw;
-	z-index:1;
 }
 
 #framesPerSecond{
@@ -104,14 +118,6 @@ body{
 	top: 2px;
 	left: 17px;
 }
-/*
-#fpsMeter{
-	visibility: visible;
-	height: 152px;
-	width: 300px;
-}
-*/
-
 
 #lives{
 	position: absolute;
@@ -162,19 +168,23 @@ body{
 	/*font-size: ;*/
 }
 #levelNum{
-
-	font-size: 100%;
-
+	font-size: 1.2vw;
 }
 
 #continue{
 	height: 15%;
+	width: 30%;
+	text-align: center;
+	font-size:1vw;
 }
 #play1st{
 	height: 15%;
 }
 #help{
 	height: 15%;
+	width: 30%;
+	text-align: center;
+	font-size: 1vw;
 }
 
 #fpsDiv{
@@ -238,13 +248,45 @@ body{
 	/*border-style: outset;*/
 }
 
+#scoreDiv{
+	position: absolute;
+	background-color: black;
+	border: 7px solid rgb(64,64,64);
+	width:24vw;
+	height:24vh;
+	top:65vh;
+	left: 2vw;
 
+	color:#1ff400;
+	font-family: "Retroville";
+	font-size: 1.6vw;
+
+}
+#score{
+	position: absolute;
+	left: 1vw;
+}
+#level{
+	position: absolute;
+	top:5vh;
+	left: 1vw;
+}
+#streak{
+	position: absolute;
+	top:10vh;
+	left: 1vw;
+}
+#bonus{
+	position: absolute;
+	top:15vh;
+	left: 1vw;
+}
 
 #quitButton{
 	font-size: 11px;
 	height: 25px;
 	position: absolute;
-	left: 417px;
+	left:87%;
 	top: 10px;
 }
 
@@ -256,7 +298,6 @@ body{
 	width: 33vw;
 	height: 7vh;
 }
-
 
 .ui{
 	display: none;
@@ -346,6 +387,7 @@ body{
 	left: 3vw;
 	width: 13vw;
 	height: 8vh;
+	font-size: 1.5vw;
 }
 
 #replay{
@@ -353,6 +395,7 @@ body{
 	left: 19vw;
 	width: 13vw;
 	height: 8vh;
+    font-size: 1.5vw;
 }
 
 #gameOverText{
@@ -403,7 +446,7 @@ body{
 	left: 11vw;
 	width: 13vw;
 	height: 8vh;
-
+	font-size: 1.20vw;
 }
 
 #mainMenu_Options{
@@ -411,6 +454,7 @@ body{
 	left: 11vw;
 	width: 13vw;
 	height: 8vh;
+	font-size: 1.5vw;
 }
 
 #mainMenu_HowTo{
@@ -418,6 +462,7 @@ body{
 	left: 11vw;
 	width: 13vw;
 	height: 8vh;
+	font-size: 1.5vw;
 }
 
 
@@ -426,6 +471,7 @@ body{
 	left: 11vw;
 	width: 13vw;
 	height: 8vh;
+	font-size: 1.5vw;
 }
 
 #mainMenu_NewHighScoreScreen{
@@ -433,6 +479,7 @@ body{
 	left: 11vw;
 	width: 13vw;
 	height: 8vh;
+	font-size: 1.5vw;
 }
 
 #submitHighScore{
@@ -440,6 +487,7 @@ body{
 	left: 11vw;
 	width: 13vw;
 	height: 8vh;
+	font-size: 1.5vw;
 }
 
 #mainMenu_HighScores{
@@ -447,6 +495,7 @@ body{
 	left: 11vw;
 	width: 13vw;
 	height: 8vh;
+	font-size: 1.5vw;
 }
 
 #highScore1{
@@ -724,6 +773,7 @@ body{
 	left: 11vw;
 	width: 13vw;
 	height: 8vh;
+	font-size: 1.5vw;
 }
 
 #play{
@@ -731,26 +781,30 @@ body{
 	left: 11vw;
 	width: 13vw;
 	height: 8vh;
+	font-size: 2vw;
 }
 
 #highScores_MainMenu{
 	bottom: 5vh;
 	left: 11vw;
 	width: 13vw;
-	height: 8vh
+	height: 8vh;
+	font-size: 1.7vw;
 }
 #controls_MainMenu{
 	bottom: 25vh;
 	left: 11vw;
 	width: 13vw;
-	height: 8vh
+	height: 8vh;
+	font-size: 1.75vw;
 }
 
 #option{
 	bottom: 15vh;
 	left: 11vw;
 	width: 13vw;
-	height: 8vh
+	height: 8vh;
+	font-size: 2vw;
 }
 
 #opt{
@@ -890,7 +944,8 @@ img#table{
 
 
 .navbar-default {
-	background-color: #6b2bab;
+	/*background-color: #808080;*/
+	background-color: rgba(128,128,128,.90);
 	border-color: #5e1590;
 }
 .navbar-default .navbar-brand {
@@ -910,17 +965,17 @@ img#table{
 }
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
 	color: #ffffff;
-	background-color: #5e1590;
+	background-color: #606060;
 }
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
 	color: #ffffff;
-	background-color: #5e1590;
+	background-color: #606060;
 }
 .navbar-default .navbar-toggle {
-	border-color: #5e1590;
+	border-color: #606060;
 }
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-	background-color: #5e1590;
+	background-color: #606060;
 }
 .navbar-default .navbar-toggle .icon-bar {
 	background-color: #ecf0f1;
@@ -1142,7 +1197,7 @@ img#table{
 }
 #scoreboardDiv{
 	width: 100%;
-	height: 200px;
+	height: 250px;
 	position: absolute;
 	left: 20%;
 	top: 55%;
@@ -1160,12 +1215,40 @@ img#table{
 	color: white;
 }
 
+#hitText{
+	top: 10%;
+	left: 35%;
+	font-family:"CabinBold";
+	color: white;
+	height: 20px;
+	width: 20px;
+	position: absolute;
+}
+
+#hit{
+	font-size: x-large;
+}
+
+#missText{
+	top: 10%;
+	left: 50%;
+	font-family:"CabinBold";
+	color: white;
+	height: 20px;
+	width: 20px;
+	position: absolute;
+}
+
+#miss{
+	font-size: x-large;
+}
+
 #functionDiv{
 	width:100%;
 	height: 100px;
 	position: absolute;
 	text-align: center;
-	top: 30%;
+	top: 38%;
 	left: 5%;
 	font-family: "CabinBold";
 }
@@ -1363,7 +1446,7 @@ commentHeader{
 .GGLogo {
 	height:330px;
 	width:356px;
-	background: url('../images/GG_static.png');
+	background: url('../images/GG_gif.gif');
 	position: relative;
 	opacity: 0.9;
 }
@@ -1371,7 +1454,7 @@ commentHeader{
 .GGLogo:hover {
 	height:330px;
 	width:356px;
-	background:url('../images/GG_logo.gif');
+	background:url('../images/GG_gif.gif');
 	opacity: 1.0;
 }
 .MMLogo {

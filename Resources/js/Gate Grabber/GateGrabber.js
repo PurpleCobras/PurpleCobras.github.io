@@ -22,6 +22,15 @@ ctx2.strokeStyle = "red";
 ctx2.lineWidth = 5;
 ctx2.lineCap = "butt";
 
+//Used in how to play animation
+var howToX = 115, howToY = -50; //Variables for the "How To Play" animation coordinates
+var pic = document.getElementById("AND11x"); //Gate to use in "How To Play" animation
+var howToCanvas; //Variable to hold the new canvas
+var ctx3;
+var gdiv = document.getElementById("gameDiv"); //Div where the new canvas will go
+var howToPlayClicked = false;
+var timeout1, timeout2, timeout3, timeout4, timeout5, timeout6, timeout7, intrval;
+
 var fpsX;
 var fpsY;
 var fpsTarget = 1;
@@ -580,6 +589,7 @@ function newLevel(lvl){
     document.getElementById("continue").style.display = "inline";
     document.getElementById("help").style.display = "inline";
     document.getElementById("newLevel").style.display = "inline";
+    document.getElementById("level").innerHTML = "Level: " + lvl;
 }
 
 function continueToNextLevel(){
@@ -668,83 +678,65 @@ function multiplier(){
 function checkMatch(gate){
     if(gate == "gate1"){
         if(gate1.need == player.value || gate1.need == 2){
-            scored = true;
-            animationx = ball.x;
-            animationy = ball.y;
-            if(collected2x == true) player.score+= 100 * multiplier() * 2;
-            else
-            player.score += 100 * multiplier();
-
-            isStreak = true;
-            streak += 1;
-            streak_time = new Date().getTime()+5000;
-            collection.pause();
-            collection.currentTime = 0;
-            collection.play();
+            correctAns();
         }
         else {
-            player.lives.pop();
-
-            isStreak = false;
-            streak = 0;
-            miss.pause();
-            miss.currentTime = 0;
-            miss.play();
+            wrongAns();
         }
     }
     else if(gate == "gate2"){
         if(gate2.need == player.value || gate2.need == 2){
-            scored = true;
-            animationx = ball.x;
-            animationy = ball.y;
-            if(collected2x == true) player.score+= 100 * multiplier() * 2;
-            else
-            player.score+= 100;
-
-            isStreak = true;
-            streak += 1;
-            streak_time = new Date().getTime()+5000;
-            collection.pause();
-            collection.currentTime = 0;
-            collection.play();
-        }else {
-            player.lives.pop();
-
-            isStreak = false;
-            streak = 0;
-            miss.pause();
-            miss.currentTime = 0;
-            miss.play();
+            correctAns();
+        }
+        else {
+            wrongAns();
         }
     }
     else if(gate =="gate3"){
         if(gate3.need == player.value || gate3.need == 2){
-            scored = true;
-            animationx = ball.x;
-            animationy = ball.y;
-            if(collected2x == true) player.score+= 100 * multiplier() * 2;
-            else
-            player.score+= 100 * multiplier();
-
-            isStreak = true;
-            streak += 1;
-            streak_time = new Date().getTime() + 5000;
-            collection.pause();
-            collection.currentTime = 0;
-            collection.play()
-        }else{
-            player.lives.pop();
-            isStreak = false;
-            streak = 0;
-            miss.pause();
-            miss.currentTime = 0;
-            miss.play();
+            correctAns();
+        }
+        else{
+            wrongAns();
         }
     }
     else{
         player.lives.pop();
     }
 
+}
+/*correctAns()
+    fucntion called when a correct value is provided to a corresponding gate
+
+*/
+function correctAns(){
+    scored = true;
+    animationx = ball.x;
+    animationy = ball.y;
+    if(collected2x == true) player.score+= 100 * multiplier() * 2;
+    else
+    player.score += 100 * multiplier();
+
+    isStreak = true;
+    streak += 1;
+    streak_time = new Date().getTime()+5000;
+    collection.pause();
+    collection.currentTime = 0;
+    collection.play();
+}
+/*correctAns()
+    fucntion called when a incorrect value is provided to a corresponding gate
+
+*/
+function wrongAns(){
+    document.getElementById("streak").innerHTML = "Streak: 0";
+    document.getElementById("bonus").innerHTML = "Bonus: 0";
+    player.lives.pop();
+    isStreak = false;
+    streak = 0;
+    miss.pause();
+    miss.currentTime = 0;
+    miss.play();
 }
 
 //resets all of the y gate coordinates and set a new random fall rate to each gate.
@@ -848,7 +840,8 @@ function checkCollision(){
         (ball.y+ball.radius >=extralife.y-extralife.radius)){
         extralife.y = -100;
         extralife_sound.play();
-        player.lives.push('L');
+        if(player.lives.length == 10) player.score += 300;
+        else player.lives.push('L');
         spawnlife = false;
 
     }
@@ -865,7 +858,7 @@ function setUpScreen(time){
     previousFrameTime = time;
     ctx.font = "12px Verdana";
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-	document.getElementById("score").innerHTML = player.score;
+	document.getElementById("score").innerHTML = "Score: " + player.score;
 	displayLives();
 }
 
@@ -1041,13 +1034,18 @@ function draw(time) {
     }
 
     if (isStreak == true && current_time_ms < streak_time) {
-        ctx.font = "18px Retroville";
-        ctx.fillText("X" + streak, 10, canvas.height - 55);
-        if ((multiplier() - 1) * 100 > 0)
-            ctx.fillText("+" + ((multiplier() - 1) * 100) + "% Bonus", 10, canvas.height - 40);
+        // ctx.font = "18px Retroville";
+        // ctx.fillText("X" + streak, 10, canvas.height - 55);
+        document.getElementById("streak").innerHTML = "Streak: " + streak;
+        if ((multiplier() - 1) * 100 > 0){
+            // ctx.fillText("+" + ((multiplier() - 1) * 100) + "% Bonus", 10, canvas.height - 40);
+            document.getElementById("bonus").innerHTML = "Bonus: " + ((multiplier() - 1) * 100) + "%";
+        }
     }
     //You get 5 seconds before streak resets
     if (current_time_ms >= streak_time) {
+        document.getElementById("streak").innerHTML = "Streak: 0";
+        document.getElementById("bonus").innerHTML = "Bonus: 0";
         isStreak = false;
         streak = 0;
 
@@ -1341,6 +1339,155 @@ function loadControls(){
 	volumeIconSelector();
 }
 
+function drawHowToGate(){
+	ctx3.beginPath();
+	ctx3.drawImage(pic, howToX, howToY, 70, 90);
+	ctx3.closePath();
+}
+
+function clearCanvas(){
+	ctx3.clearRect(0,0, howToCanvas.width, howToCanvas.height);
+}
+
+function drawHowTo(){
+	clearCanvas();
+	drawHowToGate();
+	ctx3.drawImage(playerIcon0, howToX+25, 100, 30, 40);
+	if(howToY < 5){
+		howToY += 2;
+		requestAnimationFrame(drawHowTo);
+	}
+	
+	else{
+		timeout1 = setTimeout(function(){
+			ctx3.lineWidth = 3;
+			ctx3.strokeStyle="#FF0000";
+			//Red circle around gate output
+			ctx3.beginPath();
+			ctx3.arc(howToX+35,howToY+13,15,0,2*Math.PI);
+			ctx3.stroke();
+			ctx3.fillStyle = "#FF0000";
+			ctx3.font = 'bold 15px Arial';
+			ctx3.fillText("Gate Output", howToX+55, howToY+8);
+		}, 750);
+		
+		timeout2 = setTimeout(function(){
+			ctx3.strokeStyle="#1FF400";
+			//Green circles around user's input fields
+			ctx3.beginPath();
+			ctx3.arc(164,80,15,0,2*Math.PI);
+			ctx3.stroke();
+			ctx3.beginPath();
+			ctx3.arc(155,125,16,0,2*Math.PI);
+			ctx3.stroke();
+			ctx3.fillStyle = "#1FF400";
+			ctx3.fillText("Your input", 185, 115);
+		}, 2000);
+		
+		timeout3 = setTimeout(function(){
+			clearCanvas();
+			drawHowToGate();
+			ctx3.drawImage(playerIcon0, howToX+25, 100, 30, 40);
+			ctx3.strokeStyle="#FF0000";
+			//Red circle around gate output
+			ctx3.beginPath();
+			ctx3.arc(howToX+35,howToY+13,15,0,2*Math.PI);
+			ctx3.stroke();
+			//White circle around player icon
+			ctx3.strokeStyle="white";
+			ctx3.beginPath();
+			ctx3.arc(155,125,16,0,2*Math.PI);
+			ctx3.stroke();
+			//White circle around pre-defined input value
+			ctx3.beginPath();
+			ctx3.arc(135,82,15,0,2*Math.PI);
+			ctx3.stroke();
+			
+			ctx3.fillStyle = "#FF0000";
+			ctx3.font = 'bold 15px Arial';
+			ctx3.fillText("Gate Output", howToX+55, howToY+8);
+			ctx3.fillStyle = "white";
+			ctx3.font = '12px Arial';
+			ctx3.fillText("Notice that the two",10,30);
+			ctx3.fillText("values of input",10,43);
+			ctx3.fillText("currently will not", 10, 56);
+			ctx3.fillText("generate the given", 10, 69);
+			ctx3.fillStyle = "#FF0000";
+			ctx3.font = 'bold 13px Arial';
+			ctx3.fillText("gate output", 10, 82);
+		}, 3750);
+		
+		
+		timeout4 = setTimeout(function(){
+			ctx3.strokeStyle="#1FF400";
+			ctx3.beginPath();
+			ctx3.arc(155,125,16,0,2*Math.PI);
+			ctx3.stroke();
+			ctx3.fillStyle = "white";
+			ctx3.font = '12px Arial';
+			ctx3.fillText("Solve this by left", 190, 50);
+		    ctx3.fillText("clicking the mouse", 190, 63);
+			ctx3.fillText("to change your", 190, 76);
+			ctx3.fillStyle = "#1FF400";
+			ctx3.fillText("input value", 190, 89);
+		}, 6500);
+		
+		timeout5 = setTimeout(function(){
+			clearCanvas();
+			drawHowToGate();
+			ctx3.drawImage(playerIcon1, howToX+25, 100, 30, 40);
+			ctx3.strokeStyle="#1FF400";
+			ctx3.beginPath();
+			ctx3.arc(155,125,16,0,2*Math.PI);
+			ctx3.stroke();
+			ctx3.fillStyle = "white";
+			ctx3.fillText("Now you're ready",10,43);
+			ctx3.fillText("to collect the gate!",10, 56);
+		}, 9000);
+		
+		timeout6 = setTimeout(function(){	
+			finishHowToAnimation();
+		}, 11000);
+	}
+}
+
+function finishHowToAnimation(){
+	clearCanvas();
+	ctx3.fillText("Now you're ready",10,43);
+	ctx3.fillText("to collect the gate!",10, 56);
+	drawHowToGate();
+	ctx3.drawImage(playerIcon1, howToX+25, 100, 30, 40);
+	
+	if(howToY+90 < 125){
+		howToY += 2;
+		requestAnimationFrame(finishHowToAnimation);
+	}
+	
+	else{
+		clearCanvas();
+		ctx3.drawImage(playerIcon1, howToX+25, 100, 30, 40);
+		var yvalue = 100;
+		ctx3.font = "14px Retroville";
+		ctx3.fillStyle = "red";
+		intrval = setInterval(function(){
+					clearCanvas();
+					ctx3.drawImage(playerIcon1, howToX+25, 100, 30, 40);
+					ctx3.fillText("+"+ 100, howToX+25, yvalue);
+					yvalue -= 4;
+				  }, 250);
+				  
+		timeout7 = setTimeout(function(){
+			clearInterval(intrval);
+			clearCanvas();
+			ctx3.font = "bold 14px Arial";
+			ctx3.fillStyle = "white";
+			ctx3.fillText("If you still have questions,",53, 43); 
+			ctx3.fillText("feel free to check out the ",55,58);
+			ctx3.fillText("Gate Grabber information page.",53, 73);
+		}, 2500);
+	}
+}
+
 function loadHowToPlay(){
     ga('send','event', 'Gate Grabber', 'choice', 'HowTo');
     //clear all user interface elements
@@ -1357,6 +1504,28 @@ function loadHowToPlay(){
 	$(".howToPlay").hide();
 	$(".howToPlay").fadeIn(600);
 	volumeIconSelector();
+	
+	howToX = 115, howToY = -50; //y to 120?	
+	
+	//Create a new to run the animation on canvas
+	howToCanvas = document.createElement("canvas");
+	howToCanvas.id = "howToCanvas";
+		
+	//Append it in the gameDiv
+	gdiv.appendChild(howToCanvas);
+	
+	//Set it's properties
+	document.getElementById("howToCanvas").style.width="32vw";
+	document.getElementById("howToCanvas").style.height="43vh";
+	document.getElementById("howToCanvas").style.bottom="19vh";
+	document.getElementById("howToCanvas").style.left="1.5vw";
+	document.getElementById("howToCanvas").style.position="absolute";
+	ctx3 = howToCanvas.getContext("2d");
+	
+	howToPlayClicked = true;
+	
+	//Draw the animation
+	drawHowTo();
 }
 
 function loadoptions(){
@@ -1414,8 +1583,27 @@ function toggleMusic(){
 }
 
 function loadMainMenu(){
+	if(howToPlayClicked){
+		//Remove the howToPlayCanvas
+		gdiv.removeChild(howToCanvas);
+		ctx3 = null;
+		howToPlayClicked = false;
+		clearTimeout(timeout1);
+		clearTimeout(timeout2);
+		clearTimeout(timeout3);
+		clearTimeout(timeout4);
+		clearTimeout(timeout5);
+		clearTimeout(timeout6);
+		clearTimeout(timeout7);
+		clearInterval(intrval);
+	}
+
     document.getElementById("myCanvas").style.background = "url(../Background/circuit_background.jpg) ";
     document.getElementById("myCanvas").style.backgroundSize = "100%";
+    document.getElementById("score").innerHTML = "Score: 0";
+    document.getElementById("level").innerHTML = "Level: 0";
+    document.getElementById("streak").innerHTML = "Streak: 0";
+    document.getElementById("bonus").innerHTML = "Bonus: 0";
 	refreshHighScores();
 	$(".ui").fadeOut(600);
     //clear all user interface elements
@@ -1694,27 +1882,23 @@ function newGame(){
     playing = true;
     paused = false;
     newLevel(level);
-    // document.getElementById("levelNum").innerHTML = "LEVEL          1";
-    // document.getElementById("description").innerHTML = "Use the mouse to move<br />Left click to change value";
-    // document.getElementById("gateType").innerHTML = "Gates: AND"
-    // document.getElementById("continue").style.display = "none";
-    // document.getElementById("play1st").style.display = "inline";
-    // document.getElementById("newLevel").style.display = "inline";
-        //requestAnimationFrame(draw);
 }
 
 function quitGame(){
     ga('send','event', 'Gate Grabber', 'choice', 'Quit');
-    document.getElementById("newLevel").style.display="none";
+    document.getElementById("newLevel").style.display = "none";
 	fpsTarget = 1;
 	paused = true;
     playing = false;
+    player.score = 0;
+    streak = 0;
 	requestAnimationFrame(clearscreen);
 	fpsTarget = 1;
 	loadMainMenu();
 }
 
 function clearscreen(){
+    document.getElementById("newLevel").style.display = "none";
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 		
