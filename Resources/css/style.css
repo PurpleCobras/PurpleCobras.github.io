@@ -99,13 +99,16 @@ body{
 }
 #levelNum{
 	font-size: 1vw;
+	top: 15vh;
 }
 
 #description{
 	font-size: 1vw;
+	top: 45vh;
 }
 #gateType{
 	font-size: 1vw;
+	top: 60vh;
 }
 
 #playerIcon{
@@ -283,11 +286,12 @@ body{
 }
 
 #quitButton{
-	font-size: 11px;
-	height: 25px;
+	font-size: .7vw;
+	height: 4vh;
+	width: 4vw;
 	position: absolute;
 	left:87%;
-	top: 10px;
+	top: 1.5vh;
 }
 
 .livesMeter{
@@ -808,9 +812,28 @@ body{
 }
 
 #opt{
-	bottom: 215px;
-	left: 130px;
-	width: 250px;
+	bottom: 30vh;
+	left: 8.565vw;
+	width: 16vw;
+	height: 20vh;
+	z-index: 1;
+	color: #1ff400;
+	font-size: 1vw;
+}
+
+#bgm{
+	bottom: 45vh;
+	left: 8.565vw;
+	width: 16vw;
+	height: 5vh;
+	z-index: 1;
+	color: #1ff400;
+}
+#sfx{
+	bottom: 35vh;
+	left: 8.565vw;
+	width: 16vw;
+	height: 5vh;
 	z-index: 1;
 	color: #1ff400;
 }

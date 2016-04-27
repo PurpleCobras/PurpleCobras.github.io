@@ -158,21 +158,21 @@ var gateValue = [];
     //NAND 
     gateValue[16]=3;
     gateValue[17]=3;
-    gateValue[18]=2;
-    gateValue[19]=2;
-    gateValue[20]=1;
+    gateValue[18]=1;
+    gateValue[19]=1;
+    gateValue[20]=2;
     gateValue[21]=0;
-    gateValue[22]=1;
+    gateValue[22]=2;
     gateValue[23]=0;
 
     //NOR 
     gateValue[24]=1;
     gateValue[25]=1;
-    gateValue[26]=0;
-    gateValue[27]=0;
-    gateValue[28]=2;
+    gateValue[26]=2;
+    gateValue[27]=2;
+    gateValue[28]=0;
     gateValue[29]=3;
-    gateValue[30]=2;
+    gateValue[30]=0;
     gateValue[31]=3;
 
     //XOR 
@@ -1088,9 +1088,9 @@ function draw(time) {
 
 
     if (collected2x == true) {
-        ctx.font = "16px Retroville";
+ /*       ctx.font = "16px Retroville";
         ctx.fillText("2x: " + Math.floor((collected2x_limit - current_time_ms) / 1000) + " Sec", 0, canvas.height / 2);
-
+*/
         if (current_time_ms >= collected2x_limit) {
             doublepts.x = Math.random() * canvas.width;
             doublepts.y = -100;
