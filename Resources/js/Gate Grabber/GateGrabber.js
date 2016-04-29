@@ -1431,7 +1431,7 @@ function drawHowTo(){
 			ctx3.fillText("to change your", 190, 76);
 			ctx3.fillStyle = "#1FF400";
 			ctx3.fillText("input value", 190, 89);
-		}, 6500);
+		}, 9500);
 		
 		timeout5 = setTimeout(function(){
 			clearCanvas();
@@ -1444,11 +1444,11 @@ function drawHowTo(){
 			ctx3.fillStyle = "white";
 			ctx3.fillText("Now you're ready",10,43);
 			ctx3.fillText("to collect the gate!",10, 56);
-		}, 9000);
+		}, 14000);
 		
 		timeout6 = setTimeout(function(){	
 			finishHowToAnimation();
-		}, 11000);
+		}, 17000);
 	}
 }
 
