@@ -46,7 +46,7 @@ document.write('</div>');
 
 document.write('<div id="navbar" class="navbar-collapse collapse">');
 document.write('<ul class="nav navbar-nav">');
-document.write('<li class="active"><a href="../../index.html">Home</a></li>');
+document.write('<li class="dropdown"><a href="../../index.html">Home</a></li>');
             
 document.write('<li class="dropdown">');
 document.write('<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About<span class="caret"></span></a>');

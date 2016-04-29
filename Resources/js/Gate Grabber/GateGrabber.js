@@ -295,6 +295,7 @@ function keyDownHandler(e) {
         changePlayerValue();
         spacePressed = true;
     }
+ /*
     if(e.keyCode == 77){
         if(mute == false){
             mute = true;
@@ -306,6 +307,7 @@ function keyDownHandler(e) {
             music.play();
         }
     }
+ */
     if(e.keyCode == 80 && playing == true){
         pause();
     }
@@ -1164,7 +1166,7 @@ function draw(time) {
     }
 
 //Animation runs when a player scores. Working on improving this animation later on
-    if(scored == true){
+    if(scored == true && paused == false){
         ctx.font = "14px Retroville";
         if(collected2x == true) ctx.fillText("+"+ (100 * multiplier() * 2),animationx - 25, animationy);
         else ctx.fillText("+"+ (100 * multiplier()),animationx - 25, animationy);

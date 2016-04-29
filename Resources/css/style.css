@@ -1469,7 +1469,7 @@ commentHeader{
 .GGLogo {
 	height:330px;
 	width:356px;
-	background: url('../images/GG_gif.gif');
+	background: url('../images/GGstatic.png');
 	position: relative;
 	opacity: 0.9;
 }
@@ -1491,7 +1491,7 @@ commentHeader{
 .MMLogo:hover {
 	height:330px;
 	width:356px;
-	background:url('../images/MM_logo.gif');
+	background:url('../images/MM.gif');
 	opacity: 1.0;
 }
 
