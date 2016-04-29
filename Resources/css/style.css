@@ -81,6 +81,30 @@ body{
 	color: #1ff400;
 }
 
+#GateGrabber1{
+	visibility: visible;
+	height:80vh;
+	width:32vw;
+}
+#GateGrabber2{
+	visibility: visible;
+	height:80vh;
+	width:32vw;
+	padding-left: 35px; 
+}
+#GateGrabber3{
+	visibility: visible;
+	height:60vh;
+	width:60vw;
+	padding-top: 35px;
+}
+#GateGrabber4{
+	visibility: visible;
+	height:65vh;
+	width:60vw;
+	padding-top: 35px;
+}
+
 #scoreBoard{
 	visibility: visible;
 	position: absolute;
@@ -1495,3 +1519,9 @@ commentHeader{
 	opacity: 1.0;
 }
 
+
+#groupPhoto {
+    visibility: visible;
+	height:58vh;
+	width:65vw;
+}

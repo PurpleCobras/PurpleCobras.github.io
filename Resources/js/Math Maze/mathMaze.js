@@ -1412,6 +1412,8 @@ function loadEndMenu(){
  loadNewHighScoreScreen()
 */
 function loadNewHighScoreScreen(){
+	document.getElementById("hit").style.display = "none";
+	document.getElementById("miss").style.display ="none"
 	document.getElementById("EndGameScores").style.display = "inline";
 	document.getElementById("functionDiv").style.display = "none";
 	document.getElementById("hit_missDiv").style.display = "none";

@@ -295,7 +295,6 @@ function keyDownHandler(e) {
         changePlayerValue();
         spacePressed = true;
     }
- /*
     if(e.keyCode == 77){
         if(mute == false){
             mute = true;
@@ -307,7 +306,6 @@ function keyDownHandler(e) {
             music.play();
         }
     }
- */
     if(e.keyCode == 80 && playing == true){
         pause();
     }
@@ -1163,6 +1161,7 @@ function draw(time) {
             ctx.font = "30px Retroville";
             ctx.fillText("PAUSED", canvas.width / 2 - 75, canvas.height / 2);
         }
+        scored = false;
     }
 
 //Animation runs when a player scores. Working on improving this animation later on
